@@ -1,7 +1,7 @@
 # Contact-Form-7-Spam-Checker (CF7FC)
 
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/paulmann/Contact-Form-7-Spam-Checker)](https://github.com/paulmann/Contact-Form-7-Spam-Checker/releases)
-[![PHP Version Support](https://img.shields.io/badge/php-%3E%3D%208.2-8892bf.svg)](https://php.net/)
+[![PHP Version Support](https://img.shields.io/badge/php-%3E%3D%208.3-8892bf.svg)](https://php.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **1st CF7 Form Checker** is a high-performance, multi-layered security extension for Contact Form 7. Designed for enterprise-grade protection, it combines behavioral analysis, network-level filtering, and content inspection to eliminate spam and malicious submissions with zero impact on legitimate users.
