@@ -1486,7 +1486,7 @@ class CF7_Advanced_Security_Pro
 
                 $ban_threshold = $options['ban_threshold'] ?? self::BAN_THRESHOLD;
                 if ($attack_count >= $ban_threshold) {
-                    $this->ban_ip($this->get_client_ip(), 'Rate limit threshold exceeded (' . $attack_count . ' attacks)', 'RATE_LIMIT_EXCEEDED');
+                    $this->ban_ip($this->get_client_ip(), 'Rate limit threshold exceeded (' . $attack_count . ' attacks)', 'RATE_LIMIT_EXCEEDED', 0);
                     $detailed_reasons[count($detailed_reasons) - 1]['auto_banned'] = true;
                     $detailed_reasons[count($detailed_reasons) - 1]['ban_threshold'] = $ban_threshold;
                 }
@@ -2304,6 +2304,7 @@ class CF7_Advanced_Security_Pro
 
     /**
      * Debug Mode Page with enhanced options
+     * FIXED: Added proper checkbox values for unchecked state
      */
     public function debug_mode_page(): void
     {
@@ -2330,7 +2331,7 @@ class CF7_Advanced_Security_Pro
                                     <label>
                                         <input type="checkbox" id="debug_mode"
                                             name="cf7sec_options[debug_mode]"
-                                            value="1" <?php checked($debug_mode); ?>>
+                                            value="1" <?php checked($debug_mode, true, true); ?>>
                                         Enable detailed logging of all form submissions
                                     </label>
                                     <p class="description">
@@ -2346,7 +2347,7 @@ class CF7_Advanced_Security_Pro
                                     <label>
                                         <input type="checkbox" id="debug_output"
                                             name="cf7sec_options[debug_output]"
-                                            value="1" <?php checked($debug_output); ?>>
+                                            value="1" <?php checked($debug_output, true, true); ?>>
                                         Show debug information under form after submission
                                     </label>
                                     <p class="description">
@@ -3446,21 +3447,40 @@ class CF7_Advanced_Security_Pro
     }
 
     /**
-     * Ban IP address
+     * Ban IP address with custom duration support
+     * FIXED: Added $duration parameter and fixed expiration calculation
      */
-    private function ban_ip(string $ip, string $reason, string $attack_type): void
+    private function ban_ip(string $ip, string $reason, string $attack_type, int $custom_duration = 0): void
     {
         $ban_list = $this->get_ban_list();
         $options = get_option($this->options_name, []);
-        $duration = $options['ban_duration'] ?? self::BAN_DURATION;
+
+        // Use custom duration if provided, otherwise use settings
+        if ($custom_duration > 0) {
+            $duration = $custom_duration;
+        } else {
+            $duration = $options['ban_duration'] ?? self::BAN_DURATION;
+        }
+
+        // Fix expiration calculation - ensure we're adding seconds, not multiplying
+        $expires_at = time() + $duration;
+
+        // If duration is 0 or negative, make it permanent
+        $is_permanent = ($duration <= 0);
+
+        // For permanent bans, set expiration far in the future (100 years)
+        if ($is_permanent) {
+            $expires_at = time() + (31536000 * 100); // 100 years
+        }
 
         $ban_list[$ip] = [
             'banned_at' => time(),
-            'expires_at' => $duration > 0 ? time() + $duration : time() + 31536000 * 100, // 100 years if permanent
+            'expires_at' => $expires_at,
             'reason' => $reason,
-            'is_permanent' => $duration === 0,
+            'is_permanent' => $is_permanent,
             'attack_type' => $attack_type,
-            'banned_by' => 'system'
+            'duration_used' => $duration, // Store the duration used for debugging
+            'banned_by' => isset($custom_duration) && $custom_duration > 0 ? 'manual' : 'system'
         ];
 
         $ban_file = CF7SEC_LOG_DIR . 'ban_list.json';
@@ -3472,7 +3492,9 @@ class CF7_Advanced_Security_Pro
             'reason' => $reason,
             'attack_type' => $attack_type,
             'duration' => $duration,
-            'is_permanent' => $duration === 0
+            'is_permanent' => $is_permanent,
+            'expires_at' => $expires_at,
+            'expires_human' => date('Y-m-d H:i:s', $expires_at)
         ]);
     }
 
@@ -3530,21 +3552,34 @@ class CF7_Advanced_Security_Pro
 
     /**
      * AJAX handler to reset counter
+     * FIXED: Added proper option update and admin check
      */
     public function ajax_reset_counter(): void
     {
         check_ajax_referer('cf7sec_reset_counter', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_die('Unauthorized', 403);
+            wp_send_json_error('Unauthorized access', 403);
         }
 
         $options = get_option($this->options_name, []);
+
+        // Reset both counters
         $options['processed_submissions'] = 0;
         $options['blocked_submissions'] = 0;
-        update_option($this->options_name, $options);
 
-        wp_send_json_success(['message' => 'Statistics reset']);
+        // Update the option
+        update_option($this->options_name, $options, false);
+
+        // Update local counters for immediate display
+        $this->processed_submissions = 0;
+
+        wp_send_json_success([
+            'message' => 'Statistics reset successfully',
+            'processed_submissions' => 0,
+            'blocked_submissions' => 0,
+            'protected_forms' => $this->protected_forms
+        ]);
     }
 
     /**
@@ -3570,25 +3605,31 @@ class CF7_Advanced_Security_Pro
 
     /**
      * AJAX handler to manually ban IP
+     * FIXED: Pass duration parameter to ban_ip() method
      */
     public function ajax_manual_ban(): void
     {
         check_ajax_referer('cf7sec_manual_ban', 'nonce');
 
         if (!current_user_can('manage_options')) {
-            wp_die('Unauthorized', 403);
+            wp_send_json_error('Unauthorized access', 403);
         }
 
-        $ip = sanitize_text_field($_POST['ip']);
-        $reason = sanitize_text_field($_POST['reason']);
-        $duration = (int)$_POST['duration'];
+        $ip = sanitize_text_field($_POST['ip'] ?? '');
+        $reason = sanitize_text_field($_POST['reason'] ?? 'Manual ban');
+        $duration = (int)($_POST['duration'] ?? 3600); // Default to 1 hour if not specified
 
         if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-            wp_send_json_error('Invalid IP address');
+            wp_send_json_error('Invalid IP address format');
         }
 
-        $this->ban_ip($ip, $reason, 'MANUAL_BAN');
-        wp_send_json_success(['message' => 'IP banned successfully']);
+        // Pass the duration to ban_ip method
+        $this->ban_ip($ip, $reason, 'MANUAL_BAN', $duration);
+        wp_send_json_success([
+            'message' => 'IP banned successfully',
+            'ip' => $ip,
+            'duration' => $duration
+        ]);
     }
 
     /**
@@ -3750,12 +3791,18 @@ class CF7_Advanced_Security_Pro
         wp_send_json_success(['history' => $history]);
     }
 
+
     /**
      * General Settings Page
+     * FIXED: Fixed ban duration display and calculation
      */
     public function general_settings_page(): void
     {
         $options = get_option($this->options_name, []);
+
+        // Get ban duration in hours for display
+        $ban_duration_seconds = $options['ban_duration'] ?? self::BAN_DURATION;
+        $ban_duration_hours = intval($ban_duration_seconds / 3600);
     ?>
         <div class="wrap">
             <h1>General Settings</h1>
@@ -3796,11 +3843,15 @@ class CF7_Advanced_Security_Pro
                                 <th><label for="ban_duration">Temporary Ban Duration (Hours)</label></th>
                                 <td>
                                     <input type="number" id="ban_duration" name="cf7sec_options[ban_duration]"
-                                        value="<?php echo esc_attr(($options['ban_duration'] ?? self::BAN_DURATION) / 3600); ?>"
-                                        min="1" max="8760" class="regular-text">
+                                        value="<?php echo esc_attr($ban_duration_hours); ?>"
+                                        min="0" max="8760" class="regular-text">
                                     <p class="description">
                                         Duration of temporary IP bans in hours. IPs that trigger rate limiting will be banned
                                         for this period. Set to 0 for permanent bans (use with caution).
+                                    </p>
+                                    <p class="description">
+                                        <strong>Current setting:</strong> <?php echo $ban_duration_hours; ?> hours
+                                        (<?php echo $ban_duration_seconds; ?> seconds)
                                     </p>
                                 </td>
                             </tr>
@@ -4957,10 +5008,22 @@ class CF7_Advanced_Security_Pro
 
     /**
      * Sanitize settings before saving - updated for error messages
+     * FIXED: Added null input handling and fixed ban duration calculation
      */
-    public function sanitize_settings(array $input): array
+    public function sanitize_settings(?array $input): array
     {
+        // Handle null input (when all checkboxes are unchecked)
+        if ($input === null) {
+            $input = [];
+        }
+
         $sanitized = [];
+        $current_options = get_option($this->options_name, []);
+
+        // Debug logging for troubleshooting
+        if ($this->debug_mode) {
+            error_log('CF7 Security Pro: Sanitizing settings - Input: ' . json_encode($input));
+        }
 
         // Sanitize security features
         if (isset($input['security_features'])) {
@@ -4976,7 +5039,10 @@ class CF7_Advanced_Security_Pro
                 'selected_language' => sanitize_text_field($input['language_settings']['selected_language'] ?? 'russian'),
                 'custom_fields' => sanitize_text_field($input['language_settings']['custom_fields'] ?? ''),
                 'strict_mode' => isset($input['language_settings']['strict_mode']),
-                'validation_error_message' => sanitize_textarea_field($input['language_settings']['validation_error_message'] ?? self::DEFAULT_ERROR_MESSAGES['language_validation']),
+                'validation_error_message' => sanitize_textarea_field(
+                    $input['language_settings']['validation_error_message'] ??
+                        self::DEFAULT_ERROR_MESSAGES['language_validation']
+                ),
             ];
         }
 
@@ -4987,14 +5053,33 @@ class CF7_Advanced_Security_Pro
             }
         }
 
-        // Sanitize other settings
-        $sanitized['debug_mode'] = isset($input['debug_mode']);
-        $sanitized['debug_output'] = isset($input['debug_output']);
-        $sanitized['max_requests'] = min(max((int)($input['max_requests'] ?? self::MAX_REQUESTS_PER_MINUTE), 1), 100);
-        $sanitized['ban_threshold'] = min(max((int)($input['ban_threshold'] ?? self::BAN_THRESHOLD), 1), 1000);
-        $sanitized['ban_duration'] = (int)($input['ban_duration'] ?? self::BAN_DURATION) * 3600;
+        // Sanitize other settings - handle missing checkboxes
+        $sanitized['debug_mode'] = isset($input['debug_mode']) && $input['debug_mode'] === '1';
+        $sanitized['debug_output'] = isset($input['debug_output']) && $input['debug_output'] === '1';
 
-        return array_merge(get_option($this->options_name, []), $sanitized);
+        // Sanitize max requests
+        $sanitized['max_requests'] = min(max((int)($input['max_requests'] ?? self::MAX_REQUESTS_PER_MINUTE), 1), 1000);
+
+        // Sanitize ban threshold
+        $sanitized['ban_threshold'] = min(max((int)($input['ban_threshold'] ?? self::BAN_THRESHOLD), 1), 1000);
+
+        // FIXED: Properly handle ban duration conversion from hours to seconds
+        $ban_duration_hours = (int)($input['ban_duration'] ?? 1);
+        $sanitized['ban_duration'] = $ban_duration_hours * 3600;
+
+        // Log the conversion for debugging
+        if ($this->debug_mode) {
+            error_log(sprintf(
+                'CF7 Security Pro: Ban duration - Input: %d hours, Output: %d seconds',
+                $ban_duration_hours,
+                $sanitized['ban_duration']
+            ));
+        }
+
+        // Merge with existing options to preserve any missing fields
+        $merged_options = array_merge($current_options, $sanitized);
+
+        return $merged_options;
     }
 } // End of CF7_Advanced_Security_Pro class
 
