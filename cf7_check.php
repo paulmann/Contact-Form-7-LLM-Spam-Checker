@@ -240,7 +240,7 @@ class CF7_Advanced_Security_Pro
 
     /**
      * Initialize plugin with dependency checks
-     * IMPROVED: Added Contact Form 7 availability check
+     * FIXED: Added proper initialization of processed_submissions counter
      */
     public function init(): void
     {
@@ -259,12 +259,12 @@ class CF7_Advanced_Security_Pro
         $this->load_settings();
         $this->protected_forms = $this->get_protected_forms_count();
 
-        $options = get_option($this->options_name, []);
-        $this->processed_submissions = (int)($options['processed_submissions'] ?? 0);
+        // FIXED: Get processed_submissions directly from settings array after load_settings()
+        $this->processed_submissions = (int)($this->settings['processed_submissions'] ?? 0);
 
         // Load custom error messages
-        if (!empty($options['error_messages'])) {
-            $this->error_messages = array_merge($this->error_messages, $options['error_messages']);
+        if (!empty($this->settings['error_messages'])) {
+            $this->error_messages = array_merge($this->error_messages, $this->settings['error_messages']);
         }
     }
 
@@ -325,6 +325,7 @@ class CF7_Advanced_Security_Pro
 
     /**
      * Load settings from database
+     * FIXED: Ensure all counters are properly loaded
      */
     private function load_settings(): void
     {
@@ -357,7 +358,7 @@ class CF7_Advanced_Security_Pro
             'debug_mode' => false,
             'debug_output' => false, // Whether to show debug info to users
 
-            // Statistics
+            // Statistics - FIXED: Ensure all counters have default values
             'processed_submissions' => 0,
             'blocked_submissions' => 0,
 
@@ -370,6 +371,9 @@ class CF7_Advanced_Security_Pro
         $options = get_option($this->options_name, []);
         $this->settings = array_merge($defaults, $options);
         $this->debug_mode = (bool)($this->settings['debug_mode'] ?? false);
+
+        // FIXED: Ensure processed_submissions is always set
+        $this->processed_submissions = (int)($this->settings['processed_submissions'] ?? 0);
     }
 
     /**
@@ -479,12 +483,20 @@ class CF7_Advanced_Security_Pro
 
     /**
      * Dashboard Page - Main overview
+     * FIXED: Use local properties for real-time statistics display
      */
     public function dashboard_page(): void
     {
+        // Get options from database
         $options = get_option($this->options_name, []);
         $features = $options['security_features'] ?? [];
         $lang_settings = $options['language_settings'] ?? [];
+
+        // FIXED: Use local properties for real-time statistics
+        $blocked_submissions = $options['blocked_submissions'] ?? 0;
+        $processed_submissions = $this->processed_submissions;
+        $success_rate = $processed_submissions > 0 ?
+            round(($processed_submissions - $blocked_submissions) / $processed_submissions * 100, 1) : 100;
 
         // Get last 15 form check history
         $check_history = $this->get_form_check_history(15);
@@ -507,7 +519,7 @@ class CF7_Advanced_Security_Pro
                     <div class="stat-icon">📊</div>
                     <div class="stat-content">
                         <h3>Processed Submissions</h3>
-                        <p class="stat-number"><?php echo $this->processed_submissions; ?></p>
+                        <p class="stat-number"><?php echo $processed_submissions; ?></p>
                         <p class="stat-desc">Total spam and legitimate checks</p>
                     </div>
                 </div>
@@ -516,7 +528,7 @@ class CF7_Advanced_Security_Pro
                     <div class="stat-icon">🚫</div>
                     <div class="stat-content">
                         <h3>Blocked Spam</h3>
-                        <p class="stat-number"><?php echo $options['blocked_submissions'] ?? 0; ?></p>
+                        <p class="stat-number"><?php echo $blocked_submissions; ?></p>
                         <p class="stat-desc">Successfully prevented spam submissions</p>
                     </div>
                 </div>
@@ -525,14 +537,7 @@ class CF7_Advanced_Security_Pro
                     <div class="stat-icon">📈</div>
                     <div class="stat-content">
                         <h3>Success Rate</h3>
-                        <p class="stat-number">
-                            <?php
-                            $blocked = $options['blocked_submissions'] ?? 0;
-                            $processed = $this->processed_submissions;
-                            $rate = $processed > 0 ? round(($processed - $blocked) / $processed * 100, 1) : 100;
-                            echo $rate;
-                            ?>%
-                        </p>
+                        <p class="stat-number"><?php echo $success_rate; ?>%</p>
                         <p class="stat-desc">Clean submissions percentage</p>
                     </div>
                 </div>
@@ -1090,7 +1095,6 @@ class CF7_Advanced_Security_Pro
                 line-height: 1.5;
             }
         </style>
-
         <script>
             jQuery(document).ready(function($) {
                 // Refresh history
@@ -1119,7 +1123,14 @@ class CF7_Advanced_Security_Pro
                             },
                             success: function(response) {
                                 if (response.success) {
-                                    location.reload();
+                                    alert(response.data.message || 'History cleared successfully');
+                                    setTimeout(function() {
+                                        location.reload();
+                                    }, 1000);
+                                } else {
+                                    alert('Failed to clear history: ' + (response.data || 'Unknown error'));
+                                    $('#clear-history').prop('disabled', false)
+                                        .html('<span class="dashicons dashicons-trash"></span> Clear History');
                                 }
                             },
                             error: function() {
@@ -3552,7 +3563,7 @@ class CF7_Advanced_Security_Pro
 
     /**
      * AJAX handler to reset counter
-     * FIXED: Added proper option update and admin check
+     * FIXED: Properly resets all statistics and updates local properties
      */
     public function ajax_reset_counter(): void
     {
@@ -3564,22 +3575,30 @@ class CF7_Advanced_Security_Pro
 
         $options = get_option($this->options_name, []);
 
-        // Reset both counters
+        // Reset all statistics counters
         $options['processed_submissions'] = 0;
         $options['blocked_submissions'] = 0;
 
         // Update the option
-        update_option($this->options_name, $options, false);
+        $result = update_option($this->options_name, $options, false);
 
-        // Update local counters for immediate display
-        $this->processed_submissions = 0;
+        if ($result) {
+            // Update local properties immediately
+            $this->processed_submissions = 0;
 
-        wp_send_json_success([
-            'message' => 'Statistics reset successfully',
-            'processed_submissions' => 0,
-            'blocked_submissions' => 0,
-            'protected_forms' => $this->protected_forms
-        ]);
+            // Also reset counters in settings array for immediate use
+            $this->settings['processed_submissions'] = 0;
+            $this->settings['blocked_submissions'] = 0;
+
+            wp_send_json_success([
+                'message' => 'Statistics reset successfully',
+                'processed_submissions' => 0,
+                'blocked_submissions' => 0,
+                'protected_forms' => $this->protected_forms
+            ]);
+        } else {
+            wp_send_json_error('Failed to reset statistics. Please try again.');
+        }
     }
 
     /**
@@ -4280,16 +4299,23 @@ class CF7_Advanced_Security_Pro
 
     /**
      * Statistics Page
+     * FIXED: Use real-time data from local properties
      */
     public function statistics_page(): void
     {
         $options = get_option($this->options_name, []);
+
+        // FIXED: Use local properties for real-time statistics
+        $processed_submissions = $this->processed_submissions;
+        $blocked_submissions = $options['blocked_submissions'] ?? 0;
+        $success_rate = $processed_submissions > 0 ?
+            round(($processed_submissions - $blocked_submissions) / $processed_submissions * 100, 2) : 0;
+
         $stats = [
             'total_forms' => $this->protected_forms,
-            'processed' => $this->processed_submissions,
-            'blocked' => $options['blocked_submissions'] ?? 0,
-            'success_rate' => $this->processed_submissions > 0 ?
-                round(($this->processed_submissions - ($options['blocked_submissions'] ?? 0)) / $this->processed_submissions * 100, 2) : 0
+            'processed' => $processed_submissions,
+            'blocked' => $blocked_submissions,
+            'success_rate' => $success_rate
         ];
     ?>
         <div class="wrap">
@@ -4347,9 +4373,8 @@ class CF7_Advanced_Security_Pro
                         <button type="button" class="button button-secondary" id="reset-stats">
                             Reset All Statistics
                         </button>
-                        <span id="reset-message" style="display:none; margin-left:10px; color:green;">
-                            Statistics reset successfully!
-                        </span>
+                        <span id="reset-message" style="display:none; margin-left:10px; color:green;"></span>
+                        <span id="reset-error" style="display:none; margin-left:10px; color:red;"></span>
                     </p>
                     <p class="description">
                         This will reset all counters (processed submissions, blocked spam, etc.) but will not affect IP bans or settings.
@@ -4403,7 +4428,15 @@ class CF7_Advanced_Security_Pro
         <script>
             jQuery(document).ready(function($) {
                 $('#reset-stats').on('click', function() {
-                    if (confirm('Are you sure you want to reset all statistics?')) {
+                    if (confirm('Are you sure you want to reset all statistics? This action cannot be undone.')) {
+                        var $button = $(this);
+                        var $message = $('#reset-message');
+                        var $error = $('#reset-error');
+
+                        $button.prop('disabled', true).text('Resetting...');
+                        $message.hide();
+                        $error.hide();
+
                         $.ajax({
                             url: ajaxurl,
                             method: 'POST',
@@ -4411,11 +4444,27 @@ class CF7_Advanced_Security_Pro
                                 action: 'cf7sec_reset_counter',
                                 nonce: '<?php echo wp_create_nonce("cf7sec_reset_counter"); ?>'
                             },
-                            success: function() {
-                                $('#reset-message').show().fadeOut(3000);
-                                setTimeout(function() {
-                                    location.reload();
-                                }, 1000);
+                            success: function(response) {
+                                if (response.success) {
+                                    $message.text(response.data.message || 'Statistics reset successfully!').show();
+
+                                    // Update statistics display immediately
+                                    $('.stat-card:nth-child(2) .stat-number').text('0');
+                                    $('.stat-card:nth-child(3) .stat-number').text('0');
+                                    $('.stat-card:nth-child(4) .stat-number').text('100%');
+
+                                    // Reload page after 1 second to ensure consistency
+                                    setTimeout(function() {
+                                        location.reload();
+                                    }, 1000);
+                                } else {
+                                    $error.text('Error: ' + (response.data || 'Unknown error')).show();
+                                    $button.prop('disabled', false).text('Reset All Statistics');
+                                }
+                            },
+                            error: function() {
+                                $error.text('Network error. Please try again.').show();
+                                $button.prop('disabled', false).text('Reset All Statistics');
                             }
                         });
                     }
