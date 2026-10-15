@@ -2,7 +2,7 @@
     "name": "paulmann/cf7-spam-checker-pro",
     "description": "Multi-layered spam & security protection for Contact Form 7: local heuristics, AbuseIPDB reputation and a multi-provider LLM gateway.",
     "type": "wordpress-plugin",
-    "license": "GPL-2.0-or-later",
+    "license": "PolyForm-Noncommercial-1.0.0",
     "require": {
         "php": ">=8.3"
     },
