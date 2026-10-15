@@ -4,7 +4,7 @@
  *
  * @see https://docs.abuseipdb.com/
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -50,7 +50,7 @@ final class AbuseIpDb
     public function lookup(string $ip, bool $forceRefresh = false): array|WP_Error
     {
         if (filter_var($ip, FILTER_VALIDATE_IP) === false) {
-            return new WP_Error('cf7sec_abuse_bad_ip', __('Invalid IP address.', 'contact-form-7-spam-checker'));
+            return new WP_Error('cf7sec_abuse_bad_ip', __('Invalid IP address.', 'spam-checker-for-contact-form-7'));
         }
 
         $cacheDays = (int) $this->settings->get('abuseipdb.cache_days', 7);
@@ -68,11 +68,11 @@ final class AbuseIpDb
 
         $apiKey = (string) $this->settings->get('abuseipdb.api_key', '');
         if ($apiKey === '') {
-            return new WP_Error('cf7sec_abuse_no_key', __('AbuseIPDB API key is not set.', 'contact-form-7-spam-checker'));
+            return new WP_Error('cf7sec_abuse_no_key', __('AbuseIPDB API key is not set.', 'spam-checker-for-contact-form-7'));
         }
 
         if (!$this->hasDailyBudget()) {
-            return new WP_Error('cf7sec_abuse_budget', __('Daily AbuseIPDB query budget exhausted — cached data used when available.', 'contact-form-7-spam-checker'));
+            return new WP_Error('cf7sec_abuse_budget', __('Daily AbuseIPDB query budget exhausted — cached data used when available.', 'spam-checker-for-contact-form-7'));
         }
 
         $maxAge = max(1, (int) $this->settings->get('abuseipdb.max_age_days', 90));
@@ -149,12 +149,12 @@ final class AbuseIpDb
     {
         $apiKey = (string) $this->settings->get('abuseipdb.api_key', '');
         if ($apiKey === '') {
-            return new WP_Error('cf7sec_abuse_no_key', __('AbuseIPDB API key is not set.', 'contact-form-7-spam-checker'));
+            return new WP_Error('cf7sec_abuse_no_key', __('AbuseIPDB API key is not set.', 'spam-checker-for-contact-form-7'));
         }
 
         $comment = mb_substr(trim($comment), 0, 1000);
         if ($comment === '') {
-            return new WP_Error('cf7sec_abuse_report_comment', __('AbuseIPDB requires a comment when reporting.', 'contact-form-7-spam-checker'));
+            return new WP_Error('cf7sec_abuse_report_comment', __('AbuseIPDB requires a comment when reporting.', 'spam-checker-for-contact-form-7'));
         }
 
         $http = wp_remote_post(self::API . '/report', [
@@ -204,7 +204,7 @@ final class AbuseIpDb
             'ok'      => true,
             'message' => sprintf(
                 /* translators: 1: country code, 2: abuse score */
-                __('API key is valid. Sample lookup 8.8.8.8 → country %1$s, abuse score %2$d%%.', 'contact-form-7-spam-checker'),
+                __('API key is valid. Sample lookup 8.8.8.8 → country %1$s, abuse score %2$d%%.', 'spam-checker-for-contact-form-7'),
                 $result['country_code'] ?: '—',
                 (int) $result['abuse_score']
             ),

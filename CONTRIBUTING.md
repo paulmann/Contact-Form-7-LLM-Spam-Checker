@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping make CF7 Spam Checker Pro better!
+Thanks for helping make Spam Checker Pro for Contact Form 7 better!
 
 ## Ground rules
 
@@ -33,7 +33,7 @@ npm test
 - 4 spaces, LF line endings, UTF-8 without BOM (enforced by `.editorconfig`
   and `.gitattributes`).
 - PSR-4: one class per file under `src/`, namespace `CF7Sec\…`.
-- Text domain `contact-form-7-spam-checker` for **every** user-facing string;
+- Text domain `spam-checker-for-contact-form-7` for **every** user-facing string;
   escape on output (`esc_html`, `esc_attr`, `esc_url`), sanitise on input.
 - `$wpdb->prepare()` for every query; no direct superglobal reads in new code
   (see `LanguageValidator::postedValue()` for the sanctioned pattern).

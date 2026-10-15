@@ -2,7 +2,7 @@
 /**
  * Builds the structured submission digest sent to the LLM.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);

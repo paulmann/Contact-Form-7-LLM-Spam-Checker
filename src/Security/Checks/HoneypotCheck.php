@@ -2,7 +2,7 @@
 /**
  * Honeypot field check.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -28,7 +28,7 @@ final class HoneypotCheck implements CheckInterface
 
     public function label(): string
     {
-        return __('Honeypot', 'contact-form-7-spam-checker');
+        return __('Honeypot', 'spam-checker-for-contact-form-7');
     }
 
     /**
@@ -60,7 +60,7 @@ final class HoneypotCheck implements CheckInterface
         if (trim((string) $value) !== '') {
             return CheckResult::fail(
                 $this->id(),
-                sprintf(__('Hidden honeypot field "%s" was filled.', 'contact-form-7-spam-checker'), $field),
+                sprintf(__('Hidden honeypot field "%s" was filled.', 'spam-checker-for-contact-form-7'), $field),
                 'honeypot',
                 ['field' => $field, 'value' => mb_substr((string) $value, 0, 120)]
             );
@@ -68,6 +68,6 @@ final class HoneypotCheck implements CheckInterface
 
         return array_key_exists($field, $context->postedData)
             ? CheckResult::pass($this->id(), ['field' => $field])
-            : CheckResult::skip($this->id(), __('Honeypot field missing from submission.', 'contact-form-7-spam-checker'));
+            : CheckResult::skip($this->id(), __('Honeypot field missing from submission.', 'spam-checker-for-contact-form-7'));
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="CF7 Spam Checker Pro">
-    <description>Coding standard for CF7 Spam Checker Pro (WordPress + PHP 8.3 compatibility).</description>
+<ruleset name="Spam Checker Pro for Contact Form 7">
+    <description>Coding standard for Spam Checker Pro for Contact Form 7 (WordPress + PHP 8.3 compatibility).</description>
 
     <arg name="basepath" value="."/>
     <arg name="extensions" value="php"/>

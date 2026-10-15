@@ -2,7 +2,7 @@
 /**
  * Admin menu registration.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -40,8 +40,8 @@ final class AdminMenu
 
             if ($first) {
                 add_menu_page(
-                    $title . ' — CF7 Spam Checker Pro',
-                    __('CF7 Security', 'contact-form-7-spam-checker'),
+                    $title . ' — Spam Checker Pro for Contact Form 7',
+                    __('CF7 Security', 'spam-checker-for-contact-form-7'),
                     self::CAPABILITY,
                     $page['slug'],
                     $cb,
@@ -56,7 +56,7 @@ final class AdminMenu
 
             add_submenu_page(
                 'cf7sec',
-                $title . ' — CF7 Spam Checker Pro',
+                $title . ' — Spam Checker Pro for Contact Form 7',
                 $title,
                 self::CAPABILITY,
                 $page['slug'],
@@ -68,12 +68,12 @@ final class AdminMenu
     private function translateTitle(string $title): string
     {
         return match ($title) {
-            'Dashboard'     => __('Dashboard', 'contact-form-7-spam-checker'),
-            'Settings'      => __('Settings', 'contact-form-7-spam-checker'),
-            'Integrations'  => __('Integrations', 'contact-form-7-spam-checker'),
-            'IP Rules'      => __('IP Rules', 'contact-form-7-spam-checker'),
-            'Spam Registry' => __('Spam Registry', 'contact-form-7-spam-checker'),
-            'Tools'         => __('Tools', 'contact-form-7-spam-checker'),
+            'Dashboard'     => __('Dashboard', 'spam-checker-for-contact-form-7'),
+            'Settings'      => __('Settings', 'spam-checker-for-contact-form-7'),
+            'Integrations'  => __('Integrations', 'spam-checker-for-contact-form-7'),
+            'IP Rules'      => __('IP Rules', 'spam-checker-for-contact-form-7'),
+            'Spam Registry' => __('Spam Registry', 'spam-checker-for-contact-form-7'),
+            'Tools'         => __('Tools', 'spam-checker-for-contact-form-7'),
             default         => $title,
         };
     }

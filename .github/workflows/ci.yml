@@ -42,6 +42,9 @@ jobs:
       - name: 4.0 -> 4.1 upgrade guard (B2)
         run: php tests/upgrade-4.0-to-4.1.php
 
+      - name: Plugin-update legacy import + cron guard (P1)
+        run: php tests/upgrade-legacy.php
+
       - name: Documentation links guard (M7/L2)
         run: php tests/docs-links.php
 

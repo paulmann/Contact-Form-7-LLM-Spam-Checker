@@ -2,7 +2,7 @@
 /**
  * The spam-check pipeline hooked into `wpcf7_spam`.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -23,6 +23,7 @@ use CF7Sec\Security\Checks\XssCheck;
 use CF7Sec\Services\AbuseIpDb;
 use CF7Sec\Services\BanManager;
 use CF7Sec\Services\Llm\LlmGateway;
+use CF7Sec\Services\Llm\ProviderCatalog;
 use CF7Sec\Services\Logger;
 use CF7Sec\Services\Mailer;
 use CF7Sec\Settings;
@@ -152,7 +153,7 @@ final class SpamPipeline
         $flagged = false;
         foreach ($this->localChecks as $check) {
             if (!$check->enabled($context)) {
-                $results[] = CheckResult::skip($check->id(), __('Disabled', 'contact-form-7-spam-checker'));
+                $results[] = CheckResult::skip($check->id(), __('Disabled', 'spam-checker-for-contact-form-7'));
                 continue;
             }
             $result    = $check->run($context);
@@ -172,11 +173,11 @@ final class SpamPipeline
         $runRemoteWhenFlagged = (bool) $this->settings->get('llm.run_when_flagged', false);
         foreach ($this->remoteChecks as $check) {
             if (!$check->enabled($context)) {
-                $results[] = CheckResult::skip($check->id(), __('Disabled or not configured', 'contact-form-7-spam-checker'));
+                $results[] = CheckResult::skip($check->id(), __('Disabled or not configured', 'spam-checker-for-contact-form-7'));
                 continue;
             }
             if ($flagged && !$runRemoteWhenFlagged) {
-                $results[] = CheckResult::skip($check->id(), __('Skipped — submission already flagged', 'contact-form-7-spam-checker'));
+                $results[] = CheckResult::skip($check->id(), __('Skipped — submission already flagged', 'spam-checker-for-contact-form-7'));
                 continue;
             }
 
@@ -284,10 +285,10 @@ final class SpamPipeline
         $this->banManager->strike($context->ip, $reasons[0] ?? 'spam');
 
         if (in_array('abuseipdb', $failIds, true) && $this->settings->get('abuseipdb.auto_ban', false)) {
-            $this->banManager->ban($context->ip, __('AbuseIPDB reputation below threshold', 'contact-form-7-spam-checker'), 'abuseipdb');
+            $this->banManager->ban($context->ip, __('AbuseIPDB reputation below threshold', 'spam-checker-for-contact-form-7'), 'abuseipdb');
         }
         if (in_array('llm', $failIds, true) && $this->settings->get('llm.ban_on_spam', false)) {
-            $this->banManager->ban($context->ip, sprintf(__('LLM verdict: SPAM (%s)', 'contact-form-7-spam-checker'), (string) $this->settings->get('llm.provider', '')), 'llm');
+            $this->banManager->ban($context->ip, sprintf(__('LLM verdict: SPAM (%s)', 'spam-checker-for-contact-form-7'), (string) $this->settings->get('llm.provider', '')), 'llm');
         }
 
         // Optional: report confirmed spammers back to AbuseIPDB.
@@ -300,7 +301,7 @@ final class SpamPipeline
             $this->mailer->notify(
                 'spam_detected',
                 /* translators: %s: form ID */
-                sprintf(__('Spam blocked on form #%s', 'contact-form-7-spam-checker'), (string) $context->formId),
+                sprintf(__('Spam blocked on form #%s', 'spam-checker-for-contact-form-7'), (string) $context->formId),
                 implode("\n", [
                     'IP: ' . $context->ip,
                     'Country: ' . ($context->country() ?: '—'),
@@ -357,8 +358,8 @@ final class SpamPipeline
                 $notifyKey,
                 sprintf(
                     /* translators: %s: integration name */
-                    __('Integration error: %s', 'contact-form-7-spam-checker'),
-                    $checkId === 'llm' ? 'DeepSeek LLM' : 'AbuseIPDB'
+                    __('Integration error: %s', 'spam-checker-for-contact-form-7'),
+                    $checkId === 'llm' ? ProviderCatalog::label((string) $this->settings->get('llm.provider', 'deepseek')) : 'AbuseIPDB'
                 ),
                 $result->reason
             );
@@ -379,7 +380,7 @@ final class SpamPipeline
         $reported[$context->ip] = true;
 
         $comment = sprintf(
-            'Spam submission blocked by CF7 Spam Checker Pro on form #%d at %s. Reasons: %s',
+            'Spam submission blocked by Spam Checker Pro for Contact Form 7 on form #%d at %s. Reasons: %s',
             $context->formId,
             wp_date('Y-m-d H:i'),
             mb_substr(implode('; ', $reasons), 0, 700)

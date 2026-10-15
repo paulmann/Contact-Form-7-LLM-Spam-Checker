@@ -2,7 +2,7 @@
 /**
  * IP ban-list check.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -25,7 +25,7 @@ final class IpBanCheck implements CheckInterface
 
     public function label(): string
     {
-        return __('IP ban list', 'contact-form-7-spam-checker');
+        return __('IP ban list', 'spam-checker-for-contact-form-7');
     }
 
     public function enabled(SubmissionContext $context): bool
@@ -53,7 +53,7 @@ final class IpBanCheck implements CheckInterface
         return CheckResult::fail(
             $this->id(),
             sprintf(
-                __('IP %1$s is banned (reason: %2$s, source: %3$s).', 'contact-form-7-spam-checker'),
+                __('IP %1$s is banned (reason: %2$s, source: %3$s).', 'spam-checker-for-contact-form-7'),
                 $context->ip,
                 (string) $rule->reason,
                 (string) $rule->source

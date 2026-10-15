@@ -3,7 +3,7 @@
  * Catalog of supported LLM providers and the two universal protocols
  * (OpenAI-compatible chat completions & Anthropic Messages) they speak.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);

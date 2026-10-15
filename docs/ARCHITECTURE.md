@@ -1,4 +1,4 @@
-# Architecture — CF7 Spam Checker Pro v4
+# Architecture — Spam Checker Pro for Contact Form 7 v4
 
 > For the Russian summary see the bottom of this document / [README.ru.md](../README.ru.md).
 
@@ -210,7 +210,7 @@ magic, offsets, header entry, context entries `\x04`-joined). 385 strings,
 ## 10. Build & release
 
 ```
-tools/build-release.sh → dist/contact-form-7-spam-checker.zip
+tools/build-release.sh → dist/spam-checker-for-contact-form-7.zip
 ```
 The ZIP contains runtime files only (`*.php` root, `src/`, `assets/dist/`,
 `languages/`, `readme.txt`, `README*.md`, `CHANGELOG.md`, `LICENSE.txt`,
@@ -222,7 +222,7 @@ docs). Dev files (`tests/`, `tools/`, `assets/src/`, `package.json`,
 ## Резюме (Russian)
 
 - **Модульная архитектура**: PSR-4 пространство `CF7Sec\`, 30+ классов, строгая типизация, PHP 8.3–8.5.
-- **Конвейер проверок**: 9 локальных (баны, тайминги, ловушка, боты, rate-limit, SQLi, XSS, ссылки, слова) → AbuseIPDB (3 порога + фильтр стран) → DeepSeek LLM (SPAM/CLEAN). Внешние API вызываются только для «чистых» отправок.
+- **Конвейер проверок**: 9 локальных (баны, тайминги, ловушка, боты, rate-limit, SQLi, XSS, ссылки, слова) → AbuseIPDB (3 порога + фильтр стран) → LLM-шлюз (SPAM/CLEAN, 11 провайдеров). Внешние API вызываются только для «чистых» отправок.
 - **Хранилище**: 4 таблицы БД (реестр спама, IP-правила, гео-кэш, суточные счётчики); JSON-файлы v3 мигрируются при активации.
 - **Безопасность**: nonce + capability на всех REST-маршрутах, prepare() на всех SQL, экранирование вывода, маскирование ключей, отказ банить частные диапазоны, fail-open при сбоях.
 - **UI**: локальная сборка Tailwind (без CDN), токены в стиле shadcn/ui, светлая/тёмная/системная тема, mobile-first, REST-driven таблицы и формы.

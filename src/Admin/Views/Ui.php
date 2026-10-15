@@ -3,7 +3,7 @@
  * Small UI component helpers — the "shadcn-style" primitives rendered
  * server-side with Tailwind utility classes.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -98,9 +98,9 @@ final class Ui
         $id = 'sec-' . preg_replace('/[^a-z0-9]+/i', '-', $name);
         $input = '<div class="c-secret-wrap">'
             . '<input type="password" class="c-input c-secret" id="' . esc_attr($id) . '" name="' . esc_attr($name) . '" '
-            . 'value="' . esc_attr($masked) . '" placeholder="' . esc_attr__('Paste new key…', 'contact-form-7-spam-checker') . '" autocomplete="off" spellcheck="false">'
+            . 'value="' . esc_attr($masked) . '" placeholder="' . esc_attr__('Paste new key…', 'spam-checker-for-contact-form-7') . '" autocomplete="off" spellcheck="false">'
             . '<button type="button" class="c-btn c-btn-ghost c-btn-icon c-secret-toggle" data-target="' . esc_attr($id) . '" '
-            . 'aria-label="' . esc_attr__('Show key', 'contact-form-7-spam-checker') . '" title="' . esc_attr__('Show key', 'contact-form-7-spam-checker') . '">'
+            . 'aria-label="' . esc_attr__('Show key', 'spam-checker-for-contact-form-7') . '" title="' . esc_attr__('Show key', 'spam-checker-for-contact-form-7') . '">'
             . self::icon('eye') . '</button>'
             . '</div>';
 

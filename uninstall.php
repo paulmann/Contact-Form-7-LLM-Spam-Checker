@@ -3,7 +3,7 @@
  * Uninstall handler — removes every trace of the plugin unless the
  * administrator opted to keep data (Settings > Tools > Uninstall).
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);

@@ -2,7 +2,7 @@
 /**
  * Result value object produced by every security check.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);

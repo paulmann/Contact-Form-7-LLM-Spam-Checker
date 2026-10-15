@@ -2,7 +2,7 @@
 /**
  * AbuseIPDB reputation check (+ optional country filtering).
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -52,7 +52,7 @@ final class AbuseIpCheck implements CheckInterface
 
     public function label(): string
     {
-        return __('AbuseIPDB reputation', 'contact-form-7-spam-checker');
+        return __('AbuseIPDB reputation', 'spam-checker-for-contact-form-7');
     }
 
     public function enabled(SubmissionContext $context): bool
@@ -104,7 +104,7 @@ final class AbuseIpCheck implements CheckInterface
                 $this->id(),
                 sprintf(
                     /* translators: 1: score, 2: threshold, 3: country */
-                    __('AbuseIPDB confidence %1$d%% ≥ %2$d%% threshold (country: %3$s, reports: %4$d).', 'contact-form-7-spam-checker'),
+                    __('AbuseIPDB confidence %1$d%% ≥ %2$d%% threshold (country: %3$s, reports: %4$d).', 'spam-checker-for-contact-form-7'),
                     $score,
                     $minConfidence,
                     $country ?: '—',
@@ -123,7 +123,7 @@ final class AbuseIpCheck implements CheckInterface
                 $this->id(),
                 sprintf(
                     /* translators: 1: report count, 2: threshold */
-                    __('AbuseIPDB total reports %1$d ≥ %2$d threshold.', 'contact-form-7-spam-checker'),
+                    __('AbuseIPDB total reports %1$d ≥ %2$d threshold.', 'spam-checker-for-contact-form-7'),
                     $reports,
                     $minReports
                 ),
@@ -142,7 +142,7 @@ final class AbuseIpCheck implements CheckInterface
                 $this->id(),
                 sprintf(
                     /* translators: 1: email-spam report count, 2: threshold */
-                    __('AbuseIPDB "Email Spam" reports %1$d ≥ %2$d threshold (counted from the most recent reports).', 'contact-form-7-spam-checker'),
+                    __('AbuseIPDB "Email Spam" reports %1$d ≥ %2$d threshold (counted from the most recent reports).', 'spam-checker-for-contact-form-7'),
                     $emailSpam,
                     $minEmailSpam
                 ),
@@ -177,7 +177,7 @@ final class AbuseIpCheck implements CheckInterface
                 $this->id(),
                 sprintf(
                     /* translators: 1: country code, 2: mode */
-                    __('Country filter: submission from %1$s is not accepted (mode: %2$s).', 'contact-form-7-spam-checker'),
+                    __('Country filter: submission from %1$s is not accepted (mode: %2$s).', 'spam-checker-for-contact-form-7'),
                     $country,
                     $mode
                 ),

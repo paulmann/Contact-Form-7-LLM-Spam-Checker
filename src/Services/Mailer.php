@@ -2,7 +2,7 @@
 /**
  * Throttled e-mail notifications for administrators.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -76,10 +76,10 @@ final class Mailer
             $to,
             sprintf(
                 /* translators: %s: site name */
-                __('[%s] CF7 Spam Checker Pro — test notification', 'contact-form-7-spam-checker'),
+                __('[%s] Spam Checker Pro for Contact Form 7 — test notification', 'spam-checker-for-contact-form-7'),
                 wp_specialchars_decode((string) get_option('blogname'), ENT_QUOTES)
             ),
-            __("This is a test message from CF7 Spam Checker Pro.\nIf you can read it, e-mail notifications are configured correctly.", 'contact-form-7-spam-checker'),
+            __("This is a test message from Spam Checker Pro for Contact Form 7.\nIf you can read it, e-mail notifications are configured correctly.", 'spam-checker-for-contact-form-7'),
             ['Content-Type: text/plain; charset=UTF-8']
         );
     }

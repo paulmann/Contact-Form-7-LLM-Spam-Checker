@@ -3,7 +3,7 @@
  * Stub of wp-admin/includes/upgrade.php for standalone tests: dbDelta()
  * becomes a no-op so Activator::createTables() can run without a database.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 if (!function_exists('dbDelta')) {

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Simplified Chinese (zh_CN) translations for CF7 Spam Checker Pro."""
+"""Simplified Chinese (zh_CN) translations for Spam Checker Pro for Contact Form 7."""
 
 LANGUAGE_NAMES = {
     'Russian': '俄语',
@@ -92,8 +92,8 @@ TRANSLATIONS = {
     'Bot user-agent detection': '机器人 User-Agent 检测',
     'CF7 Security': 'CF7 安全',
     'CF7 Spam Checker': 'CF7 Spam Checker',
-    'CF7 Spam Checker Pro': 'CF7 Spam Checker Pro',
-    'CF7 Spam Checker Pro %1$s · PHP %2$s · ': 'CF7 Spam Checker Pro %1$s · PHP %2$s · ',
+    'Spam Checker Pro for Contact Form 7': 'Spam Checker Pro for Contact Form 7',
+    'Spam Checker Pro for Contact Form 7 %1$s · PHP %2$s · ': 'Spam Checker Pro for Contact Form 7 %1$s · PHP %2$s · ',
     'CF7 Spam Checker — today': 'CF7 Spam Checker——今日概览',
     'CF7 active': 'CF7 已启用',
     'CF7 missing': '缺少 CF7',
@@ -343,9 +343,9 @@ TRANSLATIONS = {
     'The daily cron prunes expired bans, old events and stale caches. You can also run it manually.': '每日计划任务会清理过期封禁、旧事件与陈旧缓存，也可手动运行。',
     'The key is stored in the WordPress database and masked in this UI.': '密钥存储在 WordPress 数据库中，并在此界面中打码显示。',
     'Theme: light / dark / system': '主题：浅色 / 深色 / 跟随系统',
-    'This file was not exported by CF7 Spam Checker Pro.': '此文件并非由 CF7 Spam Checker Pro 导出。',
+    'This file was not exported by Spam Checker Pro for Contact Form 7.': '此文件并非由 Spam Checker Pro for Contact Form 7 导出。',
     'This form:': '此表单：',
-    'This is a test message from CF7 Spam Checker Pro.\nIf you can read it, e-mail notifications are configured correctly.': '这是来自 CF7 Spam Checker Pro 的测试消息。\n如果您能看到它，说明邮件通知配置正确。',
+    'This is a test message from Spam Checker Pro for Contact Form 7.\nIf you can read it, e-mail notifications are configured correctly.': '这是来自 Spam Checker Pro for Contact Form 7 的测试消息。\n如果您能看到它，说明邮件通知配置正确。',
     'This permanently deletes data. Continue?': '此操作将永久删除数据。是否继续？',
     'Throttle (minutes)': '限流（分钟）',
     'Time': '时间',
@@ -378,7 +378,7 @@ TRANSLATIONS = {
     'XSS signature "%1$s" matched in field "%2$s".': '在字段“%2$s”中匹配到 XSS 特征“%1$s”。',
     'You have unsaved changes.': '您有未保存的更改。',
     'Your current request resolves to: ': '当前请求解析为：',
-    '[%s] CF7 Spam Checker Pro — test notification': '[%s] CF7 Spam Checker Pro——测试通知',
+    '[%s] Spam Checker Pro for Contact Form 7 — test notification': '[%s] Spam Checker Pro for Contact Form 7——测试通知',
     'abuseConfidenceScore 0–100. Community consensus suggests 25–50 for aggressive, 75+ for conservative filtering.': 'abuseConfidenceScore 取值 0–100。社区共识：激进过滤建议 25–50，保守过滤建议 75 以上。',
     'ban list, timing, honeypot, bot UA, rate limit, SQLi, XSS, links, keywords.': '封禁列表、计时、蜜罐、机器人 UA、频率限制、SQL 注入、XSS、链接、关键词。',
     'e.g. US, DE, CN, RU': '例如 US, DE, CN, RU',
@@ -415,8 +415,20 @@ TRANSLATIONS = {
     'One key, hundreds of models — enter any OpenRouter model id.': '一个密钥，数百个模型——输入任意 OpenRouter 模型 ID。',
     'Works with any operator exposing POST {base}/chat/completions and Bearer auth: Together, Fireworks, Perplexity, self-hosted vLLM/Ollama/LM Studio gateways, Azure-style proxies…': '适用于任何开放 POST {base}/chat/completions 且使用 Bearer 认证的运营商：Together、Fireworks、Perplexity、自建 vLLM/Ollama/LM Studio 网关、Azure 风格代理等。',
     'Works with any gateway exposing POST {base}/v1/messages with x-api-key auth (proxies, Bedrock/Vertex Anthropic-compatible endpoints…).': '适用于任何开放 POST {base}/v1/messages 且使用 x-api-key 认证的网关（代理、Bedrock/Vertex 的 Anthropic 兼容端点等）。',
-    'CF7 Spam Checker Pro requires Contact Form 7 %1$s or newer (detected: %2$s). Spam protection stays disabled until Contact Form 7 is updated.': 'CF7 Spam Checker Pro 需要 Contact Form 7 %1$s 或更高版本（检测到：%2$s）。在 Contact Form 7 更新之前，垃圾防护保持禁用。',
+    'Spam Checker Pro for Contact Form 7 requires Contact Form 7 %1$s or newer (detected: %2$s). Spam protection stays disabled until Contact Form 7 is updated.': 'Spam Checker Pro for Contact Form 7 需要 Contact Form 7 %1$s 或更高版本（检测到：%2$s）。在 Contact Form 7 更新之前，垃圾防护保持禁用。',
     'File names carry a per-installation suffix; on nginx additionally deny the uploads/cf7sec location in the server config — .htaccess protects Apache only.': '文件名包含按安装生成的随机后缀；在 nginx 上还需在服务器配置中拒绝 uploads/cf7sec 位置——.htaccess 仅保护 Apache。',
     'On shared hosting behind a proxy you do not control, choose "REMOTE_ADDR only" — forwarded headers can then no longer be spoofed by the client.': '在您无法控制的代理之后的共享主机上，请选择“仅 REMOTE_ADDR”——此时客户端无法伪造转发头。',
     'Test performs a lookup of 8.8.8.8 (Google DNS); a cached result is used when available.': '测试将查询 8.8.8.8（Google DNS）；如有缓存则使用缓存结果。',
 }
+
+# --- 4.2.0: new UI strings (rate-limit hint, keyword hint, admin.js labels) ---
+TRANSLATIONS.update({
+    '60-second window per IP with strike escalation. The counter is incremented atomically, so simultaneous submissions are all counted.': '每个 IP 60 秒窗口，带违规升级。计数器以原子方式递增，因此并发提交都会被计入。',
+    'Case-insensitive substring matching, one keyword per line; multi-word phrases are supported, and tokens shorter than 4 characters are ignored. Patterns are curated in the project pattern bank (docs/spam-patterns.md), which the project owner replenishes separately — the built-in default list is never changed by that process.': '不区分大小写的子串匹配，每行一个关键词；支持多词短语，少于 4 个字符的词元会被忽略。模式由项目模式库（docs/spam-patterns.md）统一维护，由项目所有者另行补充——该过程不会修改内置默认列表。',
+    'Delete all': '全部删除',
+    'IP is required': '需要填写 IP',
+    'Remove': '移除',
+    'Reset every option to factory defaults? API keys will be erased.': '将所有选项重置为出厂默认值？API 密钥将被清除。',
+    'Reset everything': '全部重置',
+    'bans': '个封禁',
+})

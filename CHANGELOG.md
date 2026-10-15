@@ -3,6 +3,105 @@
 All notable changes to **CF7 Spam Checker Pro** are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows [SemVer](https://semver.org/).
 
+> **Naming.** Up to 4.1.1 the plugin was called *CF7 Spam Checker Pro*. From 4.2.0 the
+> WordPress.org display name is **Spam Checker Pro for Contact Form 7** and the text
+> domain/slug is `spam-checker-for-contact-form-7`; neither may begin with another
+> product's term (directory guideline 17). Internal identifiers — the `cf7sec/v1` REST
+> namespace, `cf7sec_*` options and tables, the `CF7Sec\` class prefix, the CSS classes
+> and `CF7SEC_*` constants — are unchanged, so existing installations keep their data
+> and API surface.
+
+## [4.2.0] — 2026-10-15
+
+Audit fixes plus WordPress.org submission readiness. No architectural change; the REST
+contract, option names, table names and class prefixes are untouched.
+
+### Fixed
+- **S1:** the spam-registry CSV export passes every cell through the new pure
+  `EventsRepository::csvCell()`, which prefixes values starting with `=`, `+`, `-`, `@`,
+  tab, CR or LF with `'`. Submitter-controlled columns (`reasons`, `user_agent`,
+  `referrer`, `payload`) could otherwise be evaluated as formulas by Excel/LibreOffice
+  when the administrator opens the export (OWASP CSV-injection guidance). Covered by a
+  new smoke group.
+- **S2:** the per-IP rate-limit counter is no longer a `get_transient()` → PHP increment →
+  `set_transient()` read-modify-write. `wp_cache_incr()` is used when a persistent object
+  cache is present; otherwise one atomic `UPDATE … option_value = option_value + 1` on the
+  option row that backs the counter. The window is owned by the storage (the transient
+  expires by itself), so concurrent submissions no longer lose counts and the configured
+  threshold fires when it should.
+- **S3:** `BanManager::ban()` takes its escalation decision from
+  `IpRuleRepository::bumpBannedCount()`, a single atomic `banned_count = banned_count + 1`
+  statement that returns the value the storage produced (MySQL `LAST_INSERT_ID(expr)`,
+  with a read-back fallback). Two close-together bans can no longer both decide on the
+  same stale count and escalate one ban too late.
+- **S4:** `RestController::authorize()` now verifies `X-WP-Nonce` (or a `_wpnonce`
+  parameter) explicitly before `current_user_can()`. Defence in depth on sites with a
+  non-standard authentication layer; `admin.js` already sent the header, so no client
+  behaviour changed.
+- **P1:** `Activator::maybeUpgrade()` — the path a regular plugin update actually runs —
+  now also calls `migrateLegacyData()` and schedules `cf7sec_daily_cleanup` via the new
+  `Activator::scheduleCleanup()`. Previously both only happened on activation, so updating
+  from v3.x left the ban list un-imported and the retention job unscheduled.
+  Reproduced and locked by the new `tests/upgrade-legacy.php`, including idempotency.
+- **P2:** `cf7sec_events` gains `KEY verdict (verdict)` — the registry's verdict filter was
+  a full table scan. `CF7SEC_DB_VERSION` is bumped 400 → 410 so `dbDelta` reaches
+  existing installations through `maybeUpgrade()`.
+- **P3:** the default validation language had three different literals (`'russian'` in
+  `Settings::sanitize()`, `'russian'` in the settings view, `'russian'` in
+  `LanguageValidator`, against `'english'` in `Settings::DEFAULTS`). All of them now read
+  `Languages::DEFAULT_LANG`, which `Settings::DEFAULTS` also uses as its single source.
+- **P4:** the remaining hard-coded English strings in `admin.js` (`items`, `bans`,
+  `Delete all`, `IP is required`, `Remove`, the reset confirmation and its button label)
+  are served through `CFG.i18n` with a `t(key, fallback)` lookup, so they reach the
+  translation catalogue and are translated in ru_RU/de_DE/zh_CN instead of always
+  rendering in English.
+- **P5:** removed the leftover `unset($today)` (and its now-unused `$today` assignment) at
+  the end of `DashboardWidget::render()`.
+- **L1:** `readme.txt` no longer describes the AI layer as DeepSeek-only — installation,
+  FAQ and the "slow submissions" answer now say "LLM gateway (11 providers)".
+
+### Added
+- **P6:** the keyword filter is split into pure, testable functions —
+  `KeywordSpamCheck::matches(string $haystack, array $keywords): array` (case-insensitive
+  substring matching, multi-word phrases, matched tokens returned in list order) and a
+  normalising `KeywordSpamCheck::parseList()` (trim, drop empties, case-insensitive
+  de-duplication, ignore tokens shorter than `MIN_KEYWORD_LENGTH` = 4). `run()` behaviour
+  is unchanged: the first match still stops the check. New smoke group **"Keyword
+  matcher"**, driven by tokens read at runtime from the owner-maintained pattern bank
+  `docs/spam-patterns.md` plus synthetic benign text; the default keyword list in
+  `Settings::DEFAULTS` is untouched.
+- Settings hint for the keyword field now names the pattern bank and the owner's
+  replenishment process.
+- `assets-wporg/` — the WordPress.org catalogue set: `banner-772x250.png`,
+  `banner-1544x500.png`, `icon-128x128.png`, `icon-256x256.png` and
+  `screenshot-1.png` … `screenshot-9.png` (lowercase, numbered to match the readme).
+  Reproducible via `python tools/make-wporg-assets.py`.
+- `LICENSE.txt` is now the unmodified canonical GPL-2.0 text from gnu.org; the previous
+  file carried a project-specific preamble, which made GitHub report the licence as
+  "Other/NOASSERTION".
+
+### Changed
+- **W2:** display name is **Spam Checker Pro for Contact Form 7** (no leading foreign
+  trademark, no portmanteau) in the plugin header, admin titles, footer, e-mails,
+  README and readme.txt.
+- **W3:** text domain and slug are `spam-checker-for-contact-form-7`;
+  `languages/*.po|.mo|.pot` renamed to match and POT/PO/MO regenerated. The i18n tools and
+  `tools/build-release.sh` now locate the bootstrap by content instead of hardcoding the
+  plugin file name.
+- **W4:** the privacy disclosure in `readme.txt`, `README.md` and `README.ru.md` now names
+  every destination: the local database, the opt-in AbuseIPDB endpoint (submitter IP) and
+  the opt-in LLM provider actually selected — all 11 catalogue entries with their host
+  names plus custom endpoints — and states that both integrations are off until an API key
+  is entered.
+- **W5:** readme.txt short description shortened to 148 characters (directory limit is
+  150), `== Screenshots ==` section added and matched to the numbered assets, changelog
+  entries added for 4.1.1 and 4.2.0, and the readable sources linked in both Description
+  and FAQ.
+- **W7:** the release ZIP folder is the new slug and `LICENSE.txt` ships inside it.
+- **W8:** version 4.2.0 agreed across the plugin header, `CF7SEC_VERSION`, `readme.txt`
+  (Stable tag + changelog + upgrade notice), `package.json` and this changelog.
+- `package.json` and CI now also run `tests/upgrade-legacy.php`.
+
 ## [4.1.1] — 2026-10-15
 
 Patch release: defect audit fixes, no new features.

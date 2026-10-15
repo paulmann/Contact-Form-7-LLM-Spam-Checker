@@ -10,12 +10,34 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOMAIN = 'contact-form-7-spam-checker'
+DOMAIN = 'spam-checker-for-contact-form-7'
+
+
+def main_plugin_file():
+    """Locate the plugin bootstrap by content, not by file name.
+
+    The plugin directory (the wp.org slug) and the bootstrap file name are
+    independent, so neither is hardcoded here.
+    """
+    for name in sorted(os.listdir(ROOT)):
+        if not name.endswith('.php'):
+            continue
+        path = os.path.join(ROOT, name)
+        try:
+            with open(path, encoding='utf-8') as fh:
+                if "define('CF7SEC_VERSION'" in fh.read():
+                    return path
+        except OSError:
+            continue
+    return None
 
 
 def plugin_version():
     """Read CF7SEC_VERSION from the plugin bootstrap (single source)."""
-    src = open(os.path.join(ROOT, DOMAIN + '.php'), encoding='utf-8').read()
+    path = main_plugin_file()
+    if path is None:
+        return '0.0.0'
+    src = open(path, encoding='utf-8').read()
     m = re.search(r"define\('CF7SEC_VERSION', '([^']+)'\)", src)
     return m.group(1) if m else '0.0.0'
 
@@ -58,12 +80,16 @@ def escape_pot(s: str) -> str:
 def main():
     entries = {}  # (msg, context) -> {refs: [(file, line)], comment}
     for dirpath, dirnames, filenames in os.walk(os.path.join(ROOT, 'src')):
-        dirnames[:] = [d for d in dirnames if d != 'node_modules']
+        # sorted(): os.walk order is filesystem-dependent, and the reference
+        # lines it produces must not differ between Windows and Linux.
+        dirnames[:] = sorted(d for d in dirnames if d != 'node_modules')
         for fn in sorted(filenames):
             if not fn.endswith('.php'):
                 continue
             path = os.path.join(dirpath, fn)
-            rel = os.path.relpath(path, ROOT)
+            # Always POSIX separators: the POT is a published artefact and must
+            # be identical whether it is generated on Windows or on Linux.
+            rel = os.path.relpath(path, ROOT).replace(os.sep, '/')
             src = open(path, encoding='utf-8').read()
             for pattern, msg_group, ctx_group in FUNC_PATTERNS:
                 for m in pattern.finditer(src):
@@ -99,7 +125,7 @@ def main():
                 e['refs'].append(('src/Languages.php', line))
 
     header = {
-        'Project-Id-Version': 'CF7 Spam Checker Pro ' + plugin_version(),
+        'Project-Id-Version': 'Spam Checker Pro for Contact Form 7 ' + plugin_version(),
         'Report-Msgid-Bugs-To': 'https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/issues',
         'MIME-Version': '1.0',
         'Content-Type': 'text/plain; charset=UTF-8',
@@ -125,7 +151,8 @@ def main():
 
     pot_path = os.path.join(ROOT, 'languages', f'{DOMAIN}.pot')
     os.makedirs(os.path.dirname(pot_path), exist_ok=True)
-    with open(pot_path, 'w', encoding='utf-8') as f:
+    # newline='\n': the POT must be LF everywhere, not CRLF on Windows.
+    with open(pot_path, 'w', encoding='utf-8', newline='\n') as f:
         f.write(''.join(out))
 
     print(f'Extracted {len(entries)} unique strings -> {pot_path}')

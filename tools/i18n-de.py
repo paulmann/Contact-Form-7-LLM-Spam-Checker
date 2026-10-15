@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""German (de_DE) translations for CF7 Spam Checker Pro."""
+"""German (de_DE) translations for Spam Checker Pro for Contact Form 7."""
 
 LANGUAGE_NAMES = {
     'Russian': 'Russisch',
@@ -92,8 +92,8 @@ TRANSLATIONS = {
     'Bot user-agent detection': 'Bot-User-Agent-Erkennung',
     'CF7 Security': 'CF7-Sicherheit',
     'CF7 Spam Checker': 'CF7 Spam Checker',
-    'CF7 Spam Checker Pro': 'CF7 Spam Checker Pro',
-    'CF7 Spam Checker Pro %1$s · PHP %2$s · ': 'CF7 Spam Checker Pro %1$s · PHP %2$s · ',
+    'Spam Checker Pro for Contact Form 7': 'Spam Checker Pro for Contact Form 7',
+    'Spam Checker Pro for Contact Form 7 %1$s · PHP %2$s · ': 'Spam Checker Pro for Contact Form 7 %1$s · PHP %2$s · ',
     'CF7 Spam Checker — today': 'CF7 Spam Checker — heute',
     'CF7 active': 'CF7 aktiv',
     'CF7 missing': 'CF7 fehlt',
@@ -343,9 +343,9 @@ TRANSLATIONS = {
     'The daily cron prunes expired bans, old events and stale caches. You can also run it manually.': 'Der tägliche Cron löscht abgelaufene Sperren, alte Ereignisse und veraltete Caches. Du kannst ihn auch manuell ausführen.',
     'The key is stored in the WordPress database and masked in this UI.': 'Der Schlüssel wird in der WordPress-Datenbank gespeichert und in dieser Oberfläche maskiert.',
     'Theme: light / dark / system': 'Theme: Hell / Dunkel / System',
-    'This file was not exported by CF7 Spam Checker Pro.': 'Diese Datei wurde nicht von CF7 Spam Checker Pro exportiert.',
+    'This file was not exported by Spam Checker Pro for Contact Form 7.': 'Diese Datei wurde nicht von Spam Checker Pro for Contact Form 7 exportiert.',
     'This form:': 'Dieses Formular:',
-    'This is a test message from CF7 Spam Checker Pro.\nIf you can read it, e-mail notifications are configured correctly.': 'Dies ist eine Testnachricht von CF7 Spam Checker Pro.\nWenn du sie lesen kannst, sind die E-Mail-Benachrichtigungen korrekt konfiguriert.',
+    'This is a test message from Spam Checker Pro for Contact Form 7.\nIf you can read it, e-mail notifications are configured correctly.': 'Dies ist eine Testnachricht von Spam Checker Pro for Contact Form 7.\nWenn du sie lesen kannst, sind die E-Mail-Benachrichtigungen korrekt konfiguriert.',
     'This permanently deletes data. Continue?': 'Dadurch werden Daten endgültig gelöscht. Fortfahren?',
     'Throttle (minutes)': 'Drosselung (Minuten)',
     'Time': 'Zeit',
@@ -378,7 +378,7 @@ TRANSLATIONS = {
     'XSS signature "%1$s" matched in field "%2$s".': 'XSS-Signatur „%1$s“ im Feld „%2$s“ gefunden.',
     'You have unsaved changes.': 'Du hast ungespeicherte Änderungen.',
     'Your current request resolves to: ': 'Deine aktuelle Anfrage wird aufgelöst als: ',
-    '[%s] CF7 Spam Checker Pro — test notification': '[%s] CF7 Spam Checker Pro — Testbenachrichtigung',
+    '[%s] Spam Checker Pro for Contact Form 7 — test notification': '[%s] Spam Checker Pro for Contact Form 7 — Testbenachrichtigung',
     'abuseConfidenceScore 0–100. Community consensus suggests 25–50 for aggressive, 75+ for conservative filtering.': 'abuseConfidenceScore 0–100. Community-Konsens: 25–50 für aggressives, 75+ für konservatives Filtern.',
     'ban list, timing, honeypot, bot UA, rate limit, SQLi, XSS, links, keywords.': 'Sperrliste, Timing, Honeypot, Bot-UA, Ratenlimit, SQLi, XSS, Links, Schlüsselwörter.',
     'e.g. US, DE, CN, RU': 'z. B. US, DE, CN, RU',
@@ -415,8 +415,20 @@ TRANSLATIONS = {
     'One key, hundreds of models — enter any OpenRouter model id.': 'Ein Schlüssel, hunderte Modelle — gib eine beliebige OpenRouter-Modell-ID ein.',
     'Works with any operator exposing POST {base}/chat/completions and Bearer auth: Together, Fireworks, Perplexity, self-hosted vLLM/Ollama/LM Studio gateways, Azure-style proxies…': 'Funktioniert mit jedem Betreiber, der POST {base}/chat/completions mit Bearer-Authentifizierung anbietet: Together, Fireworks, Perplexity, selbst gehostete vLLM-/Ollama-/LM-Studio-Gateways, Proxys im Azure-Stil …',
     'Works with any gateway exposing POST {base}/v1/messages with x-api-key auth (proxies, Bedrock/Vertex Anthropic-compatible endpoints…).': 'Funktioniert mit jedem Gateway, das POST {base}/v1/messages mit x-api-key-Authentifizierung anbietet (Proxys, Anthropic-kompatible Endpoints von Bedrock/Vertex …).',
-    'CF7 Spam Checker Pro requires Contact Form 7 %1$s or newer (detected: %2$s). Spam protection stays disabled until Contact Form 7 is updated.': 'CF7 Spam Checker Pro benötigt Contact Form 7 %1$s oder neuer (erkannt: %2$s). Der Spamschutz bleibt deaktiviert, bis Contact Form 7 aktualisiert ist.',
+    'Spam Checker Pro for Contact Form 7 requires Contact Form 7 %1$s or newer (detected: %2$s). Spam protection stays disabled until Contact Form 7 is updated.': 'Spam Checker Pro for Contact Form 7 benötigt Contact Form 7 %1$s oder neuer (erkannt: %2$s). Der Spamschutz bleibt deaktiviert, bis Contact Form 7 aktualisiert ist.',
     'File names carry a per-installation suffix; on nginx additionally deny the uploads/cf7sec location in the server config — .htaccess protects Apache only.': 'Dateinamen tragen ein installationspezifisches Suffix; verbiete auf nginx zusätzlich die Location uploads/cf7sec in der Server-Konfiguration — .htaccess schützt nur Apache.',
     'On shared hosting behind a proxy you do not control, choose "REMOTE_ADDR only" — forwarded headers can then no longer be spoofed by the client.': 'Wähle auf Shared Hosting hinter einem Proxy, den du nicht kontrollierst, „Nur REMOTE_ADDR“ — weitergeleitete Header können dann vom Client nicht mehr gefälscht werden.',
     'Test performs a lookup of 8.8.8.8 (Google DNS); a cached result is used when available.': 'Der Test führt eine Abfrage von 8.8.8.8 (Google DNS) durch; ein zwischengespeichertes Ergebnis wird verwendet, sofern verfügbar.',
 }
+
+# --- 4.2.0: new UI strings (rate-limit hint, keyword hint, admin.js labels) ---
+TRANSLATIONS.update({
+    '60-second window per IP with strike escalation. The counter is incremented atomically, so simultaneous submissions are all counted.': '60-Sekunden-Fenster pro IP mit Strike-Eskalation. Der Zähler wird atomar erhöht, daher werden gleichzeitige Übermittlungen alle gezählt.',
+    'Case-insensitive substring matching, one keyword per line; multi-word phrases are supported, and tokens shorter than 4 characters are ignored. Patterns are curated in the project pattern bank (docs/spam-patterns.md), which the project owner replenishes separately — the built-in default list is never changed by that process.': 'Groß-/Kleinschreibung-unabhängiger Teilstring-Abgleich, ein Schlüsselwort pro Zeile; mehrwortige Phrasen werden unterstützt, Token unter 4 Zeichen ignoriert. Die Muster werden im Musterbestand des Projekts (docs/spam-patterns.md) gepflegt, den der Projektinhaber separat ergänzt — die eingebaute Standardliste wird dabei nie verändert.',
+    'Delete all': 'Alle löschen',
+    'IP is required': 'IP ist erforderlich',
+    'Remove': 'Entfernen',
+    'Reset every option to factory defaults? API keys will be erased.': 'Alle Optionen auf Werkseinstellungen zurücksetzen? API-Schlüssel werden gelöscht.',
+    'Reset everything': 'Alles zurücksetzen',
+    'bans': 'Sperren',
+})

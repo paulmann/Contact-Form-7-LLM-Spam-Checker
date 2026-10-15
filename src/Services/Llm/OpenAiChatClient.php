@@ -2,7 +2,7 @@
 /**
  * OpenAI-compatible "chat completions" protocol client.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -35,10 +35,10 @@ final class OpenAiChatClient
         array $extra = [],
     ): array|WP_Error {
         if ($apiKey === '') {
-            return new WP_Error('cf7sec_llm_no_key', __('The API key for the selected LLM provider is not set.', 'contact-form-7-spam-checker'));
+            return new WP_Error('cf7sec_llm_no_key', __('The API key for the selected LLM provider is not set.', 'spam-checker-for-contact-form-7'));
         }
         if ($baseUrl === '') {
-            return new WP_Error('cf7sec_llm_no_base', __('The API base URL for the selected LLM provider is not set.', 'contact-form-7-spam-checker'));
+            return new WP_Error('cf7sec_llm_no_base', __('The API base URL for the selected LLM provider is not set.', 'spam-checker-for-contact-form-7'));
         }
 
         $body = array_merge([
@@ -54,7 +54,7 @@ final class OpenAiChatClient
         // OpenRouter asks for attribution headers (optional but polite).
         if (str_contains($baseUrl, 'openrouter.ai')) {
             $headers['HTTP-Referer'] = home_url();
-            $headers['X-Title']      = 'CF7 Spam Checker Pro';
+            $headers['X-Title']      = 'Spam Checker Pro for Contact Form 7';
         }
 
         $start = hrtime(true);

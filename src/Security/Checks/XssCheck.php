@@ -2,7 +2,7 @@
 /**
  * XSS / script-injection signature scanner.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -25,7 +25,7 @@ final class XssCheck implements CheckInterface
 
     public function label(): string
     {
-        return __('XSS detection', 'contact-form-7-spam-checker');
+        return __('XSS detection', 'spam-checker-for-contact-form-7');
     }
 
     public function enabled(SubmissionContext $context): bool
@@ -45,7 +45,7 @@ final class XssCheck implements CheckInterface
                     return CheckResult::fail(
                         $this->id(),
                         sprintf(
-                            __('XSS signature "%1$s" matched in field "%2$s".', 'contact-form-7-spam-checker'),
+                            __('XSS signature "%1$s" matched in field "%2$s".', 'spam-checker-for-contact-form-7'),
                             $description,
                             $field
                         ),

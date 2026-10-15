@@ -6,7 +6,7 @@
  * fallbacks only activate when it is genuinely missing, so the plugin
  * never hard-crashes on a minimal PHP install.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);

@@ -13,7 +13,7 @@ import struct
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DOMAIN = 'contact-form-7-spam-checker'
+DOMAIN = 'spam-checker-for-contact-form-7'
 LANG_DIR = os.path.join(ROOT, 'languages')
 
 LANGS = {
@@ -23,9 +23,19 @@ LANGS = {
 }
 
 def plugin_version():
-    src = open(os.path.join(ROOT, DOMAIN + '.php'), encoding='utf-8').read()
-    m = re.search(r"define\('CF7SEC_VERSION', '([^']+)'\)", src)
-    return m.group(1) if m else '0.0.0'
+    """Read CF7SEC_VERSION from the plugin bootstrap, located by content (the
+    slug and the bootstrap file name are independent)."""
+    for name in sorted(os.listdir(ROOT)):
+        if not name.endswith('.php'):
+            continue
+        try:
+            src = open(os.path.join(ROOT, name), encoding='utf-8').read()
+        except OSError:
+            continue
+        m = re.search(r"define\('CF7SEC_VERSION', '([^']+)'\)", src)
+        if m:
+            return m.group(1)
+    return '0.0.0'
 
 
 TEAM = {
@@ -132,11 +142,11 @@ def main():
     for locale, (dictfile, short, plurals) in LANGS.items():
         trans, lang_names = load_dict(os.path.join(ROOT, 'tools', dictfile))
         po_lines = []
-        po_lines.append(f'''# Translation of CF7 Spam Checker Pro in {locale.replace("_", " ")}
-# This file is distributed under the same license as the CF7 Spam Checker Pro package.
+        po_lines.append(f'''# Translation of Spam Checker Pro for Contact Form 7 in {locale.replace("_", " ")}
+# This file is distributed under the same license as the Spam Checker Pro for Contact Form 7 package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CF7 Spam Checker Pro {plugin_version()}\\n"
+"Project-Id-Version: Spam Checker Pro for Contact Form 7 {plugin_version()}\\n"
 "Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/issues\\n"
 "MIME-Version: 1.0\\n"
 "Content-Type: text/plain; charset=UTF-8\\n"
@@ -170,12 +180,13 @@ msgstr ""
 
         po_path = os.path.join(LANG_DIR, f'{DOMAIN}-{locale}.po')
         mo_path = os.path.join(LANG_DIR, f'{DOMAIN}-{locale}.mo')
-        with open(po_path, 'w', encoding='utf-8') as f:
+        # newline='\n': generated .po files must be LF, not CRLF on Windows.
+        with open(po_path, 'w', encoding='utf-8', newline='\n') as f:
             f.write('\n'.join(po_lines))
 
         # The MO header entry (empty msgid) must carry the metadata block.
         header_msgstr = '\n'.join([
-            f'Project-Id-Version: CF7 Spam Checker Pro {plugin_version()}',
+            f'Project-Id-Version: Spam Checker Pro for Contact Form 7 {plugin_version()}',
             'Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/issues',
             'MIME-Version: 1.0',
             'Content-Type: text/plain; charset=UTF-8',

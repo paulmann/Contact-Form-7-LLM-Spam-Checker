@@ -2,7 +2,7 @@
 /**
  * LLM classification check (provider-agnostic gateway).
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -41,7 +41,7 @@ final class LlmCheck implements CheckInterface
 
     public function label(): string
     {
-        return __('LLM analysis (your provider)', 'contact-form-7-spam-checker');
+        return __('LLM analysis (your provider)', 'spam-checker-for-contact-form-7');
     }
 
     public function enabled(SubmissionContext $context): bool
@@ -72,13 +72,13 @@ final class LlmCheck implements CheckInterface
             return $onError === 'block'
                 ? CheckResult::fail(
                     $this->id(),
-                    sprintf(__('LLM API error (%1$s); fail-closed policy applied.', 'contact-form-7-spam-checker'), $result->get_error_message()),
+                    sprintf(__('LLM API error (%1$s); fail-closed policy applied.', 'spam-checker-for-contact-form-7'), $result->get_error_message()),
                     'llm_spam',
                     ['error' => $result->get_error_message(), 'policy' => 'block']
                 )
                 : CheckResult::error(
                     $this->id(),
-                    sprintf(__('LLM API error (%1$s); fail-open policy applied.', 'contact-form-7-spam-checker'), $result->get_error_message()),
+                    sprintf(__('LLM API error (%1$s); fail-open policy applied.', 'spam-checker-for-contact-form-7'), $result->get_error_message()),
                     ['error' => $result->get_error_message(), 'policy' => 'allow']
                 );
         }
@@ -92,7 +92,7 @@ final class LlmCheck implements CheckInterface
                 $this->id(),
                 sprintf(
                     /* translators: 1: provider label, 2: model, 3: latency ms */
-                    __('LLM %1$s (%2$s) classified the submission as SPAM in %3$d ms.', 'contact-form-7-spam-checker'),
+                    __('LLM %1$s (%2$s) classified the submission as SPAM in %3$d ms.', 'spam-checker-for-contact-form-7'),
                     $providerLabel,
                     $result['model'],
                     $result['ms']
@@ -127,13 +127,13 @@ final class LlmCheck implements CheckInterface
         return $onError === 'block'
             ? CheckResult::fail(
                 $this->id(),
-                __('LLM returned an unparsable verdict; fail-closed policy applied.', 'contact-form-7-spam-checker'),
+                __('LLM returned an unparsable verdict; fail-closed policy applied.', 'spam-checker-for-contact-form-7'),
                 'llm_spam',
                 ['raw' => mb_substr($result['raw'], 0, 300), 'policy' => 'block']
             )
             : CheckResult::error(
                 $this->id(),
-                __('LLM returned an unparsable verdict; fail-open policy applied.', 'contact-form-7-spam-checker'),
+                __('LLM returned an unparsable verdict; fail-open policy applied.', 'spam-checker-for-contact-form-7'),
                 ['raw' => mb_substr($result['raw'], 0, 300), 'policy' => 'allow']
             );
     }

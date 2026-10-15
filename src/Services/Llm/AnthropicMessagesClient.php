@@ -2,7 +2,7 @@
 /**
  * Anthropic "Messages" protocol client.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -35,10 +35,10 @@ final class AnthropicMessagesClient
         int $maxTokens = 32,
     ): array|WP_Error {
         if ($apiKey === '') {
-            return new WP_Error('cf7sec_llm_no_key', __('The API key for the selected LLM provider is not set.', 'contact-form-7-spam-checker'));
+            return new WP_Error('cf7sec_llm_no_key', __('The API key for the selected LLM provider is not set.', 'spam-checker-for-contact-form-7'));
         }
         if ($baseUrl === '') {
-            return new WP_Error('cf7sec_llm_no_base', __('The API base URL for the selected LLM provider is not set.', 'contact-form-7-spam-checker'));
+            return new WP_Error('cf7sec_llm_no_base', __('The API base URL for the selected LLM provider is not set.', 'spam-checker-for-contact-form-7'));
         }
 
         $base = untrailingslashit($baseUrl);

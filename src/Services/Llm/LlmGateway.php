@@ -2,7 +2,7 @@
 /**
  * Provider-agnostic LLM gateway for spam classification.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -193,7 +193,7 @@ TXT;
         if ($result['verdict'] === null) {
             return new WP_Error(
                 'cf7sec_llm_parse',
-                __('Model returned an unparsable verdict: ', 'contact-form-7-spam-checker') . $result['raw']
+                __('Model returned an unparsable verdict: ', 'spam-checker-for-contact-form-7') . $result['raw']
             );
         }
 
@@ -201,7 +201,7 @@ TXT;
             'ok'         => true,
             'message'    => sprintf(
                 /* translators: 1: provider label, 2: model name, 3: verdict, 4: latency in ms */
-                __('%1$s / %2$s responded "%3$s" in %4$d ms.', 'contact-form-7-spam-checker'),
+                __('%1$s / %2$s responded "%3$s" in %4$d ms.', 'spam-checker-for-contact-form-7'),
                 $this->provider()['label'],
                 $result['model'],
                 $result['verdict'],

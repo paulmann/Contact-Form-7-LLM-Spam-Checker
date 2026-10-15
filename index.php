@@ -2,5 +2,5 @@
 /**
  * Silence is golden.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */

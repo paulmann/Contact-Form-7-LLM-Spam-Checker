@@ -2,7 +2,7 @@
 /**
  * Renders the admin app shell (header, nav, footer) around page views.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -26,19 +26,19 @@ final class PageRenderer
         echo '<header class="c-topbar">';
         echo '<div class="c-topbar-brand">';
         echo '<span class="c-logo">' . Views\Ui::icon('shield') . '</span>';
-        echo '<div class="c-brand-text"><span class="c-brand-name">' . esc_html__('CF7 Spam Checker', 'contact-form-7-spam-checker') . '</span>';
-        echo '<span class="c-brand-sub">' . esc_html__('Advanced form security', 'contact-form-7-spam-checker') . '</span></div>';
+        echo '<div class="c-brand-text"><span class="c-brand-name">' . esc_html__('CF7 Spam Checker', 'spam-checker-for-contact-form-7') . '</span>';
+        echo '<span class="c-brand-sub">' . esc_html__('Advanced form security', 'spam-checker-for-contact-form-7') . '</span></div>';
         echo Views\Ui::badge('v' . CF7SEC_VERSION, 'outline');
         echo $cf7Active
-            ? Views\Ui::badge(__('CF7 active', 'contact-form-7-spam-checker'), 'success')
-            : Views\Ui::badge(__('CF7 missing', 'contact-form-7-spam-checker'), 'destructive');
+            ? Views\Ui::badge(__('CF7 active', 'spam-checker-for-contact-form-7'), 'success')
+            : Views\Ui::badge(__('CF7 missing', 'spam-checker-for-contact-form-7'), 'destructive');
         echo '</div>';
 
         echo '<div class="c-topbar-actions">';
         echo '<button type="button" id="cf7sec-save" class="c-btn c-btn-primary c-save-btn" hidden>'
-            . Views\Ui::icon('check', 'c-icon c-icon-sm') . '<span>' . esc_html__('Save changes', 'contact-form-7-spam-checker') . '</span></button>';
+            . Views\Ui::icon('check', 'c-icon c-icon-sm') . '<span>' . esc_html__('Save changes', 'spam-checker-for-contact-form-7') . '</span></button>';
         echo '<button type="button" id="cf7sec-theme-toggle" class="c-btn c-btn-ghost c-btn-icon" '
-            . 'aria-label="' . esc_attr__('Toggle theme', 'contact-form-7-spam-checker') . '" title="' . esc_attr__('Theme: light / dark / system', 'contact-form-7-spam-checker') . '">'
+            . 'aria-label="' . esc_attr__('Toggle theme', 'spam-checker-for-contact-form-7') . '" title="' . esc_attr__('Theme: light / dark / system', 'spam-checker-for-contact-form-7') . '">'
             . '<span class="c-theme-icon" data-theme-icon="light">' . Views\Ui::icon('sun') . '</span>'
             . '<span class="c-theme-icon" data-theme-icon="dark">' . Views\Ui::icon('moon') . '</span>'
             . '<span class="c-theme-icon" data-theme-icon="system">' . Views\Ui::icon('monitor') . '</span>'
@@ -47,7 +47,7 @@ final class PageRenderer
         echo '</header>';
 
         /* ---------- nav ---------- */
-        echo '<nav class="c-nav" aria-label="' . esc_attr__('Plugin sections', 'contact-form-7-spam-checker') . '">';
+        echo '<nav class="c-nav" aria-label="' . esc_attr__('Plugin sections', 'spam-checker-for-contact-form-7') . '">';
         foreach ($navItems as $item) {
             $active = $item['slug'] === $currentSlug ? ' c-nav-active' : '';
             printf(
@@ -67,7 +67,7 @@ final class PageRenderer
         if (is_readable($viewFile)) {
             include $viewFile;
         } else {
-            echo '<p>' . esc_html__('Unknown page.', 'contact-form-7-spam-checker') . '</p>';
+            echo '<p>' . esc_html__('Unknown page.', 'spam-checker-for-contact-form-7') . '</p>';
         }
 
         echo '</main>';
@@ -76,7 +76,7 @@ final class PageRenderer
         echo '<footer class="c-footer">';
         printf(
             /* translators: 1: version, 2: PHP version */
-            esc_html__('CF7 Spam Checker Pro %1$s · PHP %2$s · ', 'contact-form-7-spam-checker'),
+            esc_html__('Spam Checker Pro for Contact Form 7 %1$s · PHP %2$s · ', 'spam-checker-for-contact-form-7'),
             esc_html(CF7SEC_VERSION),
             esc_html(PHP_VERSION)
         );
@@ -97,12 +97,12 @@ final class PageRenderer
     private static function navItems(): array
     {
         return [
-            ['slug' => 'cf7sec',              'title' => __('Dashboard', 'contact-form-7-spam-checker'),     'url' => AdminMenu::url('cf7sec'),              'icon' => Views\Ui::icon('activity')],
-            ['slug' => 'cf7sec-settings',     'title' => __('Settings', 'contact-form-7-spam-checker'),      'url' => AdminMenu::url('cf7sec-settings'),     'icon' => Views\Ui::icon('sliders')],
-            ['slug' => 'cf7sec-integrations', 'title' => __('Integrations', 'contact-form-7-spam-checker'),  'url' => AdminMenu::url('cf7sec-integrations'), 'icon' => Views\Ui::icon('zap')],
-            ['slug' => 'cf7sec-ip',           'title' => __('IP Rules', 'contact-form-7-spam-checker'),      'url' => AdminMenu::url('cf7sec-ip'),           'icon' => Views\Ui::icon('ban')],
-            ['slug' => 'cf7sec-registry',     'title' => __('Spam Registry', 'contact-form-7-spam-checker'), 'url' => AdminMenu::url('cf7sec-registry'),     'icon' => Views\Ui::icon('list')],
-            ['slug' => 'cf7sec-tools',        'title' => __('Tools', 'contact-form-7-spam-checker'),         'url' => AdminMenu::url('cf7sec-tools'),        'icon' => Views\Ui::icon('cpu')],
+            ['slug' => 'cf7sec',              'title' => __('Dashboard', 'spam-checker-for-contact-form-7'),     'url' => AdminMenu::url('cf7sec'),              'icon' => Views\Ui::icon('activity')],
+            ['slug' => 'cf7sec-settings',     'title' => __('Settings', 'spam-checker-for-contact-form-7'),      'url' => AdminMenu::url('cf7sec-settings'),     'icon' => Views\Ui::icon('sliders')],
+            ['slug' => 'cf7sec-integrations', 'title' => __('Integrations', 'spam-checker-for-contact-form-7'),  'url' => AdminMenu::url('cf7sec-integrations'), 'icon' => Views\Ui::icon('zap')],
+            ['slug' => 'cf7sec-ip',           'title' => __('IP Rules', 'spam-checker-for-contact-form-7'),      'url' => AdminMenu::url('cf7sec-ip'),           'icon' => Views\Ui::icon('ban')],
+            ['slug' => 'cf7sec-registry',     'title' => __('Spam Registry', 'spam-checker-for-contact-form-7'), 'url' => AdminMenu::url('cf7sec-registry'),     'icon' => Views\Ui::icon('list')],
+            ['slug' => 'cf7sec-tools',        'title' => __('Tools', 'spam-checker-for-contact-form-7'),         'url' => AdminMenu::url('cf7sec-tools'),        'icon' => Views\Ui::icon('cpu')],
         ];
     }
 }

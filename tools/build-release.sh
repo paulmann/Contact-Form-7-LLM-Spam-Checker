@@ -4,8 +4,16 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-VERSION="${1:-$(grep -oP "define\('CF7SEC_VERSION', '\K[^']+" "$ROOT/contact-form-7-spam-checker.php")}"
-SLUG="contact-form-7-spam-checker"
+SLUG="spam-checker-for-contact-form-7"
+# The plugin bootstrap is the root PHP file that defines CF7SEC_VERSION.
+# Discovered rather than hardcoded so a slug/filename change cannot silently
+# break the release build.
+MAIN_FILE="$(basename "$(grep -l "define('CF7SEC_VERSION'" "$ROOT"/*.php | head -n1)")"
+if [ -z "$MAIN_FILE" ] || [ ! -f "$ROOT/$MAIN_FILE" ]; then
+    echo "✗ cannot locate the plugin bootstrap (no root *.php defines CF7SEC_VERSION)" >&2
+    exit 1
+fi
+VERSION="${1:-$(grep -oP "define\('CF7SEC_VERSION', '\K[^']+" "$ROOT/$MAIN_FILE")}"
 DIST="$ROOT/dist"
 STAGE="$DIST/$SLUG"
 
@@ -32,7 +40,7 @@ fi
 # 3. Stage runtime files
 rm -rf "$STAGE"
 mkdir -p "$STAGE"
-cp "$ROOT/contact-form-7-spam-checker.php" "$ROOT/uninstall.php" "$ROOT/index.php" \
+cp "$ROOT/$MAIN_FILE" "$ROOT/uninstall.php" "$ROOT/index.php" \
    "$ROOT/readme.txt" "$ROOT/README.md" "$ROOT/README.ru.md" "$ROOT/CHANGELOG.md" "$ROOT/LICENSE.txt" "$STAGE/"
 cp -r "$ROOT/src" "$STAGE/src"
 cp -r "$ROOT/languages" "$STAGE/languages"
@@ -51,10 +59,22 @@ done
 cd "$DIST"
 ZIP="$SLUG-$VERSION.zip"
 rm -f "$ZIP"
+
+# Prefer `zip`; otherwise fall back to a Python that actually runs — on Windows
+# `python3` is often the Microsoft Store stub, and `python`/`py` may be the real
+# interpreter, so each candidate is probed instead of assumed.
+PY_BIN=""
+for candidate in python3 python py; do
+    if command -v "$candidate" >/dev/null 2>&1 && "$candidate" -c 'import sys' >/dev/null 2>&1; then
+        PY_BIN="$candidate"
+        break
+    fi
+done
+
 if command -v zip >/dev/null 2>&1; then
     zip -qr "$ZIP" "$SLUG"
-else
-    python3 - "$SLUG" "$ZIP" <<'PY'
+elif [ -n "$PY_BIN" ]; then
+    "$PY_BIN" - "$SLUG" "$ZIP" <<'PY'
 import os, sys, zipfile
 slug, out = sys.argv[1], sys.argv[2]
 with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
@@ -64,6 +84,9 @@ with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
             p = os.path.join(root, f)
             z.write(p, p)
 PY
+else
+    echo "✗ no zip tool and no working python interpreter found" >&2
+    exit 1
 fi
 
 rm -rf "$STAGE"

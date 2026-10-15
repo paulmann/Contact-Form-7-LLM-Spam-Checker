@@ -1,4 +1,4 @@
-# CF7 Spam Checker Pro
+# Spam Checker Pro for Contact Form 7
 
 [![PHP](https://img.shields.io/badge/PHP-8.3%20--8.5-8892bf.svg)](https://php.net/)
 [![WordPress](https://img.shields.io/badge/WordPress-6.0%20--7.1-21759b.svg)](https://wordpress.org/)
@@ -7,7 +7,7 @@
 
 **Multi-layered spam & security protection for Contact Form 7** — silent, zero-UI for your visitors, ruthless to bots.
 
-Combines behavioural analysis (timing + honeypot), content inspection (SQLi/XSS/link/keyword signatures), network reputation (**AbuseIPDB**) and **AI classification (DeepSeek LLM)** into a single, ordered pipeline. Everything is stored in purpose-built database tables, fully translatable (**EN / RU / ZH / DE**) and managed from a modern, mobile-first admin dashboard with light/dark themes.
+Combines behavioural analysis (timing + honeypot), content inspection (SQLi/XSS/link/keyword signatures), network reputation (**AbuseIPDB**) and **AI classification (LLM gateway, 11 providers)** into a single, ordered pipeline. Everything is stored in purpose-built database tables, fully translatable (**EN / RU / ZH / DE**) and managed from a modern, mobile-first admin dashboard with light/dark themes.
 
 > **Русская документация:** [README.ru.md](README.ru.md)
 
@@ -30,8 +30,9 @@ Combines behavioural analysis (timing + honeypot), content inspection (SQLi/XSS/
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Quick start](#quick-start)
-- [DeepSeek LLM setup](#deepseek-llm-setup)
+- [LLM gateway setup](#llm-gateway-setup-deepseek-chatgpt-qwen-claude-)
 - [AbuseIPDB setup](#abuseipdb-setup)
+- [Privacy](#privacy)
 - [Admin dashboard](#admin-dashboard)
 - [Developer reference](#developer-reference)
 - [Architecture](#architecture)
@@ -45,7 +46,7 @@ Combines behavioural analysis (timing + honeypot), content inspection (SQLi/XSS/
 
 CAPTCHAs punish your visitors. Most "anti-spam" plugins stop at a honeypot. Real form spam in 2026 comes from LLM-driven bots, rotating residential proxies and Tor exit nodes — defeating it takes **layered signals**: behavioural, structural, reputational and semantic.
 
-CF7 Spam Checker Pro runs those layers in cost-aware order: free local heuristics first, paid/cloud APIs only when the submission still looks clean. Legit users are never challenged; spammers are logged to an auditable **spam registry** with the exact evidence that condemned them.
+Spam Checker Pro for Contact Form 7 runs those layers in cost-aware order: free local heuristics first, paid/cloud APIs only when the submission still looks clean. Legit users are never challenged; spammers are logged to an auditable **spam registry** with the exact evidence that condemned them.
 
 ## Features
 
@@ -58,7 +59,7 @@ CF7 Spam Checker Pro runs those layers in cost-aware order: free local heuristic
 | 2 | Timing analysis | local | Human dwell-time measured client-side (monotonic timer — immune to clock skew **and page caches**); server-timestamp fallback with skew tolerance |
 | 3 | Honeypot | local | Per-form invisible field |
 | 4 | Bot user-agent | local | 60+ automation markers, headless browsers, scanners — with false-positive suppression for real browser names |
-| 5 | Rate limiting | local | Sliding 60-second window per IP |
+| 5 | Rate limiting | local | 60-second window per IP (atomic counter) |
 | 6 | SQL-injection | local | Context-aware signatures (UNION SELECT, tautologies, stacked queries, system catalog probes…) tuned against false positives |
 | 7 | XSS | local | Script tags, event handlers, dangerous URIs — including HTML-entity and URL-decoded variants |
 | 8 | Link spam | local | Configurable max links per field |
@@ -91,7 +92,7 @@ flowchart TD
     L -- clean --> R{AbuseIPDB enabled?}
     R -- yes --> R1{country filter /<br/>confidence ≥ X% /<br/>reports ≥ N /<br/>email-spam ≥ M?}
     R1 -- hit --> B
-    R1 -- ok --> K{DeepSeek enabled?}
+    R1 -- ok --> K{LLM gateway enabled?}
     R -- no --> K
     K -- yes --> K1{LLM verdict}
     K1 -- SPAM --> B
@@ -113,7 +114,7 @@ Design rules:
 - WordPress **6.0 – 7.1+**
 - PHP **8.3 – 8.5+** (strict types, readonly properties, enums)
 - [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) **5.7+** (tested with 6.2)
-- Optional: [DeepSeek API key](https://platform.deepseek.com/api_keys), [AbuseIPDB API key](https://www.abuseipdb.com/account/api)
+- Optional: an API key for any of the [11 LLM providers](#llm-gateway-setup-deepseek-chatgpt-qwen-claude-), [AbuseIPDB API key](https://www.abuseipdb.com/account/api)
 
 The plugin degrades gracefully: without CF7 it shows a notice and waits; without API keys the local layers keep working.
 
@@ -121,11 +122,11 @@ The plugin degrades gracefully: without CF7 it shows a notice and waits; without
 
 ### From WordPress.org (once published)
 
-1. *Plugins → Add New* → search **"CF7 Spam Checker Pro"** → Install → Activate.
+1. *Plugins → Add New* → search **"Spam Checker Pro for Contact Form 7"** → Install → Activate.
 
 ### Manual / GitHub release
 
-1. Download `contact-form-7-spam-checker.zip` from [Releases](https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/releases).
+1. Download `spam-checker-for-contact-form-7.zip` from [Releases](https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/releases).
 2. *Plugins → Add New → Upload Plugin* → choose the ZIP → Activate.
 
 Activation creates four tables (`{prefix}cf7sec_events`, `…_ip_rules`, `…_geo`, `…_daily`), schedules a daily maintenance cron and — if you used v3.x — migrates your legacy settings and `ban_list.json` automatically.
@@ -133,7 +134,7 @@ Activation creates four tables (`{prefix}cf7sec_events`, `…_ip_rules`, `…_ge
 ## Quick start
 
 1. Go to **CF7 Security → Settings → Protection** and review the layers (sane defaults are already on).
-2. Open **Integrations** and add your DeepSeek and/or AbuseIPDB keys; press **Test connection** for each.
+2. Open **Integrations** and add your LLM provider and/or AbuseIPDB keys; press **Test connection** for each.
 3. Submit your contact form once — check **Spam Registry** and the **Dashboard** chart.
 4. Set the visitor-facing texts under **Settings → Messages** if you want something friendlier than the CF7 default.
 
@@ -175,13 +176,28 @@ What gets sent: a structured digest of the submission — all field values, clie
 
 Quota safety: responses are cached in a DB table for a configurable TTL (default 7 days), the plugin tracks the remaining daily budget from the API's own `x-ratelimit-remaining` header, and remote checks run only for submissions that passed local heuristics.
 
+## Privacy
+
+Nothing leaves your site until you opt in. Both integrations ship **disabled**; without an API key no data is ever transmitted, and neither integration is enabled implicitly by installing or updating the plugin.
+
+| Where | What leaves your site | When |
+|---|---|---|
+| Your own database | Blocked submissions (verdict, IP, country, reasons, per-check evidence, payload) | Always, kept for the configured retention period |
+| `wp-content/uploads/cf7sec/` | Debug log lines | Only if you switch debug logging on |
+| `abuseipdb.com` | The submitter's IP address, to read its abuse-confidence score and report counts. If community reporting is enabled, the IP of a confirmed spammer is submitted back | Only if the AbuseIPDB integration is enabled with an API key |
+| One LLM provider of your choice | The submission digest: every form field value, the submitter IP, country/ISP when available, user agent, referrer, human dwell time and the local check results | Only if the LLM gateway is enabled with an API key |
+
+The provider that receives the digest is exactly the one you select — DeepSeek, OpenAI (ChatGPT), Qwen (Alibaba DashScope, `dashscope.aliyuncs.com` / `dashscope-intl.aliyuncs.com`), Anthropic Claude (`api.anthropic.com`), Google Gemini (`generativelanguage.googleapis.com`), Groq (`api.groq.com`), Mistral AI (`api.mistral.ai`), OpenRouter (`openrouter.ai`), xAI Grok (`api.x.ai`), or a custom OpenAI-compatible / Anthropic-compatible endpoint whose base URL you supply yourself.
+
+Uninstalling removes all plugin data unless **Keep data on uninstall** is enabled. See `readme.txt` for the same disclosure in the directory listing format.
+
 ## Admin dashboard
 
 | Page | What you do there |
 |------|-------------------|
 | **Dashboard** | Today/30-day KPIs, processed-vs-blocked chart, system health, recent events |
 | **Settings** | General (scope, retention, IP detection), Protection (all 10 local layers + parameters), Messages, Notifications, Diagnostics (debug log viewer) |
-| **Integrations** | DeepSeek + AbuseIPDB configuration & self-tests, pipeline order card |
+| **Integrations** | LLM gateway + AbuseIPDB configuration & self-tests, pipeline order card |
 | **IP Rules** | Ban list & whitelist: add/search/delete/bulk-delete, strikes, expiry, CSV export, per-IP AbuseIPDB lookup |
 | **Spam Registry** | Filter by verdict/type/date/text, evidence modal per event (checks, payload, UA), CSV export, purge |
 | **Tools** | Settings export/import, manual maintenance, geo-cache clear, stats reset, IP lookup, requirements check, danger zone |
@@ -252,8 +268,8 @@ Compose it into a pipeline by subclassing, or simply block via the standard `wpc
 ## Architecture
 
 ```
-contact-form-7-spam-checker/
-├── contact-form-7-spam-checker.php   # bootstrap: constants, PSR-4 autoloader, guards
+spam-checker-for-contact-form-7/
+├── spam-checker-for-contact-form-7.php   # bootstrap: constants, PSR-4 autoloader, guards
 ├── uninstall.php                     # full data purge (unless keep_data)
 ├── src/                              # namespace CF7Sec\ (PHP 8.3+, strict types)
 │   ├── Plugin.php                    # composition root, hook wiring
@@ -265,7 +281,7 @@ contact-form-7-spam-checker/
 │   │   ├── Patterns.php              # SQLi/XSS/bot-UA signature registries
 │   │   ├── LlmPrompt.php             # submission digest builder
 │   │   └── LanguageValidator.php     # wpcf7_validate_* integration
-│   ├── Services/                     # DeepSeek, AbuseIpDb, BanManager, Mailer, Logger
+│   ├── Services/                     # Llm gateway, AbuseIpDb, BanManager, Mailer, Logger
 │   ├── Storage/                      # EventsRepository, IpRuleRepository, GeoCache, DailyStats
 │   ├── Support/                      # Ip (proxy-aware resolution), mbstring compat
 │   └── Admin/                        # AdminMenu, Assets, PageRenderer, RestController,
@@ -278,7 +294,7 @@ contact-form-7-spam-checker/
 └── tools/                            # POT extraction + i18n/MO compiler (pure Python)
 ```
 
-Storage: 4 custom tables — `cf7sec_events` (registry), `cf7sec_ip_rules` (ban/whitelist/strikes), `cf7sec_geo` (AbuseIPDB cache), `cf7sec_daily` (aggregate counters). No more JSON files in `wp-content/` (v3 legacy data is migrated on activation).
+Storage: 4 custom tables — `cf7sec_events` (registry), `cf7sec_ip_rules` (ban/whitelist/strikes), `cf7sec_geo` (AbuseIPDB cache), `cf7sec_daily` (aggregate counters). No more JSON files in `wp-content/` (v3 legacy data is migrated on activation — and on a regular plugin update).
 
 Full details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 

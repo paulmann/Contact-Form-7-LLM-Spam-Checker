@@ -2,7 +2,7 @@
 /**
  * Bot user-agent detection with false-positive suppression.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -36,7 +36,7 @@ final class BotAgentCheck implements CheckInterface
 
     public function label(): string
     {
-        return __('Bot user-agent detection', 'contact-form-7-spam-checker');
+        return __('Bot user-agent detection', 'spam-checker-for-contact-form-7');
     }
 
     public function enabled(SubmissionContext $context): bool
@@ -51,7 +51,7 @@ final class BotAgentCheck implements CheckInterface
         if ($ua === '') {
             return CheckResult::fail(
                 $this->id(),
-                __('Empty User-Agent header — real browsers always send one.', 'contact-form-7-spam-checker'),
+                __('Empty User-Agent header — real browsers always send one.', 'spam-checker-for-contact-form-7'),
                 'bot_detected',
                 ['user_agent' => '', 'signal' => 'empty_ua']
             );
@@ -92,7 +92,7 @@ final class BotAgentCheck implements CheckInterface
         return CheckResult::fail(
             $this->id(),
             sprintf(
-                __('User-Agent contains automation marker "%s".', 'contact-form-7-spam-checker'),
+                __('User-Agent contains automation marker "%s".', 'spam-checker-for-contact-form-7'),
                 $token
             ),
             'bot_detected',

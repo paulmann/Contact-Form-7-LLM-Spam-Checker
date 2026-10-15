@@ -2,7 +2,7 @@
 /**
  * Excessive-links detector.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -24,7 +24,7 @@ final class LinkSpamCheck implements CheckInterface
 
     public function label(): string
     {
-        return __('Link-spam detection', 'contact-form-7-spam-checker');
+        return __('Link-spam detection', 'spam-checker-for-contact-form-7');
     }
 
     public function enabled(SubmissionContext $context): bool
@@ -48,7 +48,7 @@ final class LinkSpamCheck implements CheckInterface
                     $this->id(),
                     sprintf(
                         /* translators: 1: link count, 2: limit, 3: field name */
-                        __('%1$d links in field "%3$s" — above the limit of %2$d.', 'contact-form-7-spam-checker'),
+                        __('%1$d links in field "%3$s" — above the limit of %2$d.', 'spam-checker-for-contact-form-7'),
                         $count,
                         $max,
                         $field

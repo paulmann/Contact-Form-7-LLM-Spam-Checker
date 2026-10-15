@@ -1,6 +1,6 @@
 <?php
 /**
- * Sliding-window rate limiter (per IP, storage-side atomic counter).
+ * Rate limiter (per IP, storage-side atomic counter).
  *
  * @package spam-checker-for-contact-form-7
  */

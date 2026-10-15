@@ -2,7 +2,7 @@
 /**
  * Time-based plausibility check ("form filled too fast / stale page").
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -37,7 +37,7 @@ final class TimeCheck implements CheckInterface
 
     public function label(): string
     {
-        return __('Timing analysis', 'contact-form-7-spam-checker');
+        return __('Timing analysis', 'spam-checker-for-contact-form-7');
     }
 
     public function enabled(SubmissionContext $context): bool
@@ -58,7 +58,7 @@ final class TimeCheck implements CheckInterface
             if ($age >= 0 && $age < $min) {
                 return CheckResult::fail(
                     $this->id(),
-                    sprintf(__('Submitted in %d s — faster than the %d s human minimum.', 'contact-form-7-spam-checker'), $age, $min),
+                    sprintf(__('Submitted in %d s — faster than the %d s human minimum.', 'spam-checker-for-contact-form-7'), $age, $min),
                     'time_check',
                     ['signal' => 'js_age', 'age' => $age, 'min' => $min]
                 );
@@ -66,7 +66,7 @@ final class TimeCheck implements CheckInterface
             if ($age > $maxAge) {
                 return CheckResult::fail(
                     $this->id(),
-                    sprintf(__('Form sat open for %d s — older than the %d s maximum.', 'contact-form-7-spam-checker'), $age, $maxAge),
+                    sprintf(__('Form sat open for %d s — older than the %d s maximum.', 'spam-checker-for-contact-form-7'), $age, $maxAge),
                     'time_check',
                     ['signal' => 'js_age', 'age' => $age, 'max' => $maxAge]
                 );
@@ -78,7 +78,7 @@ final class TimeCheck implements CheckInterface
         // Signal 2: server render timestamp fallback.
         $ts = (int) ($context->postedData[self::FIELD_TS] ?? 0);
         if ($ts <= 0) {
-            return CheckResult::skip($this->id(), __('No timing fields present (JS disabled or direct POST).', 'contact-form-7-spam-checker'));
+            return CheckResult::skip($this->id(), __('No timing fields present (JS disabled or direct POST).', 'spam-checker-for-contact-form-7'));
         }
 
         $diff = $context->serverTime - $ts;
@@ -86,7 +86,7 @@ final class TimeCheck implements CheckInterface
         if ($diff < $min && abs($diff) < $skew) {
             return CheckResult::fail(
                 $this->id(),
-                sprintf(__('Render-to-submit delta of %d s is below the %d s minimum.', 'contact-form-7-spam-checker'), $diff, $min),
+                sprintf(__('Render-to-submit delta of %d s is below the %d s minimum.', 'spam-checker-for-contact-form-7'), $diff, $min),
                 'time_check',
                 ['signal' => 'render_ts', 'delta' => $diff, 'min' => $min]
             );
@@ -94,7 +94,7 @@ final class TimeCheck implements CheckInterface
         if ($diff > $maxAge + $skew) {
             return CheckResult::fail(
                 $this->id(),
-                sprintf(__('Form timestamp is %d s old — beyond the %d s freshness window.', 'contact-form-7-spam-checker'), $diff, $maxAge),
+                sprintf(__('Form timestamp is %d s old — beyond the %d s freshness window.', 'spam-checker-for-contact-form-7'), $diff, $maxAge),
                 'time_check',
                 ['signal' => 'render_ts', 'delta' => $diff, 'max' => $maxAge]
             );

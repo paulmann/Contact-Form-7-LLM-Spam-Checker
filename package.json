@@ -1,6 +1,6 @@
 {
-    "name": "cf7-spam-checker-pro",
-    "version": "4.1.1",
+    "name": "spam-checker-for-contact-form-7",
+    "version": "4.2.0",
     "description": "Multi-layered spam & security protection for Contact Form 7 (LLM gateway + AbuseIPDB + local heuristics).",
     "private": true,
     "scripts": {
@@ -14,8 +14,9 @@
         "test:paths": "php tests/settings-paths.php",
         "test:assets": "php tests/assets-built.php",
         "test:upgrade": "php tests/upgrade-4.0-to-4.1.php",
+        "test:upgrade-legacy": "php tests/upgrade-legacy.php",
         "test:docs": "php tests/docs-links.php",
-        "test": "npm run test:smoke && npm run test:paths && npm run test:assets && npm run test:upgrade && npm run test:docs",
+        "test": "npm run test:smoke && npm run test:paths && npm run test:assets && npm run test:upgrade && npm run test:upgrade-legacy && npm run test:docs",
         "release": "bash tools/build-release.sh"
     },
     "devDependencies": {

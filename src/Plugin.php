@@ -2,7 +2,7 @@
 /**
  * Plugin orchestrator — service container + hook registration.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -252,7 +252,7 @@ JS;
             '<div class="notice notice-error"><p>%s</p></div>',
             esc_html(sprintf(
                 /* translators: 1: required CF7 version, 2: detected CF7 version */
-                __('CF7 Spam Checker Pro requires Contact Form 7 %1$s or newer (detected: %2$s). Spam protection stays disabled until Contact Form 7 is updated.', 'contact-form-7-spam-checker'),
+                __('Spam Checker Pro for Contact Form 7 requires Contact Form 7 %1$s or newer (detected: %2$s). Spam protection stays disabled until Contact Form 7 is updated.', 'spam-checker-for-contact-form-7'),
                 self::CF7_MIN_VERSION,
                 defined('WPCF7_VERSION') ? (string) WPCF7_VERSION : '?'
             ))
@@ -272,8 +272,8 @@ JS;
             '<div class="notice notice-warning"><p>%s</p></div>',
             wp_kses_post(sprintf(
                 /* translators: %s: plugin name */
-                __('<strong>%s</strong> is active, but Contact Form 7 was not detected. Spam protection will engage automatically once Contact Form 7 is installed and activated.', 'contact-form-7-spam-checker'),
-                'CF7 Spam Checker Pro'
+                __('<strong>%s</strong> is active, but Contact Form 7 was not detected. Spam protection will engage automatically once Contact Form 7 is installed and activated.', 'spam-checker-for-contact-form-7'),
+                'Spam Checker Pro for Contact Form 7'
             ))
         );
     }

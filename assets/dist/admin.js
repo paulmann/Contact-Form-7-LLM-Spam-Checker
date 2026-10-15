@@ -1,5 +1,5 @@
 /**
- * CF7 Spam Checker Pro — admin application.
+ * Spam Checker Pro for Contact Form 7 — admin application.
  *
  * Vanilla ES2017+, zero dependencies, zero external requests.
  * Talks to the plugin REST API (cf7sec/v1) with the localized nonce.
@@ -622,7 +622,7 @@
         if (!host) { return; }
         var pages = Math.max(1, Math.ceil(total / (regState.perPage || 20)));
         if (total === 0) { host.innerHTML = ''; return; }
-        host.innerHTML = '<span>' + esc(CFG.i18n.page) + ' ' + page + ' ' + esc(CFG.i18n.of) + ' ' + pages + ' · ' + total + ' ' + esc('items') + '</span>'
+        host.innerHTML = '<span>' + esc(CFG.i18n.page) + ' ' + page + ' ' + esc(CFG.i18n.of) + ' ' + pages + ' · ' + total + ' ' + esc(t('items', 'items')) + '</span>'
             + '<span class="c-pager-btns">'
             + '<button type="button" class="c-btn c-btn-outline c-btn-sm" data-pager="prev"' + (page <= 1 ? ' disabled' : '') + '>←</button>'
             + '<button type="button" class="c-btn c-btn-outline c-btn-sm" data-pager="next"' + (page >= pages ? ' disabled' : '') + '>→</button>'
@@ -698,7 +698,7 @@
             + (ipState.search ? '&search=' + encodeURIComponent(ipState.search) : '');
         api('/ip-rules?' + q).then(function (data) {
             var countHost = $('#cf7sec-rule-count');
-            if (countHost) { countHost.textContent = data.total + ' ' + (ipState.type === 'ban' ? 'bans' : 'whitelisted'); }
+            if (countHost) { countHost.textContent = data.total + ' ' + (ipState.type === 'ban' ? t('bans', 'bans') : CFG.i18n.whitelisted); }
             if (!data.items.length) {
                 host.innerHTML = '<p class="c-empty">' + esc(CFG.i18n.empty) + '</p>';
             } else {
@@ -800,7 +800,7 @@
             download('/events/export' + (q.length ? '?' + q.join('&') : ''), 'cf7sec-registry.csv');
         },
         'clear-events': function () {
-            confirmDialog(CFG.i18n.confirmClear, { danger: true, okLabel: 'Delete all' }).then(function (ok) {
+            confirmDialog(CFG.i18n.confirmClear, { danger: true, okLabel: t('deleteAll', 'Delete all') }).then(function (ok) {
                 if (!ok) { return; }
                 api('/events/clear', { method: 'POST' }).then(function () {
                     toast(CFG.i18n.deleted, 'success');
@@ -813,7 +813,7 @@
             var type = ($('#rule-type') || {}).value || 'ban';
             var duration = parseInt(($('#rule-duration') || {}).value || '1', 10);
             var reason = ($('#rule-reason') || {}).value || '';
-            if (!ip) { toast('IP is required', 'error'); return; }
+            if (!ip) { toast(t('ipRequired', 'IP is required'), 'error'); return; }
             spinner(btn, true);
             api('/ip-rules', { method: 'POST', body: { ip: ip, type: type, duration_hours: duration, reason: reason } })
                 .then(function () {
@@ -834,7 +834,7 @@
         },
         'delete-rule': function (btn) {
             var ip = btn.dataset.ip;
-            confirmDialog(CFG.i18n.confirmUnban + '\n' + ip, { danger: true, okLabel: 'Remove' }).then(function (ok) {
+            confirmDialog(CFG.i18n.confirmUnban + '\n' + ip, { danger: true, okLabel: t('remove', 'Remove') }).then(function (ok) {
                 if (!ok) { return; }
                 api('/ip-rules/' + encodeURIComponent(ip), { method: 'DELETE' })
                     .then(function () { toast(CFG.i18n.unbanned, 'success'); loadIpRules(); })
@@ -858,7 +858,7 @@
         'lookup-ip-row': function (btn) { doLookup(btn.dataset.ip, null); },
         'lookup-ip': function (btn) {
             var ip = ($('#lookup-ip') || {}).value || '';
-            if (!ip) { toast('IP is required', 'error'); return; }
+            if (!ip) { toast(t('ipRequired', 'IP is required'), 'error'); return; }
             doLookup(ip, $('#lookup-result'));
         },
         'test-llm': function (btn) {
@@ -933,7 +933,7 @@
             });
         },
         'reset-settings': function () {
-            confirmDialog('Reset every option to factory defaults? API keys will be erased.', { danger: true, okLabel: 'Reset everything' }).then(function (ok) {
+            confirmDialog(t('resetConfirm', 'Reset every option to factory defaults? API keys will be erased.'), { danger: true, okLabel: t('resetEverything', 'Reset everything') }).then(function (ok) {
                 if (!ok) { return; }
                 api('/settings/reset', { method: 'POST' })
                     .then(function () { toast(CFG.i18n.saved, 'success'); setTimeout(function () { location.reload(); }, 700); })

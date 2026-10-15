@@ -1,4 +1,4 @@
-# Банк паттернов keyword-фильтра (CF7 Spam Checker Pro)
+# Банк паттернов keyword-фильтра (Spam Checker Pro for Contact Form 7)
 
 **Назначение.** Рабочий банк лексики для keyword-фильтра плагина (Settings →
 Protection → Keyword blacklist). Файл — источник данных для настройки плагина и для
