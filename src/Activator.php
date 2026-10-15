@@ -2,7 +2,7 @@
 /**
  * Activation routines: DB schema, cron, legacy migration.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -23,10 +23,7 @@ final class Activator
         self::migrateSettingsSchema();
         self::migrateLegacyData();
         self::createLogDir();
-
-        if (!wp_next_scheduled(Cron::CLEANUP_HOOK)) {
-            wp_schedule_event(time() + HOUR_IN_SECONDS, 'daily', Cron::CLEANUP_HOOK);
-        }
+        self::scheduleCleanup();
 
         // Flush rewrite rules so REST routes are available immediately.
         flush_rewrite_rules();
@@ -35,6 +32,12 @@ final class Activator
     /**
      * Idempotent installer callable from Plugin::boot() on admin requests
      * (handles upgrades when the DB version constant changes).
+     *
+     * A regular plugin update from the Plugins screen never calls activate(),
+     * so everything an upgrade needs must be reconciled here as well: the
+     * schema (dbDelta), the legacy v3.x import and the cleanup cron
+     * (defect P1, v4.1.1 — the imported ban list and the retention job were
+     * silently skipped on update, letting the registry grow without bound).
      */
     public static function maybeUpgrade(): void
     {
@@ -47,12 +50,28 @@ final class Activator
         $dbOk     = (int) $settings->get('internal.db_version', 0) === CF7SEC_DB_VERSION;
         $schemaOk = (int) $settings->get('internal.settings_schema', 0) === Settings::SCHEMA_VERSION;
 
-        if ($dbOk && $schemaOk) {
+        if (!$dbOk || !$schemaOk) {
+            self::createTables();
+            self::stampVersions($settings);
+        }
+
+        // Both of these are no-ops once they have run, so they stay outside the
+        // version check and repair installs whose cron was never scheduled.
+        self::migrateLegacyData();
+        self::scheduleCleanup();
+    }
+
+    /**
+     * Make sure the daily retention worker is scheduled. Safe to call on
+     * every admin request.
+     */
+    public static function scheduleCleanup(): void
+    {
+        if (wp_next_scheduled(Cron::CLEANUP_HOOK)) {
             return;
         }
 
-        self::createTables();
-        self::stampVersions($settings);
+        wp_schedule_event(time() + HOUR_IN_SECONDS, 'daily', Cron::CLEANUP_HOOK);
     }
 
     /**
@@ -125,7 +144,8 @@ final class Activator
                 KEY created_at (created_at),
                 KEY ip (ip),
                 KEY event_type (event_type),
-                KEY form_id (form_id)
+                KEY form_id (form_id),
+                KEY verdict (verdict)
             ) $charset;"
         );
 

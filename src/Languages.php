@@ -2,7 +2,7 @@
 /**
  * 22-language character-set registry used by the language validation check.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -16,6 +16,14 @@ defined('ABSPATH') || exit;
  */
 final class Languages
 {
+    /**
+     * Fallback language used when a stored or submitted value is unknown.
+     * Single source of truth — `Settings::DEFAULTS` and the settings view read
+     * it from here so the fallback can never drift from the default again
+     * (defect P3, v4.1.1).
+     */
+    public const DEFAULT_LANG = 'english';
+
     /**
      * Language key => [name, regex].
      *
@@ -55,7 +63,7 @@ final class Languages
     {
         $names = [];
         foreach (self::REGEX as $key => $def) {
-            $names[$key] = translate_with_gettext_context($def['name'], 'language name', 'contact-form-7-spam-checker');
+            $names[$key] = translate_with_gettext_context($def['name'], 'language name', 'spam-checker-for-contact-form-7');
         }
 
         return $names;

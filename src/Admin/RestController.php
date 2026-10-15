@@ -2,7 +2,7 @@
 /**
  * REST API controller (namespace cf7sec/v1).
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -115,8 +115,27 @@ final class RestController
         ]);
     }
 
-    public function authorize(): bool
+    /**
+     * Capability **and** nonce gate for every route.
+     *
+     * Core treats a cookie-authenticated REST request without `X-WP-Nonce` as
+     * anonymous, so this is defence in depth: on a site with a non-standard
+     * authentication layer the capability alone could be satisfied for a
+     * cross-site request made on behalf of a logged-in administrator.
+     * `admin.js` already sends the header (and the downloads use it too), so
+     * no client behaviour changes; `_wpnonce` is accepted for hand-made links.
+     */
+    public function authorize(WP_REST_Request $request): bool
     {
+        $nonce = (string) $request->get_header('X-WP-Nonce');
+        if ($nonce === '') {
+            $nonce = (string) $request->get_param('_wpnonce');
+        }
+
+        if ($nonce === '' || wp_verify_nonce($nonce, 'wp_rest') === false) {
+            return false;
+        }
+
         return current_user_can(AdminMenu::CAPABILITY);
     }
 
@@ -157,7 +176,9 @@ final class RestController
         unset($all['internal']);
         // Secrets ARE included — the export is a full backup for the admin.
         $payload = [
-            'plugin'      => 'contact-form-7-spam-checker',
+            // Read through the constant so a slug rename cannot desynchronise
+            // the exported marker from the plugin identity.
+            'plugin'      => CF7SEC_TEXTDOMAIN,
             'version'     => CF7SEC_VERSION,
             'exported_at' => gmdate('c'),
             'site'        => home_url(),
@@ -180,19 +201,45 @@ final class RestController
             $raw = (string) $request->get_param('file_content');
             $decoded = json_decode($raw, true);
             if (json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
-                return new WP_Error('cf7sec_import', __('Invalid JSON payload.', 'contact-form-7-spam-checker'), ['status' => 400]);
+                return new WP_Error('cf7sec_import', __('Invalid JSON payload.', 'spam-checker-for-contact-form-7'), ['status' => 400]);
             }
             $payload = $decoded;
         }
 
-        if (($payload['plugin'] ?? '') !== 'contact-form-7-spam-checker' || !isset($payload['settings']) || !is_array($payload['settings'])) {
-            return new WP_Error('cf7sec_import', __('This file was not exported by CF7 Spam Checker Pro.', 'contact-form-7-spam-checker'), ['status' => 400]);
+        if (!self::looksLikeExport($payload)) {
+            return new WP_Error('cf7sec_import', __('This file was not exported by Spam Checker Pro for Contact Form 7.', 'spam-checker-for-contact-form-7'), ['status' => 400]);
         }
 
         $sanitized = $this->plugin->settings->sanitize($payload['settings']);
         $this->plugin->settings->replace($sanitized);
 
         return new WP_REST_Response(['ok' => true], 200);
+    }
+
+    /**
+     * Structural validation of an imported backup.
+     *
+     * The `plugin` marker is the plugin slug, which changed in 4.2.0; matching
+     * the current slug literally would reject every backup exported by an
+     * earlier version. The marker shape plus a recognisable settings section
+     * is enough to identify our file, and {see Settings::sanitize()} remains
+     * the real gate — it whitelists every key it accepts.
+     *
+     * @param array<string, mixed> $payload
+     */
+    private static function looksLikeExport(array $payload): bool
+    {
+        $marker = $payload['plugin'] ?? '';
+        if (!is_string($marker) || preg_match('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $marker) !== 1) {
+            return false;
+        }
+
+        $settings = $payload['settings'] ?? null;
+        if (!is_array($settings)) {
+            return false;
+        }
+
+        return array_intersect(array_keys($settings), array_keys(Settings::DEFAULTS)) !== [];
     }
 
     /* ------------------------------------------------------------------
@@ -231,8 +278,8 @@ final class RestController
         return new WP_REST_Response([
             'ok'      => $sent,
             'message' => $sent
-                ? __('Test e-mail sent.', 'contact-form-7-spam-checker')
-                : __('wp_mail() failed. Check your server mail configuration.', 'contact-form-7-spam-checker'),
+                ? __('Test e-mail sent.', 'spam-checker-for-contact-form-7')
+                : __('wp_mail() failed. Check your server mail configuration.', 'spam-checker-for-contact-form-7'),
         ], 200);
     }
 
@@ -240,7 +287,7 @@ final class RestController
     {
         $ip = Ip::valid((string) $request->get_param('ip'));
         if ($ip === '') {
-            return new WP_REST_Response(['ok' => false, 'message' => __('Invalid IP address.', 'contact-form-7-spam-checker')], 200);
+            return new WP_REST_Response(['ok' => false, 'message' => __('Invalid IP address.', 'spam-checker-for-contact-form-7')], 200);
         }
 
         $result = $this->plugin->abuseipdb->lookup($ip, (bool) $request->get_param('refresh'));
@@ -354,7 +401,7 @@ final class RestController
     {
         $row = EventsRepository::get((int) $request->get_param('id'));
         if ($row === null) {
-            return new WP_Error('cf7sec_notfound', __('Event not found.', 'contact-form-7-spam-checker'), ['status' => 404]);
+            return new WP_Error('cf7sec_notfound', __('Event not found.', 'spam-checker-for-contact-form-7'), ['status' => 404]);
         }
 
         return new WP_REST_Response($this->formatEvent($row), 200);
@@ -432,10 +479,10 @@ final class RestController
         $type = $request->get_param('type') === 'whitelist' ? IpRuleRepository::TYPE_WHITELIST : IpRuleRepository::TYPE_BAN;
 
         if ($ip === '') {
-            return new WP_Error('cf7sec_badip', __('Invalid IP address.', 'contact-form-7-spam-checker'), ['status' => 400]);
+            return new WP_Error('cf7sec_badip', __('Invalid IP address.', 'spam-checker-for-contact-form-7'), ['status' => 400]);
         }
         if (Ip::isPrivate($ip) && $type === IpRuleRepository::TYPE_BAN) {
-            return new WP_Error('cf7sec_privateip', __('Refusing to ban a private/reserved IP range — this would block your own server or LAN.', 'contact-form-7-spam-checker'), ['status' => 400]);
+            return new WP_Error('cf7sec_privateip', __('Refusing to ban a private/reserved IP range — this would block your own server or LAN.', 'spam-checker-for-contact-form-7'), ['status' => 400]);
         }
 
         $reason   = sanitize_text_field((string) $request->get_param('reason'));
@@ -447,7 +494,7 @@ final class RestController
             return new WP_REST_Response(['ok' => true, 'ip' => $ip, 'type' => $type], 200);
         }
 
-        $result = $this->plugin->bans->ban($ip, $reason !== '' ? $reason : __('Manual ban by administrator', 'contact-form-7-spam-checker'), 'manual', $duration === 0 ? 0 : $duration * 3600);
+        $result = $this->plugin->bans->ban($ip, $reason !== '' ? $reason : __('Manual ban by administrator', 'spam-checker-for-contact-form-7'), 'manual', $duration === 0 ? 0 : $duration * 3600);
 
         return new WP_REST_Response(['ok' => true, 'ip' => $ip, 'type' => $type, ...$result], 200);
     }
@@ -528,7 +575,7 @@ final class RestController
 
         return new WP_REST_Response([
             'ok'      => true,
-            'message' => __('Maintenance run completed.', 'contact-form-7-spam-checker'),
+            'message' => __('Maintenance run completed.', 'spam-checker-for-contact-form-7'),
         ], 200);
     }
 

@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name:       CF7 Spam Checker Pro
+ * Plugin Name:       Spam Checker Pro for Contact Form 7
  * Plugin URI:        https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker
- * Description:       Multi-layered spam & security protection for Contact Form 7: honeypot, timing analysis, rate limiting, bot/SQLi/XSS detection, language validation, AbuseIPDB reputation checks and DeepSeek LLM analysis — with a spam registry, IP management and a modern admin dashboard.
- * Version:           4.1.1
+ * Description:       Multi-layered spam & security protection for Contact Form 7: honeypot, timing analysis, rate limiting, bot/SQLi/XSS detection, language validation, AbuseIPDB reputation checks and LLM analysis via 11 providers — with a spam registry, IP management and a modern admin dashboard.
+ * Version:           4.2.0
  * Requires at least: 6.0
  * Requires PHP:      8.3
  * Author:            Mikhail Deynekin
  * Author URI:        https://deynekin.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       contact-form-7-spam-checker
+ * Text Domain:       spam-checker-for-contact-form-7
  * Domain Path:       /languages
  */
 
@@ -24,11 +24,11 @@ defined('ABSPATH') || exit;
 |--------------------------------------------------------------------------
 */
 
-define('CF7SEC_VERSION', '4.1.1');
-define('CF7SEC_DB_VERSION', 400);
+define('CF7SEC_VERSION', '4.2.0');
+define('CF7SEC_DB_VERSION', 410);
 define('CF7SEC_MIN_PHP', '8.3');
 define('CF7SEC_MIN_WP', '6.0');
-define('CF7SEC_TEXTDOMAIN', 'contact-form-7-spam-checker');
+define('CF7SEC_TEXTDOMAIN', 'spam-checker-for-contact-form-7');
 define('CF7SEC_FILE', __FILE__);
 define('CF7SEC_BASENAME', plugin_basename(__FILE__));
 define('CF7SEC_DIR', plugin_dir_path(__FILE__));
@@ -51,7 +51,7 @@ if (PHP_VERSION_ID < 80300) {
             '<div class="notice notice-error"><p>%s</p></div>',
             esc_html(sprintf(
                 /* translators: 1: required PHP version, 2: current PHP version */
-                __('CF7 Spam Checker Pro requires PHP %1$s or newer (current: %2$s). The plugin is inactive until the requirement is met.', 'contact-form-7-spam-checker'),
+                __('Spam Checker Pro for Contact Form 7 requires PHP %1$s or newer (current: %2$s). The plugin is inactive until the requirement is met.', 'spam-checker-for-contact-form-7'),
                 CF7SEC_MIN_PHP,
                 PHP_VERSION
             ))

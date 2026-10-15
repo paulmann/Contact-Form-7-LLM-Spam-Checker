@@ -25,6 +25,7 @@ use CF7Sec\Security\SubmissionContext;
 use CF7Sec\Services\Llm\LlmGateway;
 use CF7Sec\Services\Llm\ProviderCatalog;
 use CF7Sec\Settings;
+use CF7Sec\Storage\EventsRepository;
 use CF7Sec\Support\Ip;
 
 $passed = 0;
@@ -58,11 +59,39 @@ function makeContext(array $posted = [], array $overrides = [], ?Settings $setti
     );
 }
 
+echo "== S1: csvCell() spreadsheet-injection guard ==\n";
+foreach (['=', '+', '-', '@', "\t", "\r", "\n"] as $lead) {
+    $cell = $lead . 'cmd';
+    ok(
+        EventsRepository::csvCell($cell) === "'" . $cell,
+        'leading ' . json_encode($lead) . ' gets the defensive prefix'
+    );
+}
+ok(EventsRepository::csvCell('=1+1') === "'=1+1", 'formula-looking cell prefixed');
+ok(EventsRepository::csvCell('@SUM(A1)') === "'@SUM(A1)", 'at-sign cell prefixed');
+ok(EventsRepository::csvCell('name=value') === 'name=value', 'formula characters not in first position stay untouched');
+ok(EventsRepository::csvCell('203.0.113.9') === '203.0.113.9', 'ordinary text untouched');
+ok(EventsRepository::csvCell('') === '', 'empty cell untouched');
+$exported = [];
+foreach (EventsRepository::exportCsv() as $row) {
+    $exported[] = $row;
+    break;
+}
+ok(isset($exported[0][0]) && count($exported[0]) === 11, 'exportCsv header still has all 11 columns');
+
 echo "== Settings ==\n";
 $s = new Settings();
 ok($s->get('checks.time_check.min_seconds') === 3, 'defaults: min_seconds = 3');
 ok($s->get('llm.provider') === 'deepseek', 'defaults: llm provider = deepseek');
 ok($s->get('nonexistent.path', 'fb') === 'fb', 'missing path returns default');
+ok(
+    $s->get('checks.language.language') === Settings::DEFAULTS['checks']['language']['language'],
+    'default language comes from Settings::DEFAULTS'
+);
+ok(
+    Settings::DEFAULTS['checks']['language']['language'] === Languages::DEFAULT_LANG,
+    'DEFAULTS and Languages::DEFAULT_LANG cannot drift (P3)'
+);
 
 $raw = [
     'checks' => ['time_check' => ['enabled' => true, 'min_seconds' => 99999]],
@@ -88,6 +117,15 @@ ok($sanitized['llm']['base_urls']['groq'] === 'https://proxy.example.com/v1', 'l
 ok((new Settings())->sanitize(['llm' => ['provider' => 'evil']])['llm']['provider'] === 'deepseek', 'unknown provider rejected');
 ok($sanitized['general']['form_ids'] === [3, 2], 'form_ids sanitised+deduped');
 ok(Settings::maskSecret('sk-secret-key-9876') === Settings::MASK . '9876', 'maskSecret keeps last 4');
+ok(
+    (new Settings())->sanitize(['checks' => ['language' => ['language' => 'klingon']]])['checks']['language']['language']
+        === Settings::DEFAULTS['checks']['language']['language'],
+    'invalid language falls back to the DEFAULTS value (P3)'
+);
+ok(
+    (new Settings())->sanitize(['checks' => ['language' => ['language' => 'german']]])['checks']['language']['language'] === 'german',
+    'valid language is kept (P3)'
+);
 
 echo "== LLM provider catalog ==\n";
 ok(count(ProviderCatalog::ids()) === 11, '11 providers in catalog');
@@ -178,22 +216,75 @@ $ls = new LinkSpamCheck();
 ok($ls->run(makeContext(['message' => 'See https://a.com and https://b.com and www.c.com']))->isFail(), '3 links fail (max 2)');
 ok($ls->run(makeContext(['message' => 'See https://a.com']))->status === CheckStatus::Pass, '1 link passes');
 
-echo "== KeywordSpamCheck ==\n";
+echo "== Keyword matcher ==\n";
+// Mechanism only: the tokens come from the owner-maintained pattern bank
+// (docs/spam-patterns.md) or are synthetic and harmless. No pattern is
+// invented here, and none is printed.
+$bankFile = dirname(__DIR__) . '/docs/spam-patterns.md';
+ok(is_readable($bankFile), 'pattern bank docs/spam-patterns.md is readable');
+$bank = [];
+if (is_readable($bankFile)) {
+    foreach (preg_split('/\R/', (string) file_get_contents($bankFile)) ?: [] as $line) {
+        // Only lines made exclusively of backticked tokens are pattern rows;
+        // inline `code` inside prose must not be mistaken for a pattern.
+        if (preg_match('/^(?:\s*`[^`]+`\s*,?)*\s*`[^`]+`\s*,?\s*$/u', $line) !== 1) {
+            continue;
+        }
+        if (preg_match_all('/`([^`]+)`/u', $line, $m)) {
+            foreach ($m[1] as $token) {
+                $bank[mb_strtolower(trim($token))] = trim($token);
+            }
+        }
+    }
+}
+ok($bank !== [], 'pattern bank contributes tokens (' . count($bank) . ')');
+$bankTokens = array_values($bank);
+$longTokens = array_values(array_filter($bankTokens, static fn(string $t): bool => mb_strlen($t) >= KeywordSpamCheck::MIN_KEYWORD_LENGTH));
+ok($longTokens !== [], 'pattern bank has tokens long enough to match');
+
+$sample = array_slice($longTokens, 0, 6);
+foreach ($sample as $token) {
+    $found = KeywordSpamCheck::matches('Placeholder text before ' . $token . ' and after.', [$token]);
+    ok($found === [$token], 'bank token is matched verbatim');
+}
+foreach (array_slice($sample, 0, 3) as $token) {
+    $found = KeywordSpamCheck::matches('Placeholder text before ' . mb_strtoupper($token) . ' and after.', [$token]);
+    ok($found === [$token], 'bank token is matched case-insensitively');
+}
+$phrase = '';
+foreach ($bankTokens as $token) {
+    if (str_contains(trim($token), ' ')) {
+        $phrase = $token;
+        break;
+    }
+}
+ok($phrase !== '', 'pattern bank contains a multi-word phrase');
+if ($phrase !== '') {
+    ok(KeywordSpamCheck::matches('Some ' . $phrase . ' here', [strtoupper($phrase)]) === [strtoupper($phrase)], 'multi-word phrase matched, case-insensitive');
+}
+ok(KeywordSpamCheck::matches('A neutral sentence about the weather and a shopping list.', $bankTokens) === [], 'benign synthetic text produces no match');
+ok(KeywordSpamCheck::matches('Anything at all', []) === [], 'empty keyword list matches nothing');
+ok(KeywordSpamCheck::matches('ab', ['ab'], 1) === ['ab'], 'short token honoured when the minimum is lowered');
+ok(KeywordSpamCheck::matches('ab', ['ab']) === [], 'short token ignored at the default minimum');
+ok(KeywordSpamCheck::matches('text', ['  text  ']) === ['text'], 'keywords are trimmed before matching');
+
 $ks = new KeywordSpamCheck();
 ok(KeywordSpamCheck::parseList("viagra\ncasino, lottery\n\n") === ['viagra', 'casino', 'lottery'], 'parseList splits lines+commas');
+ok(KeywordSpamCheck::parseList("alpha\n  alpha \nALPHA\nbeta") === ['alpha', 'beta'], 'parseList trims and drops duplicates case-insensitively');
+ok(KeywordSpamCheck::parseList("abc\nabcd\n, ,\nabcde") === ['abcd', 'abcde'], 'parseList drops tokens shorter than 4 characters');
+ok(KeywordSpamCheck::parseList("abc\nabcd", 3) === ['abc', 'abcd'], 'the minimum keyword length is configurable');
 ok($ks->run(makeContext(['message' => 'Buy cheap VIAGRA today']))->isFail(), 'case-insensitive keyword fails');
 ok($ks->run(makeContext(['message' => 'I need help with my account']))->status === CheckStatus::Pass, 'clean text passes');
 
 echo "== RateLimitCheck ==\n";
-$rl = new RateLimitCheck();
-$GLOBALS['cf7sec_test_transients'] = [];
-$ctx = makeContext(['name' => 'A'], ['now' => 1700000000]);
-$status = CheckStatus::Pass;
-for ($i = 0; $i < 20; $i++) {
-    $status = $rl->run($ctx)->status;
-}
-ok($status === CheckStatus::Pass, '20th request passes (limit 20)');
-ok($rl->run($ctx)->isFail(), '21st request fails');
+// The counter itself is atomic in the storage layer and is covered by
+// tests/wp-integration.php (needs a database); the boundary stays pure here.
+ok(!RateLimitCheck::exceeds(20, 20), '20th request passes (limit 20)');
+ok(RateLimitCheck::exceeds(21, 20), '21st request fails');
+ok(!RateLimitCheck::exceeds(1, 1), 'single-request limit allows exactly one');
+ok(RateLimitCheck::key('203.0.113.9') === RateLimitCheck::key('203.0.113.9'), 'counter key is stable per IP');
+ok(RateLimitCheck::key('203.0.113.9') !== RateLimitCheck::key('203.0.113.10'), 'counter key differs per IP');
+ok(str_starts_with(RateLimitCheck::key('203.0.113.9'), 'cf7sec_rl_'), 'counter key uses the transient prefix');
 
 echo "== B1 regression: LlmCheck enablement under schema v2 ==\n";
 $GLOBALS['cf7sec_test_options'][CF7SEC_OPTION] = Settings::deepMerge(Settings::DEFAULTS, [

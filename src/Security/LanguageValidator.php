@@ -2,7 +2,7 @@
 /**
  * Field-level language validation for CF7 `wpcf7_validate_*` filters.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -53,7 +53,7 @@ final class LanguageValidator
             return $result;
         }
 
-        $language = (string) $this->settings->get('checks.language.language', 'russian');
+        $language = (string) $this->settings->get('checks.language.language', Languages::DEFAULT_LANG);
         if (!isset(Languages::REGEX[$language])) {
             return $result;
         }

@@ -2,7 +2,7 @@
 /**
  * Ban / whitelist orchestration with strike escalation.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -46,7 +46,10 @@ final class BanManager
             return ['permanent' => false, 'expires_at' => null, 'banned_count' => (int) $existing->banned_count];
         }
 
-        $bannedCount = $existing !== null ? (int) $existing->banned_count + 1 : 1;
+        // The storage increments and returns the counter in one statement, so
+        // two close-together bans can no longer both decide on the same stale
+        // value and escalate one ban too late (defect S3, v4.1.1).
+        $bannedCount   = IpRuleRepository::bumpBannedCount($ip);
         $escalateAfter = max(1, (int) $this->settings->get('checks.rate_limit.permanent_after_strikes', 3));
 
         $permanent = ($durationSecs === 0) || ($bannedCount >= $escalateAfter);
@@ -58,11 +61,10 @@ final class BanManager
         }
 
         IpRuleRepository::put($ip, [
-            'list_type'         => IpRuleRepository::TYPE_BAN,
-            'reason'            => $reason,
-            'source'            => $source,
-            'expires_at'        => $expiresAt,
-            'bump_banned_count' => true,
+            'list_type'  => IpRuleRepository::TYPE_BAN,
+            'reason'     => $reason,
+            'source'     => $source,
+            'expires_at' => $expiresAt,
         ]);
         IpRuleRepository::resetStrikes($ip);
 
@@ -86,15 +88,15 @@ final class BanManager
             $this->mailer->notify(
                 'ip_banned',
                 /* translators: %s: IP address */
-                sprintf(__('IP banned: %s', 'contact-form-7-spam-checker'), $ip),
+                sprintf(__('IP banned: %s', 'spam-checker-for-contact-form-7'), $ip),
                 sprintf(
                     "%s\n%s: %s\n%s: %s\n%s: %s",
                     $reason,
-                    __('Source', 'contact-form-7-spam-checker'), $source,
-                    __('Type', 'contact-form-7-spam-checker'), $permanent
-                        ? __('Permanent', 'contact-form-7-spam-checker')
-                        : __('Temporary', 'contact-form-7-spam-checker'),
-                    __('Expires (UTC)', 'contact-form-7-spam-checker'), $expiresAt ?? '—'
+                    __('Source', 'spam-checker-for-contact-form-7'), $source,
+                    __('Type', 'spam-checker-for-contact-form-7'), $permanent
+                        ? __('Permanent', 'spam-checker-for-contact-form-7')
+                        : __('Temporary', 'spam-checker-for-contact-form-7'),
+                    __('Expires (UTC)', 'spam-checker-for-contact-form-7'), $expiresAt ?? '—'
                 )
             );
         }
@@ -130,7 +132,7 @@ final class BanManager
     {
         IpRuleRepository::put($ip, [
             'list_type' => IpRuleRepository::TYPE_WHITELIST,
-            'reason'    => $reason !== '' ? $reason : __('Manually whitelisted by administrator', 'contact-form-7-spam-checker'),
+            'reason'    => $reason !== '' ? $reason : __('Manually whitelisted by administrator', 'spam-checker-for-contact-form-7'),
             'source'    => 'manual',
             'expires_at' => null,
         ]);
@@ -152,7 +154,7 @@ final class BanManager
         if ($strikes >= $threshold) {
             $this->ban($ip, sprintf(
                 /* translators: 1: strike count, 2: threshold */
-                __('Strike threshold reached (%1$d/%2$d). Last reason: %3$s', 'contact-form-7-spam-checker'),
+                __('Strike threshold reached (%1$d/%2$d). Last reason: %3$s', 'spam-checker-for-contact-form-7'),
                 $strikes,
                 $threshold,
                 $reason

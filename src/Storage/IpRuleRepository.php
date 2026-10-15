@@ -2,7 +2,7 @@
 /**
  * IP rules storage: bans + whitelist in one table.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -36,7 +36,7 @@ final class IpRuleRepository
      * Insert or update a rule.
      *
      * @param array{list_type?: string, reason?: string, source?: string,
-     *              expires_at?: string|null, bump_banned_count?: bool} $data
+     *              expires_at?: string|null} $data
      */
     public static function put(string $ip, array $data = []): void
     {
@@ -48,15 +48,13 @@ final class IpRuleRepository
         $existing = self::find($ip);
 
         if ($existing !== null) {
-            $bannedCount = (int) $existing->banned_count + (!empty($data['bump_banned_count']) ? 1 : 0);
             $wpdb->update( // phpcs:ignore WordPress.DB
                 self::table(),
                 [
-                    'list_type'    => $type,
-                    'reason'       => mb_substr((string) ($data['reason'] ?? $existing->reason), 0, 250),
-                    'source'       => (string) ($data['source'] ?? $existing->source),
-                    'banned_count' => $bannedCount,
-                    'expires_at'   => array_key_exists('expires_at', $data) ? $data['expires_at'] : $existing->expires_at,
+                    'list_type'  => $type,
+                    'reason'     => mb_substr((string) ($data['reason'] ?? $existing->reason), 0, 250),
+                    'source'     => (string) ($data['source'] ?? $existing->source),
+                    'expires_at' => array_key_exists('expires_at', $data) ? $data['expires_at'] : $existing->expires_at,
                 ],
                 ['ip' => $ip]
             );
@@ -77,6 +75,47 @@ final class IpRuleRepository
                 'expires_at'   => $data['expires_at'] ?? null,
             ]
         );
+    }
+
+    /**
+     * Atomically bump `banned_count` for an IP and return the value the
+     * storage actually produced.
+     *
+     * The escalation decision must never be taken on a value read in PHP
+     * beforehand: with two bans racing, both reads see the same count and the
+     * permanent ban is applied one ban too late. `banned_count = banned_count
+     * + 1` inside a single statement is race-free, and `LAST_INSERT_ID(expr)`
+     * hands the fresh value back without a second query.
+     *
+     * A missing row is created as a `strike` placeholder — never as a `ban`
+     * row — so an interrupted ban can not block traffic on its own.
+     */
+    public static function bumpBannedCount(string $ip): int
+    {
+        global $wpdb;
+
+        $affected = (int) $wpdb->query($wpdb->prepare( // phpcs:ignore WordPress.DB
+            'INSERT INTO ' . self::table() . " (ip, list_type, source, strikes, banned_count, created_at, expires_at)
+             VALUES (%s, 'strike', 'auto', 0, 1, %s, NULL)
+             ON DUPLICATE KEY UPDATE banned_count = LAST_INSERT_ID(banned_count + 1)",
+            $ip,
+            gmdate('Y-m-d H:i:s')
+        ));
+
+        if ($affected === 1) {
+            return 1; // fresh row: this is the first ban of the IP
+        }
+
+        $count = (int) $wpdb->insert_id;
+        if ($count > 0) {
+            return $count;
+        }
+
+        // Fallback for a backend that does not honour LAST_INSERT_ID(expr).
+        return (int) $wpdb->get_var($wpdb->prepare( // phpcs:ignore WordPress.DB
+            'SELECT banned_count FROM ' . self::table() . ' WHERE ip = %s',
+            $ip
+        ));
     }
 
     public static function find(string $ip): ?object

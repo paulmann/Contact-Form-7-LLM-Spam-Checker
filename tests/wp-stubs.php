@@ -7,15 +7,16 @@
 declare(strict_types=1);
 
 define('ABSPATH', __DIR__ . '/');
+define('WP_CONTENT_DIR', sys_get_temp_dir() . '/cf7sec-test-content');
 define('CF7SEC_VERSION', '4.0.0-test');
-define('CF7SEC_DB_VERSION', 400);
+define('CF7SEC_DB_VERSION', 410);
 define('CF7SEC_MIN_PHP', '8.3');
 define('CF7SEC_MIN_WP', '6.0');
-define('CF7SEC_TEXTDOMAIN', 'contact-form-7-spam-checker');
+define('CF7SEC_TEXTDOMAIN', 'spam-checker-for-contact-form-7');
 define('CF7SEC_FILE', __DIR__);
-define('CF7SEC_BASENAME', 'contact-form-7-spam-checker/cf7.php');
+define('CF7SEC_BASENAME', 'spam-checker-for-contact-form-7/cf7.php');
 define('CF7SEC_DIR', dirname(__DIR__) . '/');
-define('CF7SEC_URL', 'http://example.test/wp-content/plugins/contact-form-7-spam-checker/');
+define('CF7SEC_URL', 'http://example.test/wp-content/plugins/spam-checker-for-contact-form-7/');
 define('CF7SEC_OPTION', 'cf7sec_settings');
 define('CF7SEC_REST_NS', 'cf7sec/v1');
 define('MINUTE_IN_SECONDS', 60);
@@ -25,6 +26,8 @@ define('WEEK_IN_SECONDS', 604800);
 
 $GLOBALS['cf7sec_test_options'] = [];
 $GLOBALS['cf7sec_test_transients'] = [];
+/** Scheduled cron hooks: hook name => timestamp. Mirrors wp_next_scheduled(). */
+$GLOBALS['cf7sec_test_scheduled'] = [];
 
 function __($text, $domain = null) { return $text; }
 function _e($text, $domain = null) { echo $text; }
@@ -67,9 +70,9 @@ function add_action(...$a) { return true; }
 function add_filter(...$a) { return true; }
 function register_activation_hook(...$a) {}
 function register_deactivation_hook(...$a) {}
-function wp_next_scheduled($h) { return false; }
-function wp_schedule_event(...$a) { return true; }
-function wp_clear_scheduled_hook($h) {}
+function wp_next_scheduled($h) { return $GLOBALS['cf7sec_test_scheduled'][$h] ?? false; }
+function wp_schedule_event($timestamp, $recurrence, $hook) { $GLOBALS['cf7sec_test_scheduled'][$hook] = $timestamp; return true; }
+function wp_clear_scheduled_hook($h) { unset($GLOBALS['cf7sec_test_scheduled'][$h]); }
 function flush_rewrite_rules() {}
 function wp_mkdir_p($d) { return @mkdir($d, 0777, true) || is_dir($d); }
 function wp_is_writable($p) { return is_writable($p); }
@@ -133,6 +136,29 @@ class WP_Error
     public function get_error_message(): string { return $this->message; }
     public function get_error_data(): mixed { return $this->data; }
 }
+
+/**
+ * Minimal $wpdb double. Records the rows the legacy importer writes so tests
+ * can assert the migration without a database; anything else is out of scope.
+ */
+class CF7SEC_Test_Wpdb
+{
+    public string $prefix = 'wp_';
+    /** @var array<int, array{table: string, data: array<string, mixed>}> */
+    public array $replaced = [];
+    public int $rowCount = 0;
+
+    public function replace(string $table, array $data, mixed $format = null): int
+    {
+        $this->replaced[] = ['table' => $table, 'data' => $data];
+
+        return 1;
+    }
+
+    public function get_charset_collate(): string { return ''; }
+}
+
+$GLOBALS['wpdb'] = new CF7SEC_Test_Wpdb();
 
 // PSR-4 autoloader mirroring the plugin bootstrap.
 spl_autoload_register(static function (string $class): void {

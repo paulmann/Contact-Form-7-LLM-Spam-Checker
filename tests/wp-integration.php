@@ -13,7 +13,9 @@ use CF7Sec\Activator;
 use CF7Sec\Admin\AdminMenu;
 use CF7Sec\Admin\PageRenderer;
 use CF7Sec\Plugin;
+use CF7Sec\Security\Checks\RateLimitCheck;
 use CF7Sec\Security\LanguageValidator;
+use CF7Sec\Security\SubmissionContext;
 use CF7Sec\Settings;
 use CF7Sec\Storage\DailyStats;
 use CF7Sec\Storage\EventsRepository;
@@ -203,6 +205,117 @@ $res = $plugin->bans->ban('198.51.100.21', 'r3', 'auto', 3600);
 ok($res['permanent'] === true, '3rd ban escalates to permanent');
 ok(IpRuleRepository::find('198.51.100.21')->expires_at === null, 'permanent rule has NULL expiry');
 IpRuleRepository::delete('198.51.100.21');
+
+/* ================= S3: atomic ban counter ================= */
+echo "== S3: ban counter & escalation ==\n";
+
+// The counter itself must come from the storage, not from a PHP read-modify-write.
+IpRuleRepository::delete('198.51.100.32');
+$seq = [
+    IpRuleRepository::bumpBannedCount('198.51.100.32'),
+    IpRuleRepository::bumpBannedCount('198.51.100.32'),
+    IpRuleRepository::bumpBannedCount('198.51.100.32'),
+];
+ok($seq === [1, 2, 3], 'bumpBannedCount() returns the storage sequence 1,2,3');
+ok((int) IpRuleRepository::find('198.51.100.32')->banned_count === 3, 'row carries the storage-side count');
+ok(IpRuleRepository::find('198.51.100.32')->list_type === 'strike', 'a bumped placeholder is never created as a ban row');
+IpRuleRepository::delete('198.51.100.32');
+
+// Escalation must fire exactly on the configured threshold.
+$escalateSettings = $plugin->settings->all();
+$escalateSettings['checks']['rate_limit']['permanent_after_strikes'] = 4;
+$plugin->settings->replace($escalateSettings);
+
+IpRuleRepository::delete('198.51.100.31');
+$bannedCounts = [];
+$permanentAt  = [];
+for ($i = 1; $i <= 4; $i++) {
+    $r = $plugin->bans->ban('198.51.100.31', 'escalation r' . $i, 'auto', 3600);
+    $bannedCounts[$i] = $r['banned_count'];
+    $permanentAt[$i]  = $r['permanent'];
+}
+ok($bannedCounts === [1 => 1, 2 => 2, 3 => 3, 4 => 4], 'each ban reports the value the storage produced');
+ok($permanentAt[1] === false && $permanentAt[2] === false && $permanentAt[3] === false, 'bans 1..3 stay temporary');
+ok($permanentAt[4] === true, 'escalation fires exactly on the 4th ban');
+ok(IpRuleRepository::find('198.51.100.31')->expires_at === null, 'escalated rule is permanent (NULL expiry)');
+IpRuleRepository::delete('198.51.100.31');
+
+$plugin->settings->replace($fresh);
+
+/* ================= S2: atomic rate-limit counter ================= */
+echo "== S2: rate-limit counter ==\n";
+
+$rateSettings = $plugin->settings->all();
+$rateSettings['checks']['rate_limit']['enabled']        = true;
+$rateSettings['checks']['rate_limit']['max_per_minute'] = 5;
+$plugin->settings->replace($rateSettings);
+
+$rateIp  = '203.0.113.78';
+$rateKey = RateLimitCheck::key($rateIp);
+
+// Start from an empty window.
+delete_transient($rateKey);
+ok(get_transient($rateKey) === false, 'window starts empty');
+
+$ctx = new SubmissionContext(
+    formId: $formId,
+    formTitle: 'Rate limit test',
+    postedData: [],
+    ip: $rateIp,
+    userAgent: 'Mozilla/5.0',
+    referrer: '',
+    serverTime: time(),
+    settings: $plugin->settings,
+);
+$rate = new RateLimitCheck();
+
+$passCount  = 0;
+$blockCount = 0;
+$firstBlock = null;
+for ($i = 1; $i <= 6; $i++) {
+    if ($rate->run($ctx)->isFail()) {
+        $blockCount++;
+        $firstBlock ??= $i;
+    } else {
+        $passCount++;
+    }
+}
+ok($passCount === 5, 'exactly the configured 5 submissions pass');
+ok($blockCount === 1 && $firstBlock === 6, 'threshold fires exactly at N+1 (6th submission), not later');
+
+// The counter lives in the storage, so a lost PHP increment is no longer possible.
+$rawCount = $wpdb->get_var($wpdb->prepare(
+    "SELECT option_value FROM {$wpdb->options} WHERE option_name = %s",
+    '_transient_' . $rateKey
+));
+ok((int) $rawCount === 6, 'storage row holds exactly 6 hits after 6 submissions');
+
+// Sequential increments are exact (this is what concurrency used to destroy).
+delete_transient($rateKey);
+$increments = [];
+for ($i = 0; $i < 7; $i++) {
+    $increments[] = RateLimitCheck::increment($rateKey);
+}
+ok($increments === [1, 2, 3, 4, 5, 6, 7], 'increment() is exact and monotonic: ' . implode(',', $increments));
+
+delete_transient($rateKey);
+$plugin->settings->replace($fresh);
+
+/* ================= P2: verdict index after an upgrade ================= */
+echo "== P2: registry index ==\n";
+
+// A regular plugin update is what runs on a live site; it must reach the schema.
+Activator::maybeUpgrade();
+$verdictIndex = $wpdb->get_row($wpdb->prepare(
+    "SHOW INDEX FROM {$wpdb->prefix}cf7sec_events WHERE Key_name = %s",
+    'verdict'
+));
+ok($verdictIndex !== null, 'cf7sec_events gained the verdict index through the upgrade path');
+ok(
+    (int) (get_option('cf7sec_settings')['internal']['db_version'] ?? 0) === CF7SEC_DB_VERSION,
+    'db_version stamped as ' . CF7SEC_DB_VERSION
+);
+
 
 /* ================= REST API ================= */
 echo "== REST API ==\n";

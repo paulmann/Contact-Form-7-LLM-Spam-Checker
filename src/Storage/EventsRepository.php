@@ -2,7 +2,7 @@
 /**
  * Spam & security event registry (custom DB table).
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -226,6 +226,24 @@ final class EventsRepository
     }
 
     /**
+     * Neutralise a cell against spreadsheet formula interpretation.
+     *
+     * Excel, LibreOffice and Google Sheets treat a leading `=`, `+`, `-`, `@`,
+     * tab, CR or LF as the start of a formula (OWASP "CSV Injection"). The
+     * registry columns `reasons`, `user_agent`, `referrer` and `payload` carry
+     * submitter-controlled text, so every exported cell is passed through this
+     * guard. Pure function — no WordPress, no database.
+     */
+    public static function csvCell(string $value): string
+    {
+        if ($value === '') {
+            return '';
+        }
+
+        return preg_match('/^[=+\-@\t\r\n]/', $value) === 1 ? "'" . $value : $value;
+    }
+
+    /**
      * CSV export stream helper (returns rows as arrays).
      *
      * @param array<string, mixed> $filter
@@ -234,16 +252,16 @@ final class EventsRepository
      */
     public static function exportCsv(array $filter = []): iterable
     {
-        yield [
+        yield self::csvRow([
             'ID', 'Date (UTC)', 'Form ID', 'IP', 'Country', 'Type', 'Verdict',
             'Reasons', 'User Agent', 'Referrer', 'Payload',
-        ];
+        ]);
 
         $page = 1;
         do {
             $batch = self::list(['page' => $page, 'per_page' => 200, ...$filter]);
             foreach ($batch['items'] as $row) {
-                yield [
+                yield self::csvRow([
                     (string) $row->id,
                     (string) $row->created_at,
                     (string) $row->form_id,
@@ -255,9 +273,19 @@ final class EventsRepository
                     (string) $row->user_agent,
                     (string) $row->referrer,
                     (string) $row->payload,
-                ];
+                ]);
             }
             $page++;
         } while (count($batch['items']) === 200);
+    }
+
+    /**
+     * @param array<int, string> $cells
+     *
+     * @return array<int, string>
+     */
+    private static function csvRow(array $cells): array
+    {
+        return array_map([self::class, 'csvCell'], $cells);
     }
 }

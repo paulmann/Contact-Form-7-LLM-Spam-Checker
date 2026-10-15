@@ -2,7 +2,7 @@
 /**
  * Settings repository — single source of truth for the plugin configuration.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -89,7 +89,7 @@ final class Settings
             ],
             'language' => [
                 'enabled'       => true,
-                'language'      => 'english',
+                'language'      => Languages::DEFAULT_LANG,
                 'fields'        => 'family-name,given-name,middle-name,first-name,last-name,name,full-name,your-name,fio',
                 'strict'        => false,
                 'error_message' => '',
@@ -248,6 +248,7 @@ final class Settings
         /* ---- checks ---- */
         if (isset($input['checks']) && is_array($input['checks'])) {
             $c = $input['checks'];
+            $defaultLang = (string) self::DEFAULTS['checks']['language']['language'];
 
             $out['checks']['time_check'] = [
                 'enabled'         => !empty($c['time_check']['enabled']),
@@ -282,7 +283,7 @@ final class Settings
             $out['checks']['language'] = [
                 'enabled'       => !empty($c['language']['enabled']),
                 'language'      => array_key_exists($c['language']['language'] ?? '', Languages::REGEX)
-                    ? (string) $c['language']['language'] : 'russian',
+                    ? (string) $c['language']['language'] : $defaultLang,
                 'fields'        => sanitize_text_field((string) ($c['language']['fields'] ?? '')),
                 'strict'        => !empty($c['language']['strict']),
                 'error_message' => sanitize_textarea_field((string) ($c['language']['error_message'] ?? '')),

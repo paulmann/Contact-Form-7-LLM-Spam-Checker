@@ -2,7 +2,7 @@
 /**
  * WordPress dashboard widget with a compact protection summary.
  *
- * @package contact-form-7-spam-checker
+ * @package spam-checker-for-contact-form-7
  */
 
 declare(strict_types=1);
@@ -33,23 +33,22 @@ final class DashboardWidget
 
         wp_add_dashboard_widget(
             'cf7sec_widget',
-            __('CF7 Spam Checker — today', 'contact-form-7-spam-checker'),
+            __('CF7 Spam Checker — today', 'spam-checker-for-contact-form-7'),
             [$this, 'render']
         );
     }
 
     public function render(): void
     {
-        $today     = gmdate('Y-m-d');
         $processed = DailyStats::series(1);
         $bans      = IpRuleRepository::countActiveBans();
         $registry  = EventsRepository::count(EventsRepository::VERDICT_BLOCKED);
 
         $rows = [
-            [__('Submissions today', 'contact-form-7-spam-checker'), (int) ($processed['processed'][0] ?? 0)],
-            [__('Blocked today', 'contact-form-7-spam-checker'), (int) ($processed['blocked'][0] ?? 0)],
-            [__('Active bans', 'contact-form-7-spam-checker'), $bans],
-            [__('Registry entries', 'contact-form-7-spam-checker'), $registry],
+            [__('Submissions today', 'spam-checker-for-contact-form-7'), (int) ($processed['processed'][0] ?? 0)],
+            [__('Blocked today', 'spam-checker-for-contact-form-7'), (int) ($processed['blocked'][0] ?? 0)],
+            [__('Active bans', 'spam-checker-for-contact-form-7'), $bans],
+            [__('Registry entries', 'spam-checker-for-contact-form-7'), $registry],
         ];
 
         echo '<table class="widefat striped" style="border:0"><tbody>';
@@ -65,11 +64,9 @@ final class DashboardWidget
         printf(
             '<p style="margin:12px 0 0"><a class="button button-primary" href="%s">%s</a> <a class="button" href="%s">%s</a></p>',
             esc_url(AdminMenu::url('cf7sec')),
-            esc_html__('Open dashboard', 'contact-form-7-spam-checker'),
+            esc_html__('Open dashboard', 'spam-checker-for-contact-form-7'),
             esc_url(AdminMenu::url('cf7sec-registry')),
-            esc_html__('Spam registry', 'contact-form-7-spam-checker')
+            esc_html__('Spam registry', 'spam-checker-for-contact-form-7')
         );
-
-        unset($today);
     }
 }
