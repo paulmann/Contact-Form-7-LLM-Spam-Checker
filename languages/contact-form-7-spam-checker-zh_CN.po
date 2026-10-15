@@ -1,0 +1,1668 @@
+# Translation of CF7 Spam Checker Pro in zh CN
+# This file is distributed under the same license as the CF7 Spam Checker Pro package.
+msgid ""
+msgstr ""
+"Project-Id-Version: CF7 Spam Checker Pro 4.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-Spam-Checker/issues\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: cf7sec-i18n-builder 1.0\n"
+
+#: src/Security/Checks/LinkSpamCheck.php:51
+#. translators: 1: link count, 2: limit, 3: field name
+msgid "%1$d links in field \"%3$s\" — above the limit of %2$d."
+msgstr "字段“%3$s”中有 %1$d 个链接——超过上限 %2$d。"
+
+#: src/Security/Checks/RateLimitCheck.php:60
+msgid "%1$d submissions in the last 60 s (limit: %2$d)."
+msgstr "最近 60 秒内提交了 %1$d 次（上限：%2$d）。"
+
+#: src/Services/Llm/LlmGateway.php:204
+#. translators: 1: provider label, 2: model name, 3: verdict, 4: latency in ms
+msgid "%1$s / %2$s responded \"%3$s\" in %4$d ms."
+msgstr "%1$s / %2$s 在 %4$d 毫秒内返回“%3$s”。"
+
+#: src/Admin/Views/pages/ip-rules.php:24
+#. translators: 1: active bans, 2: whitelisted
+msgid "%1$s active bans · %2$s whitelisted IPs"
+msgstr "生效封禁 %1$s 个 · 白名单 IP %2$s 个"
+
+#: src/Admin/Views/pages/registry.php:22
+#. translators: %s: total blocked entries
+msgid "%s blocked entries stored. Retention is controlled in Settings → General."
+msgstr "已存储 %s 条拦截记录。保留期限在“设置 → 常规”中配置。"
+
+#: src/Admin/Views/pages/integrations.php:122
+msgid "0 = always query live (burns quota fast)."
+msgstr "0 = 始终实时查询（会快速消耗配额）。"
+
+#: src/Admin/Views/pages/dashboard.php:66
+msgid "30-day traffic chart"
+msgstr "30 天流量图表"
+
+#: src/Plugin.php:243
+#. translators: %s: plugin name
+msgid "<strong>%s</strong> is active, but Contact Form 7 was not detected. Spam protection will engage automatically once Contact Form 7 is installed and activated."
+msgstr "<strong>%s</strong> 已启用，但未检测到 Contact Form 7。安装并启用 Contact Form 7 后，垃圾防护会自动生效。"
+
+#: src/Admin/Views/pages/integrations.php:113
+msgid "A submission is flagged when ANY threshold is met: (1) abuse confidence score, (2) total community reports across all categories, (3) reports filed under the \"Email Spam\" category. Note: the API returns per-category data only for the most recent reports of an IP (verbose mode), so threshold 3 counts recent Email-Spam reports — a close approximation of the full category history. Set any threshold to 0 to disable it. IPs whitelisted upstream always pass."
+msgstr "任一阈值被触发即标记为垃圾：(1) 滥用置信度分数；(2) 全部类别的社区举报总数；(3)“Email Spam”类别下的举报数。注意：API 仅在 verbose 模式下返回该 IP 最近若干条举报的分类数据，因此阈值 3 统计的是最近的 Email Spam 举报——是完整分类历史的良好近似。将任一阈值设为 0 可将其禁用。上游白名单 IP 始终放行。"
+
+#: src/Admin/Views/pages/integrations.php:37
+msgid "AI spam analysis (LLM gateway)"
+msgstr "AI 垃圾分析（LLM 网关）"
+
+#: src/Admin/Views/pages/integrations.php:76
+msgid "API base URL override"
+msgstr "API 基础 URL 覆盖"
+
+#: src/Admin/Views/pages/integrations.php:59
+msgid "API key"
+msgstr "API 密钥"
+
+#: src/Services/AbuseIpDb.php:205
+#. translators: 1: country code, 2: abuse score
+msgid "API key is valid. Sample lookup 8.8.8.8 → country %1$s, abuse score %2$d%%."
+msgstr "API 密钥有效。示例查询 8.8.8.8 → 国家 %1$s，滥用评分 %2$d%%。"
+
+#: src/Admin/Views/pages/integrations.php:117
+msgid "Abuse confidence threshold"
+msgstr "滥用置信度阈值"
+
+#: src/Admin/Views/pages/integrations.php:149
+msgid "AbuseIPDB"
+msgstr "AbuseIPDB"
+
+#: src/Security/Checks/AbuseIpCheck.php:141
+#. translators: 1: email-spam report count, 2: threshold
+msgid "AbuseIPDB \"Email Spam\" reports %1$d ≥ %2$d threshold (counted from the most recent reports)."
+msgstr "AbuseIPDB“Email Spam”举报 %1$d ≥ 阈值 %2$d（按最近举报统计）。"
+
+#: src/Admin/Views/pages/integrations.php:110
+msgid "AbuseIPDB API key"
+msgstr "AbuseIPDB API 密钥"
+
+#: src/Services/AbuseIpDb.php:71
+#: src/Services/AbuseIpDb.php:152
+msgid "AbuseIPDB API key is not set."
+msgstr "AbuseIPDB API 密钥未设置。"
+
+#: src/Security/Checks/AbuseIpCheck.php:103
+#. translators: 1: score, 2: threshold, 3: country
+msgid "AbuseIPDB confidence %1$d%% ≥ %2$d%% threshold (country: %3$s, reports: %4$d)."
+msgstr "AbuseIPDB 置信度 %1$d%% ≥ 阈值 %2$d%%（国家：%3$s，举报：%4$d）。"
+
+#: src/Admin/Views/pages/settings.php:247
+msgid "AbuseIPDB error"
+msgstr "AbuseIPDB 错误"
+
+#: src/Security/Checks/AbuseIpCheck.php:51
+msgid "AbuseIPDB reputation"
+msgstr "AbuseIPDB 信誉"
+
+#: src/Security/SpamPipeline.php:285
+msgid "AbuseIPDB reputation below threshold"
+msgstr "AbuseIPDB 信誉低于阈值"
+
+#: src/Admin/Views/pages/integrations.php:107
+msgid "AbuseIPDB reputation check"
+msgstr "AbuseIPDB 信誉检查"
+
+#: src/Services/AbuseIpDb.php:157
+msgid "AbuseIPDB requires a comment when reporting."
+msgstr "AbuseIPDB 要求举报时附带说明。"
+
+#: src/Security/Checks/AbuseIpCheck.php:122
+#. translators: 1: report count, 2: threshold
+msgid "AbuseIPDB total reports %1$d ≥ %2$d threshold."
+msgstr "AbuseIPDB 举报总数 %1$d ≥ 阈值 %2$d。"
+
+#: src/Admin/DashboardWidget.php:51
+#: src/Admin/Views/pages/dashboard.php:44
+msgid "Active bans"
+msgstr "生效封禁"
+
+#: src/Admin/Cf7Panel.php:78
+msgid "Active layers:"
+msgstr "已启用的防护层："
+
+#: src/Admin/Views/pages/ip-rules.php:51
+msgid "Add"
+msgstr "添加"
+
+#: src/Admin/Views/pages/ip-rules.php:42
+msgid "Add rule"
+msgstr "添加规则"
+
+#: src/Admin/Views/pages/settings.php:261
+msgid "Adds verdict details to the CF7 JSON response — disable on production sites."
+msgstr "在 CF7 的 JSON 响应中附加判定详情——生产站点请禁用。"
+
+#: src/Admin/PageRenderer.php:30
+msgid "Advanced form security"
+msgstr "高级表单安全防护"
+
+#: src/Admin/Views/pages/integrations.php:118
+msgid "All categories combined. 0 disables this threshold. Example: 5 reports already indicates a repeat offender."
+msgstr "所有类别合计。0 表示禁用该阈值。例如：5 条举报已表明是惯犯。"
+
+#: src/Admin/Views/pages/settings.php:54
+msgid "All forms (recommended)"
+msgstr "所有表单（推荐）"
+
+#: src/Admin/Views/pages/registry.php:45
+msgid "All types"
+msgstr "所有类型"
+
+#: src/Admin/Views/pages/registry.php:38
+msgid "All verdicts"
+msgstr "所有判定"
+
+#: src/Admin/Views/pages/integrations.php:90
+msgid "Allow (fail-open — recommended)"
+msgstr "放行（fail-open——推荐）"
+
+#: src/Admin/Views/pages/integrations.php:132
+msgid "Allow ONLY listed countries"
+msgstr "仅允许所列国家"
+
+#: src/Admin/Views/pages/registry.php:40
+msgid "Allowed"
+msgstr "已放行"
+
+#: src/Admin/Views/pages/settings.php:193
+msgid "Allowed language"
+msgstr "允许的语言"
+
+#: src/Admin/Views/pages/settings.php:196
+msgid "Also register violations as blocked events in the spam registry."
+msgstr "同时将违规记录为垃圾注册表中的拦截事件。"
+
+#: src/Admin/Views/pages/settings.php:89
+msgid "Always use X-Forwarded-For"
+msgstr "始终使用 X-Forwarded-For"
+
+#: src/Admin/Views/pages/settings.php:114
+msgid "An invisible field no human should ever fill."
+msgstr "一个真人永远不会填写的隐藏字段。"
+
+#: src/Admin/Views/pages/integrations.php:65
+msgid "Any custom model id is accepted."
+msgstr "接受任何自定义模型 ID。"
+
+#: src/Admin/Views/pages/registry.php:50
+msgid "Apply"
+msgstr "应用"
+
+#: src/Admin/Assets.php:55
+msgid "Are you sure?"
+msgstr "确定吗？"
+
+#: src/Admin/Views/pages/settings.php:86
+msgid "Auto — trust forwarded headers only from local/Cloudflare proxies (recommended)"
+msgstr "自动——仅信任来自本地/Cloudflare 代理的转发头（推荐）"
+
+#: src/Admin/Views/pages/integrations.php:96
+msgid "Auto-ban IP on SPAM verdict"
+msgstr "判定为 SPAM 时自动封禁 IP"
+
+#: src/Admin/Views/pages/integrations.php:125
+msgid "Auto-ban IPs that fail the thresholds"
+msgstr "自动封禁未通过阈值的 IP"
+
+#: src/Admin/Views/pages/settings.php:140
+msgid "Auto-ban on strike threshold"
+msgstr "达到违规计数阈值时自动封禁"
+
+#: src/Admin/Views/pages/tools.php:21
+msgid "Backup, maintenance and emergency actions."
+msgstr "备份、维护与应急操作。"
+
+#: src/Admin/Views/pages/ip-rules.php:47
+msgid "Ban"
+msgstr "封禁"
+
+#: src/Admin/Assets.php:97
+msgid "Ban IP"
+msgstr "封禁 IP"
+
+#: src/Admin/Views/pages/settings.php:137
+msgid "Ban duration (hours)"
+msgstr "封禁时长（小时）"
+
+#: src/Admin/Views/pages/ip-rules.php:37
+msgid "Ban list"
+msgstr "封禁列表"
+
+#: src/Admin/Assets.php:56
+msgid "Ban this IP address?"
+msgstr "封禁此 IP 地址？"
+
+#: src/Security/Checks/KeywordSpamCheck.php:50
+msgid "Blacklisted keyword \"%1$s\" found in field \"%2$s\"."
+msgstr "在字段“%2$s”中发现黑名单关键词“%1$s”。"
+
+#: src/Admin/Views/pages/integrations.php:91
+msgid "Block (fail-closed)"
+msgstr "拦截（fail-closed）"
+
+#: src/Admin/Views/pages/integrations.php:120
+msgid "Block from \"Email Spam\" category reports ≥ …"
+msgstr "“Email Spam”类别举报 ≥ … 时拦截"
+
+#: src/Admin/Views/pages/integrations.php:116
+msgid "Block from abuse confidence ≥ … %"
+msgstr "滥用置信度 ≥ …% 时拦截"
+
+#: src/Admin/Views/pages/integrations.php:118
+msgid "Block from total reports ≥ …"
+msgstr "举报总数 ≥ … 时拦截"
+
+#: src/Admin/Views/pages/integrations.php:131
+msgid "Block listed countries"
+msgstr "拦截所列国家"
+
+#: src/Admin/Views/pages/dashboard.php:47
+msgid "Block rate (30 d)"
+msgstr "拦截率（30 天）"
+
+#: src/Admin/Views/pages/dashboard.php:68
+#: src/Admin/Views/pages/registry.php:39
+msgid "Blocked"
+msgstr "已拦截"
+
+#: src/Admin/Views/pages/settings.php:72
+msgid "Blocked submissions only (recommended)"
+msgstr "仅拦截的提交（推荐）"
+
+#: src/Admin/DashboardWidget.php:50
+#: src/Admin/Views/pages/dashboard.php:43
+msgid "Blocked today"
+msgstr "今日拦截"
+
+#: src/Admin/Views/pages/settings.php:172
+msgid "Blocks fields containing too many URLs."
+msgstr "拦截包含过多链接的字段。"
+
+#: src/Admin/Views/pages/settings.php:162
+#: src/Security/Checks/BotAgentCheck.php:39
+msgid "Bot user-agent detection"
+msgstr "机器人 User-Agent 检测"
+
+#: src/Admin/AdminMenu.php:44
+msgid "CF7 Security"
+msgstr "CF7 安全"
+
+#: src/Admin/PageRenderer.php:29
+msgid "CF7 Spam Checker"
+msgstr "CF7 Spam Checker"
+
+#: src/Admin/Cf7Panel.php:65
+msgid "CF7 Spam Checker Pro"
+msgstr "CF7 Spam Checker Pro"
+
+#: src/Admin/PageRenderer.php:79
+#. translators: 1: version, 2: PHP version
+msgid "CF7 Spam Checker Pro %1$s · PHP %2$s · "
+msgstr "CF7 Spam Checker Pro %1$s · PHP %2$s · "
+
+#: src/Admin/DashboardWidget.php:36
+msgid "CF7 Spam Checker — today"
+msgstr "CF7 Spam Checker——今日概览"
+
+#: src/Admin/PageRenderer.php:33
+msgid "CF7 active"
+msgstr "CF7 已启用"
+
+#: src/Admin/PageRenderer.php:34
+msgid "CF7 missing"
+msgstr "缺少 CF7"
+
+#: src/Admin/Views/pages/integrations.php:122
+msgid "Cache results for (days)"
+msgstr "结果缓存时长（天）"
+
+#: src/Admin/Views/pages/settings.php:181
+msgid "Case-insensitive substring matching, one keyword per line."
+msgstr "不区分大小写的子串匹配，每行一个关键词。"
+
+#: src/Admin/Assets.php:95
+msgid "Check results"
+msgstr "检查结果"
+
+#: src/Admin/Views/pages/settings.php:52
+msgid "Choose which Contact Form 7 forms the pipeline protects."
+msgstr "选择防护管线要保护的 Contact Form 7 表单。"
+
+#: src/Admin/Views/pages/tools.php:42
+msgid "Clear geo cache"
+msgstr "清空地理缓存"
+
+#: src/Admin/Views/pages/registry.php:29
+msgid "Clear registry"
+msgstr "清空注册表"
+
+#: src/Admin/Views/pages/settings.php:83
+msgid "Client IP detection"
+msgstr "客户端 IP 识别"
+
+#: src/Admin/Views/pages/settings.php:107
+msgid "Clock-skew tolerance (s)"
+msgstr "时钟偏差容忍（秒）"
+
+#: src/Admin/Views/pages/settings.php:88
+msgid "Cloudflare — always use CF-Connecting-IP"
+msgstr "Cloudflare——始终使用 CF-Connecting-IP"
+
+#: src/Admin/Assets.php:61
+msgid "Connection OK."
+msgstr "连接正常。"
+
+#: src/Admin/Assets.php:62
+msgid "Connection failed."
+msgstr "连接失败。"
+
+#: src/Admin/Views/pages/integrations.php:123
+msgid "Consider reports up to (days old)"
+msgstr "考虑的举报最长时限（天）"
+
+#: src/Admin/Assets.php:59
+msgid "Copied to clipboard."
+msgstr "已复制到剪贴板。"
+
+#: src/Admin/Assets.php:53
+msgid "Could not save settings."
+msgstr "无法保存设置。"
+
+#: src/Admin/Views/pages/integrations.php:120
+msgid "Counted from the most recent reports returned by the API (verbose mode). 0 disables this threshold. Example: 3 means an IP reported 3+ times specifically for e-mail/form spam gets blocked."
+msgstr "按 API 返回的最近举报统计（verbose 模式）。0 表示禁用该阈值。例如：3 表示某 IP 因电子邮件/表单垃圾被举报 3 次以上即被拦截。"
+
+#: src/Admin/Views/pages/integrations.php:127
+msgid "Country filter (uses the same lookup)"
+msgstr "国家过滤（复用同一次查询）"
+
+#: src/Security/Checks/AbuseIpCheck.php:176
+#. translators: 1: country code, 2: mode
+msgid "Country filter: submission from %1$s is not accepted (mode: %2$s)."
+msgstr "国家过滤：不接受来自 %1$s 的提交（模式：%2$s）。"
+
+#: src/Admin/Views/pages/integrations.php:50
+msgid "Create one at "
+msgstr "创建密钥："
+
+#: src/Admin/Assets.php:88
+msgid "Created"
+msgstr "创建时间"
+
+#: src/Admin/Views/pages/settings.php:197
+msgid "Custom field error message"
+msgstr "自定义字段错误消息"
+
+#: src/Services/AbuseIpDb.php:75
+msgid "Daily AbuseIPDB query budget exhausted — cached data used when available."
+msgstr "AbuseIPDB 当日查询额度已用尽——将尽可能使用缓存数据。"
+
+#: src/Admin/Views/pages/tools.php:58
+msgid "Danger zone"
+msgstr "危险操作区"
+
+#: src/Admin/Assets.php:73
+msgid "Dark"
+msgstr "深色"
+
+#: src/Admin/AdminMenu.php:71
+#: src/Admin/PageRenderer.php:100
+msgid "Dashboard"
+msgstr "仪表盘"
+
+#: src/Admin/Views/pages/settings.php:260
+msgid "Debug logging"
+msgstr "调试日志"
+
+#: src/Admin/Views/pages/settings.php:258
+msgid "Debug mode"
+msgstr "调试模式"
+
+#: src/Admin/Views/pages/settings.php:261
+msgid "Debug output in AJAX response"
+msgstr "AJAX 响应中的调试输出"
+
+#: src/Admin/Views/pages/integrations.php:78
+msgid "Default: "
+msgstr "默认："
+
+#: src/Admin/Views/pages/settings.php:270
+msgid "Delete file"
+msgstr "删除文件"
+
+#: src/Admin/Views/pages/ip-rules.php:32
+msgid "Delete selected"
+msgstr "删除所选"
+
+#: src/Admin/Assets.php:65
+msgid "Deleted."
+msgstr "已删除。"
+
+#: src/Admin/Assets.php:90
+msgid "Details"
+msgstr "详情"
+
+#: src/Admin/Views/pages/settings.php:30
+msgid "Diagnostics"
+msgstr "诊断"
+
+#: src/Security/SpamPipeline.php:155
+msgid "Disabled"
+msgstr "已禁用"
+
+#: src/Security/SpamPipeline.php:175
+msgid "Disabled or not configured"
+msgstr "已禁用或未配置"
+
+#: src/Admin/Views/pages/ip-rules.php:49
+msgid "Duration (hours, 0 = permanent)"
+msgstr "时长（小时，0 = 永久）"
+
+#: src/Admin/Views/pages/settings.php:227
+msgid "E-mail alerts"
+msgstr "邮件提醒"
+
+#: src/Admin/Views/pages/integrations.php:98
+msgid "Each submission is appended as a structured digest: form fields, IP, country/ISP (when known), user agent, referrer, dwell time and the results of the local heuristics. The digest is capped at ~12 KB."
+msgstr "每次提交都会以结构化摘要附加：表单字段、IP、国家/运营商（如已知）、User-Agent、来源页、停留时间以及本地启发式检查结果。摘要上限约 12 KB。"
+
+#: src/Admin/Views/pages/settings.php:231
+msgid "Empty = site admin e-mail."
+msgstr "留空 = 站点管理员邮箱。"
+
+#: src/Security/Checks/BotAgentCheck.php:54
+msgid "Empty User-Agent header — real browsers always send one."
+msgstr "User-Agent 头为空——真实浏览器总会发送。"
+
+#: src/Admin/Views/pages/integrations.php:109
+msgid "Enable API check"
+msgstr "启用 API 检查"
+
+#: src/Admin/Views/pages/integrations.php:39
+msgid "Enable LLM check"
+msgstr "启用 LLM 检查"
+
+#: src/Admin/Views/pages/integrations.php:128
+msgid "Enable country filtering"
+msgstr "启用国家过滤"
+
+#: src/Admin/Views/pages/settings.php:102
+#: src/Admin/Views/pages/settings.php:115
+#: src/Admin/Views/pages/settings.php:123
+#: src/Admin/Views/pages/settings.php:131
+msgid "Enabled"
+msgstr "启用"
+
+#: src/Admin/Views/pages/settings.php:138
+msgid "Escalation: the Nth ban of the same IP becomes permanent."
+msgstr "升级机制：同一 IP 第 N 次被封禁时变为永久封禁。"
+
+#: src/Admin/RestController.php:357
+msgid "Event not found."
+msgstr "未找到事件。"
+
+#: src/Admin/Views/pages/settings.php:76
+msgid "Events older than this are deleted by the daily cron."
+msgstr "超过该期限的事件将由每日计划任务删除。"
+
+#: src/Admin/Views/pages/integrations.php:41
+msgid "Every provider speaks one of two universal protocols: OpenAI-compatible chat completions or Anthropic Messages. The two \"Custom\" entries accept any operator exposing either protocol."
+msgstr "每个提供商都使用两种通用协议之一：OpenAI 兼容的 chat completions 或 Anthropic Messages。两个“Custom”条目接受任何开放任一协议的运营商。"
+
+#: src/Admin/Views/pages/settings.php:73
+msgid "Every submission (blocked + clean)"
+msgstr "每次提交（拦截 + 正常）"
+
+#: src/Admin/Assets.php:89
+msgid "Expires"
+msgstr "到期时间"
+
+#: src/Services/BanManager.php:97
+msgid "Expires (UTC)"
+msgstr "到期时间（UTC）"
+
+#: src/Admin/Views/pages/ip-rules.php:31
+#: src/Admin/Views/pages/registry.php:28
+msgid "Export CSV"
+msgstr "导出 CSV"
+
+#: src/Admin/Views/pages/tools.php:31
+msgid "Export JSON"
+msgstr "导出 JSON"
+
+#: src/Admin/Assets.php:69
+msgid "Export started."
+msgstr "导出已开始。"
+
+#: src/Admin/Views/pages/tools.php:29
+msgid "Export the complete configuration (including API keys) or restore it on another site."
+msgstr "导出完整配置（含 API 密钥），或在其他站点恢复。"
+
+#: src/Admin/Views/pages/integrations.php:29
+msgid "External intelligence: AI classification and IP reputation."
+msgstr "外部情报：AI 分类与 IP 信誉。"
+
+#: src/Admin/Views/pages/settings.php:165
+msgid "Extra keywords (one per line)"
+msgstr "附加关键词（每行一个）"
+
+#: src/Admin/Views/pages/settings.php:194
+msgid "Field names (comma-separated)"
+msgstr "字段名（逗号分隔）"
+
+#: src/Admin/Views/pages/settings.php:163
+msgid "Flags scripted clients (curl, headless browsers, scrapers…)."
+msgstr "标记脚本客户端（curl、无头浏览器、抓取器……）。"
+
+#: src/Admin/Views/pages/settings.php:51
+msgid "Form protection scope"
+msgstr "表单保护范围"
+
+#: src/Security/Checks/TimeCheck.php:69
+msgid "Form sat open for %d s — older than the %d s maximum."
+msgstr "表单已打开 %d 秒——超过上限 %d 秒。"
+
+#: src/Security/Checks/TimeCheck.php:97
+msgid "Form timestamp is %d s old — beyond the %d s freshness window."
+msgstr "表单时间戳已过 %d 秒——超出 %d 秒的有效期窗口。"
+
+#: src/Admin/Views/pages/integrations.php:110
+msgid "Free at "
+msgstr "免费获取："
+
+#: src/Admin/Views/pages/registry.php:47
+msgid "From date"
+msgstr "开始日期"
+
+#: src/Admin/Views/pages/settings.php:26
+msgid "General"
+msgstr "常规"
+
+#: src/Admin/Views/pages/settings.php:90
+msgid "Header mode"
+msgstr "请求头模式"
+
+#: src/Security/Checks/HoneypotCheck.php:56
+msgid "Hidden honeypot field \"%s\" was filled."
+msgstr "隐藏的蜜罐字段“%s”被填写。"
+
+#: src/Admin/Assets.php:76
+msgid "Hide key"
+msgstr "隐藏密钥"
+
+#: src/Admin/Views/pages/settings.php:113
+#: src/Security/Checks/HoneypotCheck.php:31
+msgid "Honeypot"
+msgstr "蜜罐"
+
+#: src/Security/Checks/HoneypotCheck.php:64
+msgid "Honeypot field missing from submission."
+msgstr "提交中缺少蜜罐字段。"
+
+#: src/Admin/Views/pages/integrations.php:145
+msgid "How the checks combine per submission."
+msgstr "各项检查如何在每次提交中组合。"
+
+#: src/Admin/Views/pages/settings.php:84
+msgid "How the real visitor IP is resolved behind proxies and CDNs."
+msgstr "在代理和 CDN 之后如何解析访客真实 IP。"
+
+#: src/Admin/Views/pages/integrations.php:112
+msgid "How the three thresholds work"
+msgstr "三个阈值如何工作"
+
+#: src/Admin/Views/pages/settings.php:101
+msgid "Humans need a few seconds to fill a form; bots do not."
+msgstr "真人填写表单需要几秒钟；机器人则不需要。"
+
+#: src/Admin/Assets.php:84
+msgid "IP"
+msgstr "IP"
+
+#: src/Security/Checks/IpBanCheck.php:56
+msgid "IP %1$s is banned (reason: %2$s, source: %3$s)."
+msgstr "IP %1$s 已被封禁（原因：%2$s，来源：%3$s）。"
+
+#: src/Admin/AdminMenu.php:74
+#: src/Admin/PageRenderer.php:103
+#: src/Admin/Views/pages/ip-rules.php:20
+msgid "IP Rules"
+msgstr "IP 规则"
+
+#: src/Admin/Views/pages/ip-rules.php:45
+msgid "IP address"
+msgstr "IP 地址"
+
+#: src/Admin/Views/pages/settings.php:121
+#: src/Security/Checks/IpBanCheck.php:28
+msgid "IP ban list"
+msgstr "IP 封禁列表"
+
+#: src/Admin/Views/pages/settings.php:243
+msgid "IP banned"
+msgstr "IP 被封禁"
+
+#: src/Admin/Assets.php:66
+msgid "IP banned."
+msgstr "IP 已封禁。"
+
+#: src/Services/BanManager.php:89
+#. translators: %s: IP address
+msgid "IP banned: %s"
+msgstr "IP 已封禁：%s"
+
+#: src/Admin/Views/pages/tools.php:48
+msgid "IP lookup"
+msgstr "IP 查询"
+
+#: src/Admin/Assets.php:68
+msgid "IP whitelisted."
+msgstr "IP 已加入白名单。"
+
+#: src/Admin/Views/pages/registry.php:49
+msgid "IP, reason, payload…"
+msgstr "IP、原因、内容……"
+
+#: src/Admin/Views/pages/integrations.php:134
+msgid "ISO 3166-1 alpha-2 codes (comma-separated)"
+msgstr "ISO 3166-1 alpha-2 代码（逗号分隔）"
+
+#: src/Admin/Views/pages/tools.php:32
+msgid "Import JSON"
+msgstr "导入 JSON"
+
+#: src/Admin/Assets.php:71
+msgid "Import failed: invalid file."
+msgstr "导入失败：文件无效。"
+
+#: src/Admin/Views/pages/integrations.php:94
+msgid "Include geo/ISP data in the prompt"
+msgstr "在提示词中包含地理/运营商数据"
+
+#: src/Admin/Views/pages/registry.php:42
+msgid "Info (bans)"
+msgstr "信息（封禁）"
+
+#: src/Admin/Views/pages/settings.php:122
+msgid "Instantly rejects IPs found in the ban list."
+msgstr "立即拒绝封禁列表中的 IP。"
+
+#: src/Security/SpamPipeline.php:358
+#. translators: %s: integration name
+msgid "Integration error: %s"
+msgstr "集成错误：%s"
+
+#: src/Admin/Views/pages/registry.php:41
+msgid "Integration errors"
+msgstr "集成错误"
+
+#: src/Admin/AdminMenu.php:73
+#: src/Admin/PageRenderer.php:102
+#: src/Admin/Views/pages/integrations.php:28
+msgid "Integrations"
+msgstr "集成"
+
+#: src/Admin/RestController.php:243
+#: src/Admin/RestController.php:435
+#: src/Services/AbuseIpDb.php:53
+msgid "Invalid IP address."
+msgstr "无效的 IP 地址。"
+
+#: src/Admin/RestController.php:183
+msgid "Invalid JSON payload."
+msgstr "无效的 JSON 数据。"
+
+#: src/Admin/Views/pages/tools.php:59
+msgid "Irreversible actions."
+msgstr "不可逆操作。"
+
+#: src/Admin/Views/pages/settings.php:79
+msgid "Keep data on uninstall"
+msgstr "卸载时保留数据"
+
+#: src/Admin/Views/pages/settings.php:180
+#: src/Security/Checks/KeywordSpamCheck.php:27
+msgid "Keyword blacklist"
+msgstr "关键词黑名单"
+
+#: src/Security/Checks/KeywordSpamCheck.php:39
+msgid "Keyword list is empty."
+msgstr "关键词列表为空。"
+
+#: src/Admin/Views/pages/settings.php:183
+msgid "Keywords"
+msgstr "关键词"
+
+#: src/Security/Checks/LlmCheck.php:95
+#. translators: 1: provider label, 2: model, 3: latency ms
+msgid "LLM %1$s (%2$s) classified the submission as SPAM in %3$d ms."
+msgstr "LLM %1$s（%2$s）在 %3$d 毫秒内将该提交判定为 SPAM。"
+
+#: src/Security/Checks/LlmCheck.php:75
+msgid "LLM API error (%1$s); fail-closed policy applied."
+msgstr "LLM API 错误（%1$s）；已应用 fail-closed 策略。"
+
+#: src/Security/Checks/LlmCheck.php:81
+msgid "LLM API error (%1$s); fail-open policy applied."
+msgstr "LLM API 错误（%1$s）；已应用 fail-open 策略。"
+
+#: src/Security/Checks/LlmCheck.php:44
+msgid "LLM analysis (your provider)"
+msgstr "LLM 分析（您的提供商）"
+
+#: src/Admin/Views/pages/integrations.php:150
+msgid "LLM gateway"
+msgstr "LLM 网关"
+
+#: src/Admin/Views/pages/settings.php:246
+msgid "LLM provider error"
+msgstr "LLM 提供商错误"
+
+#: src/Security/Checks/LlmCheck.php:130
+msgid "LLM returned an unparsable verdict; fail-closed policy applied."
+msgstr "LLM 返回了无法解析的判定；已应用 fail-closed 策略。"
+
+#: src/Security/Checks/LlmCheck.php:136
+msgid "LLM returned an unparsable verdict; fail-open policy applied."
+msgstr "LLM 返回了无法解析的判定；已应用 fail-open 策略。"
+
+#: src/Security/SpamPipeline.php:288
+msgid "LLM verdict: SPAM (%s)"
+msgstr "LLM 判定：SPAM（%s）"
+
+#: src/Admin/Views/pages/settings.php:189
+msgid "Language validation"
+msgstr "语言校验"
+
+#: src/Admin/Views/pages/settings.php:275
+msgid "Latest 400 lines are shown. Log directory: "
+msgstr "显示最近 400 行。日志目录："
+
+#: src/Admin/Views/pages/dashboard.php:81
+msgid "Latest registry entries — blocked spam, integration errors and bans."
+msgstr "最新注册表条目——拦截的垃圾、集成错误与封禁。"
+
+#: src/Admin/Views/pages/integrations.php:78
+msgid "Leave empty unless you use a proxy, regional endpoint or self-hosted gateway."
+msgstr "除非使用代理、区域端点或自建网关，否则留空。"
+
+#: src/Admin/Assets.php:72
+msgid "Light"
+msgstr "浅色"
+
+#: src/Admin/Views/pages/settings.php:171
+msgid "Link spam"
+msgstr "链接垃圾"
+
+#: src/Security/Checks/LinkSpamCheck.php:27
+msgid "Link-spam detection"
+msgstr "链接垃圾检测"
+
+#: src/Admin/Views/pages/dashboard.php:31
+msgid "Live overview of form protection across your site."
+msgstr "全站表单防护实时概览。"
+
+#: src/Admin/Views/pages/settings.php:268
+msgid "Loading dates…"
+msgstr "正在加载日期…"
+
+#: src/Admin/Assets.php:63
+#: src/Admin/Views/pages/dashboard.php:74
+#: src/Admin/Views/pages/dashboard.php:82
+#: src/Admin/Views/pages/ip-rules.php:62
+msgid "Loading…"
+msgstr "加载中…"
+
+#: src/Admin/Views/pages/integrations.php:148
+msgid "Local heuristics"
+msgstr "本地启发式检查"
+
+#: src/Admin/Views/pages/settings.php:265
+msgid "Log viewer"
+msgstr "日志查看器"
+
+#: src/Admin/Views/pages/settings.php:68
+msgid "Logging & data retention"
+msgstr "日志与数据保留"
+
+#: src/Admin/Views/pages/tools.php:52
+msgid "Lookup"
+msgstr "查询"
+
+#: src/Admin/Views/pages/tools.php:38
+msgid "Maintenance"
+msgstr "维护"
+
+#: src/Admin/RestController.php:531
+msgid "Maintenance run completed."
+msgstr "维护任务已完成。"
+
+#: src/Admin/Views/pages/ip-rules.php:50
+msgid "Manual ban"
+msgstr "手动封禁"
+
+#: src/Admin/RestController.php:450
+msgid "Manual ban by administrator"
+msgstr "管理员手动封禁"
+
+#: src/Services/BanManager.php:133
+msgid "Manually whitelisted by administrator"
+msgstr "管理员手动加入白名单"
+
+#: src/Admin/Views/pages/integrations.php:109
+msgid "Master switch — \"check via AbuseIPDB API\"."
+msgstr "总开关——“通过 AbuseIPDB API 检查”。"
+
+#: src/Admin/Views/pages/integrations.php:39
+msgid "Master switch — \"check via LLM\"."
+msgstr "总开关——“通过 LLM 检查”。"
+
+#: src/Admin/Views/pages/settings.php:174
+msgid "Max links per field"
+msgstr "每个字段最多链接数"
+
+#: src/Admin/Views/pages/settings.php:133
+msgid "Max submissions / min"
+msgstr "每分钟最多提交数"
+
+#: src/Admin/Views/pages/settings.php:105
+msgid "Maximum form age (s)"
+msgstr "表单最大有效期（秒）"
+
+#: src/Admin/Views/pages/settings.php:28
+msgid "Messages"
+msgstr "消息"
+
+#: src/Admin/Views/pages/settings.php:232
+msgid "Minimum gap between two alerts of the same type."
+msgstr "同类型两次提醒之间的最小间隔。"
+
+#: src/Admin/Views/pages/settings.php:104
+msgid "Minimum seconds"
+msgstr "最少秒数"
+
+#: src/Admin/Views/pages/integrations.php:133
+msgid "Mode"
+msgstr "模式"
+
+#: src/Admin/Views/pages/integrations.php:63
+msgid "Model"
+msgstr "模型"
+
+#: src/Admin/Views/pages/integrations.php:66
+msgid "Model id used by your gateway, e.g. mistralai/mistral-7b-instruct."
+msgstr "您的网关使用的模型 ID，例如 mistralai/mistral-7b-instruct。"
+
+#: src/Services/Llm/LlmGateway.php:196
+msgid "Model returned an unparsable verdict: "
+msgstr "模型返回了无法解析的判定："
+
+#: src/Admin/Cf7Panel.php:73
+msgid "NOT PROTECTED (excluded in Settings → General)"
+msgstr "未受保护（已在“设置 → 常规”中排除）"
+
+#: src/Admin/Views/pages/settings.php:59
+msgid "No Contact Form 7 forms found."
+msgstr "未找到 Contact Form 7 表单。"
+
+#: src/Admin/Cf7Panel.php:106
+msgid "No form tags are required — protection is applied automatically via hidden fields and the wpcf7_spam pipeline."
+msgstr "无需任何表单标签——防护通过隐藏字段与 wpcf7_spam 管线自动生效。"
+
+#: src/Security/Checks/TimeCheck.php:81
+msgid "No timing fields present (JS disabled or direct POST)."
+msgstr "缺少计时字段（JS 被禁用或直接 POST）。"
+
+#: src/Admin/Assets.php:64
+msgid "Nothing here yet."
+msgstr "暂无内容。"
+
+#: src/Admin/Views/pages/settings.php:74
+msgid "Nothing — counters only"
+msgstr "不记录——仅计数器"
+
+#: src/Admin/Views/pages/settings.php:29
+msgid "Notifications"
+msgstr "通知"
+
+#: src/Admin/Views/pages/settings.php:234
+msgid "Notify about"
+msgstr "通知内容"
+
+#: src/Admin/Views/pages/settings.php:228
+msgid "Notify administrators about important security events (throttled)."
+msgstr "就重要安全事件通知管理员（带限流）。"
+
+#: src/Admin/Views/pages/integrations.php:95
+msgid "Off = save tokens: the LLM is consulted only for submissions that passed local heuristics."
+msgstr "关闭 = 节省 token：仅对通过本地启发式检查的提交调用 LLM。"
+
+#: src/Admin/Views/pages/integrations.php:92
+msgid "On API error / unparsable answer"
+msgstr "API 错误/答案无法解析时"
+
+#: src/Admin/Views/pages/settings.php:55
+msgid "Only selected forms"
+msgstr "仅所选表单"
+
+#: src/Admin/Views/pages/settings.php:107
+msgid "Only used for the server-timestamp fallback when JavaScript is disabled."
+msgstr "仅在 JavaScript 被禁用时用于服务器时间戳回退。"
+
+#: src/Admin/DashboardWidget.php:68
+msgid "Open dashboard"
+msgstr "打开仪表盘"
+
+#: src/Admin/Views/pages/dashboard.php:34
+msgid "Open registry"
+msgstr "打开注册表"
+
+#: src/Admin/Cf7Panel.php:95
+msgid "Open security dashboard"
+msgstr "打开安全仪表盘"
+
+#: src/Admin/Cf7Panel.php:71
+msgid "PROTECTED"
+msgstr "已受保护"
+
+#: src/Admin/Assets.php:77
+msgid "Page"
+msgstr "第"
+
+#: src/Admin/Views/Ui.php:101
+msgid "Paste new key…"
+msgstr "粘贴新密钥…"
+
+#: src/Admin/Assets.php:96
+msgid "Payload"
+msgstr "提交内容"
+
+#: src/Services/BanManager.php:95
+msgid "Permanent"
+msgstr "永久"
+
+#: src/Admin/Views/pages/settings.php:138
+msgid "Permanent after N bans"
+msgstr "封禁 N 次后转为永久"
+
+#: src/Admin/Views/pages/integrations.php:144
+msgid "Pipeline order"
+msgstr "管线顺序"
+
+#: src/Admin/Views/pages/settings.php:197
+msgid "Placeholders: %field_name%, %language_name%. Empty = use the default from the Messages tab."
+msgstr "占位符：%field_name%、%language_name%。留空 = 使用“消息”选项卡中的默认值。"
+
+#: src/Admin/PageRenderer.php:50
+msgid "Plugin sections"
+msgstr "插件分区"
+
+#: src/Admin/Views/pages/dashboard.php:67
+msgid "Processed"
+msgstr "已处理"
+
+#: src/Admin/Views/pages/dashboard.php:65
+msgid "Processed vs blocked submissions per day (UTC)."
+msgstr "每日已处理与已拦截提交对比（UTC）。"
+
+#: src/Admin/Views/pages/settings.php:56
+msgid "Protected forms"
+msgstr "受保护表单"
+
+#: src/Admin/Views/pages/settings.php:27
+msgid "Protection"
+msgstr "防护"
+
+#: src/Admin/Views/pages/integrations.php:40
+msgid "Provider"
+msgstr "提供商"
+
+#: src/Admin/Views/pages/integrations.php:108
+msgid "Queries abuseipdb.com for the submitter IP: abuse confidence score, total community reports, country, ISP and Tor status. Results are cached locally to respect the daily API quota."
+msgstr "向 abuseipdb.com 查询提交者 IP：滥用置信度分数、社区举报总数、国家、运营商与 Tor 状态。结果会本地缓存，以遵守每日 API 配额。"
+
+#: src/Admin/Views/pages/tools.php:49
+msgid "Query AbuseIPDB for any IP on demand (uses the configured API key and cache)."
+msgstr "按需查询任意 IP 的 AbuseIPDB 数据（使用已配置的 API 密钥与缓存）。"
+
+#: src/Admin/Views/pages/settings.php:87
+msgid "REMOTE_ADDR only — ignore all headers"
+msgstr "仅 REMOTE_ADDR——忽略所有请求头"
+
+#: src/Security/Checks/RateLimitCheck.php:33
+msgid "Rate limiting"
+msgstr "频率限制"
+
+#: src/Admin/Views/pages/settings.php:129
+msgid "Rate limiting & auto-ban"
+msgstr "频率限制与自动封禁"
+
+#: src/Admin/Views/pages/settings.php:245
+msgid "Rate-limit ban"
+msgstr "频率限制封禁"
+
+#: src/Admin/Views/pages/dashboard.php:75
+msgid "Re-check"
+msgstr "重新检查"
+
+#: src/Admin/Assets.php:85
+#: src/Admin/Views/pages/ip-rules.php:50
+msgid "Reason"
+msgstr "原因"
+
+#: src/Admin/Views/pages/integrations.php:88
+msgid "Reasoner models can take 10–30 s."
+msgstr "Reasoner 模型可能需要 10–30 秒。"
+
+#: src/Admin/Views/pages/dashboard.php:80
+msgid "Recent events"
+msgstr "最近事件"
+
+#: src/Admin/Views/pages/settings.php:231
+msgid "Recipient e-mail"
+msgstr "收件邮箱"
+
+#: src/Admin/Assets.php:94
+msgid "Referrer"
+msgstr "来源页"
+
+#: src/Admin/Views/pages/dashboard.php:35
+#: src/Admin/Views/pages/settings.php:269
+msgid "Refresh"
+msgstr "刷新"
+
+#: src/Admin/RestController.php:438
+msgid "Refusing to ban a private/reserved IP range — this would block your own server or LAN."
+msgstr "拒绝封禁私有/保留 IP 段——这会封掉你自己的服务器或局域网。"
+
+#: src/Admin/Views/pages/dashboard.php:46
+msgid "Registry (blocked)"
+msgstr "注册表（拦截）"
+
+#: src/Admin/DashboardWidget.php:52
+msgid "Registry entries"
+msgstr "注册表条目"
+
+#: src/Admin/Views/pages/settings.php:75
+msgid "Registry verbosity"
+msgstr "注册表记录级别"
+
+#: src/Admin/Views/pages/integrations.php:110
+msgid "Remaining daily budget: %d queries."
+msgstr "今日剩余额度：%d 次查询。"
+
+#: src/Admin/Assets.php:57
+msgid "Remove this IP rule?"
+msgstr "移除此 IP 规则？"
+
+#: src/Security/Checks/TimeCheck.php:89
+msgid "Render-to-submit delta of %d s is below the %d s minimum."
+msgstr "渲染到提交的间隔 %d 秒低于最小值 %d 秒。"
+
+#: src/Admin/Views/pages/integrations.php:126
+msgid "Report confirmed spammers back to AbuseIPDB"
+msgstr "将确认的垃圾发送者回报给 AbuseIPDB"
+
+#: src/Admin/Views/pages/integrations.php:79
+msgid "Required for custom providers, e.g. https://api.my-operator.com/v1"
+msgstr "自定义提供商必填，例如 https://api.my-operator.com/v1"
+
+#: src/Admin/Views/pages/tools.php:71
+msgid "Requirements & environment"
+msgstr "要求与环境"
+
+#: src/Admin/Views/pages/registry.php:51
+msgid "Reset"
+msgstr "重置"
+
+#: src/Admin/Views/pages/tools.php:61
+msgid "Reset ALL settings to defaults"
+msgstr "将全部设置重置为默认值"
+
+#: src/Admin/Views/pages/tools.php:43
+msgid "Reset statistics"
+msgstr "重置统计"
+
+#: src/Admin/Views/pages/settings.php:190
+msgid "Restricts name-like fields to one character set (22 languages)."
+msgstr "将姓名字段限制为单一字符集（支持 22 种语言）。"
+
+#: src/Admin/Views/pages/settings.php:76
+msgid "Retention (days)"
+msgstr "保留天数"
+
+#: src/Admin/Assets.php:67
+msgid "Rule removed."
+msgstr "规则已移除。"
+
+#: src/Admin/Views/pages/integrations.php:95
+msgid "Run LLM even when local checks already flagged spam"
+msgstr "即使本地检查已判定垃圾也运行 LLM"
+
+#: src/Admin/Views/pages/tools.php:41
+msgid "Run maintenance now"
+msgstr "立即运行维护"
+
+#: src/Admin/Views/pages/settings.php:146
+#: src/Security/Checks/SqlInjectionCheck.php:28
+msgid "SQL-injection detection"
+msgstr "SQL 注入检测"
+
+#: src/Security/Checks/SqlInjectionCheck.php:48
+msgid "SQL-injection signature \"%1$s\" matched in field \"%2$s\"."
+msgstr "在字段“%2$s”中匹配到 SQL 注入特征“%1$s”。"
+
+#: src/Admin/PageRenderer.php:39
+msgid "Save changes"
+msgstr "保存更改"
+
+#: src/Admin/Views/pages/settings.php:155
+msgid "Script tags, event handlers and encoded payloads."
+msgstr "脚本标签、事件处理器与编码载荷。"
+
+#: src/Admin/Views/pages/ip-rules.php:59
+msgid "Search IP or reason…"
+msgstr "搜索 IP 或原因…"
+
+#: src/Admin/Views/pages/dashboard.php:30
+msgid "Security Dashboard"
+msgstr "安全仪表盘"
+
+#: src/Admin/Views/pages/settings.php:272
+msgid "Select a date to view the log."
+msgstr "选择日期以查看日志。"
+
+#: src/Admin/Assets.php:79
+msgid "Select all"
+msgstr "全选"
+
+#: src/Admin/Views/pages/settings.php:251
+msgid "Send test e-mail"
+msgstr "发送测试邮件"
+
+#: src/Admin/Views/pages/integrations.php:38
+msgid "Sends the full submission (fields, IP, browser, geo, timing) to the large language model of your choice, which must answer with exactly one word: SPAM or CLEAN. SPAM verdicts are written to the spam registry and the submission is rejected; CLEAN submissions pass."
+msgstr "将完整提交内容（字段、IP、浏览器、地理、计时）发送给您选择的大语言模型，模型必须恰好以一个词回答：SPAM 或 CLEAN。SPAM 判定会写入垃圾注册表并拒绝提交；CLEAN 提交正常通过。"
+
+#: src/Admin/AdminMenu.php:72
+#: src/Admin/Cf7Panel.php:98
+#: src/Admin/PageRenderer.php:101
+#: src/Admin/Views/pages/settings.php:35
+msgid "Settings"
+msgstr "设置"
+
+#: src/Admin/Views/pages/tools.php:28
+msgid "Settings backup"
+msgstr "设置备份"
+
+#: src/Admin/Assets.php:70
+msgid "Settings imported."
+msgstr "设置已导入。"
+
+#: src/Admin/Assets.php:52
+msgid "Settings saved."
+msgstr "设置已保存。"
+
+#: src/Admin/Assets.php:75
+#: src/Admin/Views/Ui.php:103
+msgid "Show key"
+msgstr "显示密钥"
+
+#: src/Admin/Views/pages/settings.php:78
+msgid "Show the daily summary on the main WP dashboard."
+msgstr "在 WordPress 主仪表盘显示每日摘要。"
+
+#: src/Admin/Views/pages/settings.php:209
+msgid "Shown instead of the generic CF7 spam notice when a specific check fires. Placeholders: %field_name%, %language_name%, %minutes%."
+msgstr "特定检查触发时，替代 CF7 通用垃圾提示显示。占位符：%field_name%、%language_name%、%minutes%。"
+
+#: src/Admin/Views/pages/settings.php:147
+msgid "Signature scanning of every submitted field."
+msgstr "对每个提交字段进行特征扫描。"
+
+#: src/Admin/Cf7Panel.php:86
+#. translators: 1: processed count, 2: blocked count
+msgid "Site lifetime: %1$s submissions processed, %2$s blocked as spam."
+msgstr "站点累计：处理提交 %1$s 次，拦截垃圾 %2$s 次。"
+
+#: src/Security/SpamPipeline.php:179
+msgid "Skipped — submission already flagged"
+msgstr "已跳过——提交已被标记"
+
+#: src/Admin/Views/pages/settings.php:130
+msgid "Sliding 60-second window per IP with strike escalation."
+msgstr "按 IP 的 60 秒滑动窗口，带违规计数升级。"
+
+#: src/Admin/Assets.php:86
+#: src/Services/BanManager.php:93
+msgid "Source"
+msgstr "来源"
+
+#: src/Admin/Cf7Panel.php:33
+msgid "Spam Checker"
+msgstr "Spam Checker"
+
+#: src/Admin/AdminMenu.php:75
+#: src/Admin/PageRenderer.php:104
+#: src/Admin/Views/pages/registry.php:18
+msgid "Spam Registry"
+msgstr "垃圾注册表"
+
+#: src/Admin/Views/pages/settings.php:244
+msgid "Spam blocked"
+msgstr "垃圾已拦截"
+
+#: src/Security/SpamPipeline.php:301
+#. translators: %s: form ID
+msgid "Spam blocked on form #%s"
+msgstr "表单 #%s 拦截了垃圾提交"
+
+#: src/Admin/Cf7Panel.php:101
+#: src/Admin/DashboardWidget.php:70
+msgid "Spam registry"
+msgstr "垃圾注册表"
+
+#: src/Admin/Views/pages/settings.php:196
+msgid "Strict mode"
+msgstr "严格模式"
+
+#: src/Services/BanManager.php:155
+#. translators: 1: strike count, 2: threshold
+msgid "Strike threshold reached (%1$d/%2$d). Last reason: %3$s"
+msgstr "已达到违规计数阈值（%1$d/%2$d）。最近原因：%3$s"
+
+#: src/Admin/Assets.php:87
+msgid "Strikes"
+msgstr "违规计数"
+
+#: src/Admin/Views/pages/settings.php:134
+msgid "Strikes before ban"
+msgstr "封禁前违规计数"
+
+#: src/Admin/Assets.php:92
+msgid "Submission"
+msgstr "提交"
+
+#: src/Admin/DashboardWidget.php:49
+#: src/Admin/Views/pages/dashboard.php:42
+msgid "Submissions today"
+msgstr "今日提交"
+
+#: src/Security/Checks/TimeCheck.php:61
+msgid "Submitted in %d s — faster than the %d s human minimum."
+msgstr "在 %d 秒内提交——快于人类最低值 %d 秒。"
+
+#: src/Admin/Views/pages/integrations.php:65
+msgid "Suggestions: "
+msgstr "建议："
+
+#: src/Admin/Assets.php:74
+msgid "System"
+msgstr "跟随系统"
+
+#: src/Admin/Views/pages/dashboard.php:72
+msgid "System health"
+msgstr "系统健康"
+
+#: src/Services/BanManager.php:96
+msgid "Temporary"
+msgstr "临时"
+
+#: src/Admin/Views/pages/integrations.php:101
+#: src/Admin/Views/pages/integrations.php:139
+msgid "Test connection"
+msgstr "测试连接"
+
+#: src/Admin/RestController.php:234
+msgid "Test e-mail sent."
+msgstr "测试邮件已发送。"
+
+#: src/Admin/Views/pages/integrations.php:138
+msgid "Test performs a live lookup of 8.8.8.8 (Google DNS)."
+msgstr "测试将对 8.8.8.8（Google DNS）执行实时查询。"
+
+#: src/Admin/Views/pages/integrations.php:100
+msgid "Test sends one harmless sample submission to the configured provider."
+msgstr "测试会向所配置的提供商发送一条无害的示例提交。"
+
+#: src/Admin/Assets.php:60
+msgid "Testing…"
+msgstr "测试中…"
+
+#: src/Services/Llm/AnthropicMessagesClient.php:41
+#: src/Services/Llm/OpenAiChatClient.php:41
+msgid "The API base URL for the selected LLM provider is not set."
+msgstr "未设置所选 LLM 提供商的 API 基础 URL。"
+
+#: src/Services/Llm/AnthropicMessagesClient.php:38
+#: src/Services/Llm/OpenAiChatClient.php:38
+msgid "The API key for the selected LLM provider is not set."
+msgstr "未设置所选 LLM 提供商的 API 密钥。"
+
+#: src/Admin/Views/pages/tools.php:39
+msgid "The daily cron prunes expired bans, old events and stale caches. You can also run it manually."
+msgstr "每日计划任务会清理过期封禁、旧事件与陈旧缓存，也可手动运行。"
+
+#: src/Admin/Views/pages/integrations.php:53
+msgid "The key is stored in the WordPress database and masked in this UI."
+msgstr "密钥存储在 WordPress 数据库中，并在此界面中打码显示。"
+
+#: src/Admin/PageRenderer.php:41
+msgid "Theme: light / dark / system"
+msgstr "主题：浅色 / 深色 / 跟随系统"
+
+#: src/Admin/RestController.php:189
+msgid "This file was not exported by CF7 Spam Checker Pro."
+msgstr "此文件并非由 CF7 Spam Checker Pro 导出。"
+
+#: src/Admin/Cf7Panel.php:69
+msgid "This form:"
+msgstr "此表单："
+
+#: src/Services/Mailer.php:82
+msgid "This is a test message from CF7 Spam Checker Pro.\nIf you can read it, e-mail notifications are configured correctly."
+msgstr "这是来自 CF7 Spam Checker Pro 的测试消息。\n如果您能看到它，说明邮件通知配置正确。"
+
+#: src/Admin/Assets.php:58
+msgid "This permanently deletes data. Continue?"
+msgstr "此操作将永久删除数据。是否继续？"
+
+#: src/Admin/Views/pages/settings.php:232
+msgid "Throttle (minutes)"
+msgstr "限流（分钟）"
+
+#: src/Admin/Assets.php:81
+msgid "Time"
+msgstr "时间"
+
+#: src/Admin/Views/pages/integrations.php:88
+msgid "Timeout (seconds)"
+msgstr "超时（秒）"
+
+#: src/Admin/Views/pages/settings.php:100
+#: src/Security/Checks/TimeCheck.php:40
+msgid "Timing analysis"
+msgstr "时间分析"
+
+#: src/Admin/Views/pages/registry.php:48
+msgid "To date"
+msgstr "结束日期"
+
+#: src/Admin/PageRenderer.php:41
+msgid "Toggle theme"
+msgstr "切换主题"
+
+#: src/Admin/AdminMenu.php:76
+#: src/Admin/PageRenderer.php:105
+#: src/Admin/Views/pages/tools.php:20
+msgid "Tools"
+msgstr "工具"
+
+#: src/Admin/Views/pages/dashboard.php:64
+msgid "Traffic — last 30 days"
+msgstr "流量——最近 30 天"
+
+#: src/Admin/Views/pages/settings.php:36
+msgid "Tune every protection layer. Changes are saved with the button in the top bar."
+msgstr "调整每个防护层。更改通过顶栏按钮保存。"
+
+#: src/Admin/Assets.php:82
+#: src/Admin/Views/pages/ip-rules.php:46
+#: src/Services/BanManager.php:94
+msgid "Type"
+msgstr "类型"
+
+#: src/Admin/Views/pages/tools.php:63
+msgid "Uninstall behaviour: the \"Keep data on uninstall\" switch lives in Settings → General. When off, deleting the plugin from WordPress removes all tables, options, transients and log files."
+msgstr "卸载行为：“卸载时保留数据”开关位于“设置 → 常规”。关闭时，从 WordPress 删除插件将移除所有数据表、选项、临时缓存与日志文件。"
+
+#: src/Admin/PageRenderer.php:70
+msgid "Unknown page."
+msgstr "未知页面。"
+
+#: src/Admin/Assets.php:93
+msgid "User agent"
+msgstr "User-Agent"
+
+#: src/Security/Checks/BotAgentCheck.php:95
+msgid "User-Agent contains automation marker \"%s\"."
+msgstr "User-Agent 包含自动化标记“%s”。"
+
+#: src/Admin/Views/pages/integrations.php:96
+msgid "Uses the ban duration from Settings → Protection."
+msgstr "使用“设置 → 防护”中的封禁时长。"
+
+#: src/Admin/Assets.php:83
+msgid "Verdict"
+msgstr "判定"
+
+#: src/Admin/Views/pages/dashboard.php:83
+msgid "View all"
+msgstr "查看全部"
+
+#: src/Admin/Views/pages/integrations.php:97
+msgid "View the system prompt sent to the model"
+msgstr "查看发送给模型的系统提示词"
+
+#: src/Admin/Views/pages/settings.php:208
+msgid "Visitor-facing messages"
+msgstr "访客可见消息"
+
+#: src/Admin/Views/pages/settings.php:69
+msgid "What the spam registry stores and for how long (GDPR)."
+msgstr "垃圾注册表存储的内容与期限（GDPR）。"
+
+#: src/Admin/Views/pages/integrations.php:126
+msgid "When a submission is blocked, its IP is reported under the \"Email Spam\" category with the block reasons as comment. Requires the same API key."
+msgstr "提交被拦截时，其 IP 将以“Email Spam”类别上报，拦截原因作为说明。需要同一 API 密钥。"
+
+#: src/Admin/Views/pages/settings.php:79
+msgid "When off, deleting the plugin removes all tables, options and logs."
+msgstr "关闭时，删除插件将移除所有数据表、选项与日志。"
+
+#: src/Admin/Views/pages/integrations.php:147
+#: src/Admin/Views/pages/ip-rules.php:38
+msgid "Whitelist"
+msgstr "白名单"
+
+#: src/Admin/Views/pages/ip-rules.php:48
+msgid "Whitelist (never block)"
+msgstr "白名单（永不拦截）"
+
+#: src/Admin/Views/pages/dashboard.php:45
+msgid "Whitelisted IPs"
+msgstr "白名单 IP"
+
+#: src/Admin/Views/pages/settings.php:78
+msgid "WordPress dashboard widget"
+msgstr "WordPress 仪表盘小工具"
+
+#: src/Admin/Views/pages/settings.php:259
+msgid "Writes a detailed daily log to wp-content/uploads/cf7sec/ (web-inaccessible)."
+msgstr "将详细的每日日志写入 wp-content/uploads/cf7sec/（Web 不可访问）。"
+
+#: src/Admin/Views/pages/settings.php:154
+#: src/Security/Checks/XssCheck.php:28
+msgid "XSS detection"
+msgstr "XSS 检测"
+
+#: src/Security/Checks/XssCheck.php:48
+msgid "XSS signature \"%1$s\" matched in field \"%2$s\"."
+msgstr "在字段“%2$s”中匹配到 XSS 特征“%1$s”。"
+
+#: src/Admin/Assets.php:54
+msgid "You have unsaved changes."
+msgstr "您有未保存的更改。"
+
+#: src/Admin/Views/pages/settings.php:91
+msgid "Your current request resolves to: "
+msgstr "当前请求解析为："
+
+#: src/Services/Mailer.php:79
+#. translators: %s: site name
+msgid "[%s] CF7 Spam Checker Pro — test notification"
+msgstr "[%s] CF7 Spam Checker Pro——测试通知"
+
+#: src/Admin/Views/pages/integrations.php:116
+msgid "abuseConfidenceScore 0–100. Community consensus suggests 25–50 for aggressive, 75+ for conservative filtering."
+msgstr "abuseConfidenceScore 取值 0–100。社区共识：激进过滤建议 25–50，保守过滤建议 75 以上。"
+
+#: src/Admin/Views/pages/integrations.php:148
+msgid "ban list, timing, honeypot, bot UA, rate limit, SQLi, XSS, links, keywords."
+msgstr "封禁列表、计时、蜜罐、机器人 UA、频率限制、SQL 注入、XSS、链接、关键词。"
+
+#: src/Admin/Views/pages/integrations.php:134
+msgid "e.g. US, DE, CN, RU"
+msgstr "例如 US, DE, CN, RU"
+
+#: src/Admin/Views/pages/integrations.php:150
+msgid "final AI verdict SPAM/CLEAN with geo context attached."
+msgstr "附带地理上下文的最终 AI 判定 SPAM/CLEAN。"
+
+#: src/Admin/Assets.php:91
+msgid "items"
+msgstr "条"
+
+#: src/Admin/Views/pages/integrations.php:123
+msgid "maxAgeInDays API parameter."
+msgstr "API 参数 maxAgeInDays。"
+
+#: src/Admin/Assets.php:78
+msgid "of"
+msgstr "/"
+
+#: src/Admin/Views/pages/integrations.php:149
+msgid "runs only while the submission is still clean (saves quota)."
+msgstr "仅在提交仍为“干净”时运行（节省配额）。"
+
+#: src/Admin/Assets.php:80
+msgid "selected"
+msgstr "已选择"
+
+#: src/Admin/Views/pages/integrations.php:147
+msgid "whitelisted IPs bypass everything."
+msgstr "白名单 IP 跳过所有检查。"
+
+#: src/Admin/RestController.php:235
+msgid "wp_mail() failed. Check your server mail configuration."
+msgstr "wp_mail() 失败。请检查服务器邮件配置。"
+
+#: src/Languages.php:33
+msgctxt "language name"
+msgid "Arabic"
+msgstr "阿拉伯语"
+
+#: src/Languages.php:30
+msgctxt "language name"
+msgid "Chinese"
+msgstr "中文"
+
+#: src/Languages.php:46
+msgctxt "language name"
+msgid "Czech"
+msgstr "捷克语"
+
+#: src/Languages.php:38
+msgctxt "language name"
+msgid "Dutch"
+msgstr "荷兰语"
+
+#: src/Languages.php:26
+msgctxt "language name"
+msgid "English"
+msgstr "英语"
+
+#: src/Languages.php:28
+msgctxt "language name"
+msgid "French"
+msgstr "法语"
+
+#: src/Languages.php:29
+msgctxt "language name"
+msgid "German"
+msgstr "德语"
+
+#: src/Languages.php:42
+msgctxt "language name"
+msgid "Greek"
+msgstr "希腊语"
+
+#: src/Languages.php:43
+msgctxt "language name"
+msgid "Hebrew"
+msgstr "希伯来语"
+
+#: src/Languages.php:34
+msgctxt "language name"
+msgid "Hindi"
+msgstr "印地语"
+
+#: src/Languages.php:36
+msgctxt "language name"
+msgid "Italian"
+msgstr "意大利语"
+
+#: src/Languages.php:31
+msgctxt "language name"
+msgid "Japanese"
+msgstr "日语"
+
+#: src/Languages.php:32
+msgctxt "language name"
+msgid "Korean"
+msgstr "韩语"
+
+#: src/Languages.php:39
+msgctxt "language name"
+msgid "Polish"
+msgstr "波兰语"
+
+#: src/Languages.php:35
+msgctxt "language name"
+msgid "Portuguese"
+msgstr "葡萄牙语"
+
+#: src/Languages.php:25
+msgctxt "language name"
+msgid "Russian"
+msgstr "俄语"
+
+#: src/Languages.php:27
+msgctxt "language name"
+msgid "Spanish"
+msgstr "西班牙语"
+
+#: src/Languages.php:40
+msgctxt "language name"
+msgid "Swedish"
+msgstr "瑞典语"
+
+#: src/Languages.php:44
+msgctxt "language name"
+msgid "Thai"
+msgstr "泰语"
+
+#: src/Languages.php:37
+msgctxt "language name"
+msgid "Turkish"
+msgstr "土耳其语"
+
+#: src/Languages.php:45
+msgctxt "language name"
+msgid "Ukrainian"
+msgstr "乌克兰语"
+
+#: src/Languages.php:41
+msgctxt "language name"
+msgid "Vietnamese"
+msgstr "越南语"

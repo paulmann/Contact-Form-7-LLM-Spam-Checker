@@ -1,0 +1,15 @@
+# Build artefacts that must never be committed.
+node_modules/
+
+# Release ZIP staging — rooted, so that assets/dist (a committed build
+# product) is NOT ignored by this rule.
+/dist/
+
+*.zip
+.DS_Store
+Thumbs.db
+vendor/
+.phpunit.result.cache
+
+# RAGRAF code index — machine-local, never part of the project.
+.ragraf/

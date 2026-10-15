@@ -1,0 +1,25 @@
+{
+    "name": "cf7-spam-checker-pro",
+    "version": "4.1.0",
+    "description": "Multi-layered spam & security protection for Contact Form 7 (DeepSeek LLM + AbuseIPDB + local heuristics).",
+    "private": true,
+    "scripts": {
+        "build:css": "tailwindcss -c tailwind.config.js -i assets/src/input.css -o assets/dist/admin.css --minify",
+        "build:js": "node -e \"require('fs').copyFileSync('assets/src/admin.js','assets/dist/admin.js')\"",
+        "build": "npm run build:css && npm run build:js",
+        "watch:css": "tailwindcss -c tailwind.config.js -i assets/src/input.css -o assets/dist/admin.css --watch",
+        "i18n:extract": "python3 tools/extract-pot.py",
+        "i18n:build": "python3 tools/make-i18n.py",
+        "test:smoke": "php tests/smoke.php",
+        "release": "bash tools/build-release.sh"
+    },
+    "devDependencies": {
+        "tailwindcss": "^3.4.17"
+    },
+    "browserslist": [
+        "last 2 versions",
+        "> 1%",
+        "not dead"
+    ],
+    "license": "GPL-2.0-or-later"
+}

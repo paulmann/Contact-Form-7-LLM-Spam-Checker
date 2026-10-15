@@ -1,127 +1,323 @@
-# Contact-Form-7-Spam-Checker (CF7FC)
+# CF7 Spam Checker Pro
 
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/paulmann/Contact-Form-7-Spam-Checker)](https://github.com/paulmann/Contact-Form-7-Spam-Checker/releases)
-[![PHP Version Support](https://img.shields.io/badge/php-%3E%3D%208.3-8892bf.svg)](https://php.net/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PHP](https://img.shields.io/badge/PHP-8.3%20--8.5-8892bf.svg)](https://php.net/)
+[![WordPress](https://img.shields.io/badge/WordPress-6.0%20--7.1-21759b.svg)](https://wordpress.org/)
+[![License](https://img.shields.io/badge/License-GPL--2.0--or--later-yellow.svg)](LICENSE.txt)
+[![Tests](https://img.shields.io/badge/tests-159%20passing-brightgreen.svg)](#development)
 
-**1st CF7 Form Checker** is a high-performance, multi-layered security extension for Contact Form 7. Designed for enterprise-grade protection, it combines behavioral analysis, network-level filtering, and content inspection to eliminate spam and malicious submissions with zero impact on legitimate users.
+**Multi-layered spam & security protection for Contact Form 7** — silent, zero-UI for your visitors, ruthless to bots.
 
----
+Combines behavioural analysis (timing + honeypot), content inspection (SQLi/XSS/link/keyword signatures), network reputation (**AbuseIPDB**) and **AI classification (DeepSeek LLM)** into a single, ordered pipeline. Everything is stored in purpose-built database tables, fully translatable (**EN / RU / ZH / DE**) and managed from a modern, mobile-first admin dashboard with light/dark themes.
 
-## 📋 Table of Contents
+> **Русская документация:** [README.ru.md](README.ru.md)
 
-1. [**System Overview**](#1-system-overview)
-   1.1 [Core Philosophy](#11-core-philosophy)
-   1.2 [Key Features](#12-key-features)
-2. [**User Documentation**](#2-user-documentation)
-   2.1 [For Regular Users](#21-for-regular-users)
-   2.2 [For Administrators](#22-for-administrators)
-3. [**Technical Documentation**](#3-technical-documentation)
-   3.1 [For Developers](#31-for-developers)
-   3.2 [For Security Specialists](#32-for-security-specialists)
-4. [**Logic & Architecture**](#4-logic--architecture)
-   4.1 [Workflow Diagram](#41-workflow-diagram)
-   4.2 [Validation Pipeline](#42-validation-pipeline)
-5. [**Installation & Configuration**](#5-installation--configuration)
-6. [**Maintenance & Troubleshooting**](#6-maintenance--troubleshooting)
+## Screenshots
+
+| Light theme | Dark theme |
+|---|---|
+| ![Dashboard (light)](docs/screenshots/dashboard-light.png) | ![Dashboard (dark)](docs/screenshots/dashboard-dark.png) |
+| ![Mobile dashboard](docs/screenshots/mobile-dashboard.png) | ![Integrations (dark)](docs/screenshots/integrations-dark.png) |
+
+*Interactive standalone preview of every admin page (light/dark): open `preview/admin-ui-preview.html` from the repository workspace, or browse the built-in toggles right in wp-admin after install.*
 
 ---
 
-## 1. System Overview
+## Table of Contents
 
-### 1.1 Core Philosophy
-Developed by Senior PHP architects with 20+ years of experience, this plugin follows the "Security by Design" principle. Unlike traditional CAPTCHAs that degrade UX, CF7FC operates silently in the background, making autonomous decisions based on data-driven heuristics.
-
-### 1.2 Key Features
-*   **Zero-UI Protection:** No puzzles or checkboxes for users.
-*   **Advanced IP Management:** Intelligent ban system with permanent escalation.
-*   **Multi-Language Validation:** Regex-based character set validation for 20+ languages.
-*   **Structural Content Analysis:** Detection of SQLi, XSS, and common bot patterns.
-*   **JSON-Native Storage:** High-speed data operations without database overhead.
-
----
-
-## 2. User Documentation
-
-### 2.1 For Regular Users
-As a website visitor, you will not notice the plugin's presence.
-*   **Experience:** Just fill out the form as usual.
-*   **Errors:** If your submission is blocked, you will see a standard CF7 validation error. This typically happens if you use forbidden characters or submit forms too rapidly.
-*   **Privacy:** The system does not track your personal identity; it only analyzes the technical parameters of the submission for security purposes.
-
-### 2.2 For Administrators
-The plugin provides a powerful dashboard under **CF7 Security**.
-*   **Dashboard:** Real-time statistics on blocked attacks and banned IPs.
-*   **IP Management:** Manually whitelist trusted partners or permanently ban repeat offenders.
-*   **Language Settings:** Restrict form submissions to specific languages (e.g., allow only English/Russian) to prevent international spam.
-*   **Throttling:** Configure how many requests per minute a single IP can make.
+- [Why](#why)
+- [Features](#features)
+- [How it works](#how-it-works)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick start](#quick-start)
+- [DeepSeek LLM setup](#deepseek-llm-setup)
+- [AbuseIPDB setup](#abuseipdb-setup)
+- [Admin dashboard](#admin-dashboard)
+- [Developer reference](#developer-reference)
+- [Architecture](#architecture)
+- [Upgrading from v3.x](#upgrading-from-v3x)
+- [Development](#development)
+- [License](#license)
 
 ---
 
-## 3. Technical Documentation
+## Why
 
-### 3.1 For Developers
-CF7FC is built as a final class `CF7_Advanced_Security` with a strict type system.
-*   **Hooks:** Integrates with `wpcf7_validate_text` and `wpcf7_validate_email` at priority 10.
-*   **Extensibility:** Designed for easy addition of new validation rules via the `validateField` method.
-*   **Data Structure:** Settings and logs are stored in `wp-content/cf7fc_logs/` in JSON format.
-*   **Code Quality:** PHP 7.4+ compatible, PSR-compliant structure, and `strict_types=1` enforcement.
+CAPTCHAs punish your visitors. Most "anti-spam" plugins stop at a honeypot. Real form spam in 2026 comes from LLM-driven bots, rotating residential proxies and Tor exit nodes — defeating it takes **layered signals**: behavioural, structural, reputational and semantic.
 
-### 3.2 For Security Specialists
-*   **Defense Layers:**
-    1.  **Rate Limiting:** Sliding window algorithm to prevent brute-force.
-    2.  **IP Reputation:** Local ban list + whitelist bypass.
-    3.  **Signature Matching:** Patterns for SQLi and XSS vectors.
-    4.  **Behavioral:** Bot User-Agent detection.
-*   **Audit Trail:** Every incident is logged with timestamp, IP, User-Agent, and attack payload (truncated).
+CF7 Spam Checker Pro runs those layers in cost-aware order: free local heuristics first, paid/cloud APIs only when the submission still looks clean. Legit users are never challenged; spammers are logged to an auditable **spam registry** with the exact evidence that condemned them.
 
----
+## Features
 
-## 4. Logic & Architecture
+### Protection layers
 
-### 4.1 Workflow Diagram
+| # | Layer | Type | Description |
+|---|-------|------|-------------|
+| 0 | Whitelist | local | Whitelisted IPs bypass everything |
+| 1 | IP ban list | local | Instant rejection of banned IPs (auto/manual/reputation) |
+| 2 | Timing analysis | local | Human dwell-time measured client-side (monotonic timer — immune to clock skew **and page caches**); server-timestamp fallback with skew tolerance |
+| 3 | Honeypot | local | Per-form invisible field |
+| 4 | Bot user-agent | local | 60+ automation markers, headless browsers, scanners — with false-positive suppression for real browser names |
+| 5 | Rate limiting | local | Sliding 60-second window per IP |
+| 6 | SQL-injection | local | Context-aware signatures (UNION SELECT, tautologies, stacked queries, system catalog probes…) tuned against false positives |
+| 7 | XSS | local | Script tags, event handlers, dangerous URIs — including HTML-entity and URL-decoded variants |
+| 8 | Link spam | local | Configurable max links per field |
+| 9 | Keyword blacklist | local | Admin-editable, multibyte, case-insensitive |
+| 10 | Country filter | API | Block/allow by country via AbuseIPDB geo data |
+| 11 | AbuseIPDB | API | Abuse-confidence score, total reports **and per-category "Email Spam" report counting** (verbose mode) |
+| 12 | LLM gateway | AI | Full-submission semantic analysis → strict `SPAM` / `CLEAN` verdict via **11 providers**: DeepSeek, OpenAI (ChatGPT), Qwen, Anthropic Claude, Google Gemini, Groq, Mistral, OpenRouter, xAI Grok + any custom OpenAI-compatible or Anthropic-compatible endpoint |
+| — | Language validation | field | 22-language character-set validation on name fields with friendly per-field errors |
+
+### Platform
+
+- **Spam registry** — searchable DB log of every verdict with full evidence (per-check results, sanitized payload, UA, referrer), CSV export, retention policy (GDPR-ready).
+- **IP management** — bans + whitelist in one table, strike escalation (N-th ban becomes permanent), manual bans refuse private/reserved ranges, bulk delete, CSV export, on-demand AbuseIPDB lookup per row.
+- **LLM gateway** — one configuration surface for eleven providers over two universal protocols (OpenAI-compatible chat completions, Anthropic Messages): per-provider API keys (masked in UI), free-text model ids with suggestions, base-URL overrides for proxies/regional endpoints, timeout, fail-open/fail-closed policy, optional auto-ban on SPAM verdict, built-in connection tester.
+- **AbuseIPDB integration** — three independent thresholds (confidence %, total reports, Email-Spam-category reports), DB-backed response cache with configurable TTL, live daily-quota tracking from API headers, optional **auto-reporting of confirmed spammers** back to the community (category 10 "Email Spam").
+- **Modern admin UI** — Tailwind-based design system with shadcn/ui-style tokens, full **light/dark/system theme** (persisted, auto-detected on first visit), responsive down to 360 px, **zero CDN dependencies** (everything ships locally).
+- **i18n** — English, Russian (ru_RU), Simplified Chinese (zh_CN), German (de_DE); every string translatable, visitor-facing messages customizable per check.
+- **Notifications** — throttled e-mail alerts for bans, spam waves and integration errors.
+- **Ops tooling** — settings export/import (JSON), health page, debug log viewer, one-click maintenance (cron also runs daily), clean `uninstall.php`.
+- **REST-first admin** — all UI actions go through a nonce-protected `cf7sec/v1` REST namespace with `manage_options` capability gates.
+
+## How it works
 
 ```mermaid
-graph TD
-    A[Form Submission] --> B{IP Whitelisted?}
-    B -- Yes --> C[Bypass Security]
-    B -- No --> D{IP Banned?}
-    D -- Yes --> E[Block Immediately]
-    D -- No --> F{Rate Limit Check}
-    F -- Exceeded --> G[Temp Ban IP]
-    F -- OK --> H{Content Analysis}
-    H -- Malicious --> I[Log Incident & Increment Ban Score]
-    H -- Safe --> J{Language Validation}
-    J -- Failed --> K[Return Validation Error]
-    J -- Passed --> L[Process Submission]
-    I --> M{Threshold Reached?}
-    M -- Yes --> N[Permanent Ban]
-    M -- No --> K
+flowchart TD
+    A[CF7 submission] --> W{IP whitelisted?}
+    W -- yes --> P1[ALLOW]
+    W -- no --> L[Local checks:<br/>ban list → timing → honeypot → bot UA →<br/>rate limit → SQLi → XSS → links → keywords]
+    L -- flagged --> B[BLOCK + registry + strike]
+    L -- clean --> R{AbuseIPDB enabled?}
+    R -- yes --> R1{country filter /<br/>confidence ≥ X% /<br/>reports ≥ N /<br/>email-spam ≥ M?}
+    R1 -- hit --> B
+    R1 -- ok --> K{DeepSeek enabled?}
+    R -- no --> K
+    K -- yes --> K1{LLM verdict}
+    K1 -- SPAM --> B
+    K1 -- CLEAN --> P2[ALLOW]
+    K1 -- error --> F[fail-open or fail-closed<br/>per settings + registry entry]
+    K -- no --> P2
+    B --> S{strike threshold?}
+    S -- yes --> BAN[auto-ban IP<br/>escalates to permanent]
 ```
 
-### 4.2 Validation Pipeline
-1.  **Pre-Validation:** Checks IP status and rate limits.
-2.  **Structural Validation:** Checks field lengths and types.
-3.  **Security Validation:** Scans for attack signatures.
-4.  **Semantic Validation:** Character set and regex matching.
+Design rules:
+
+1. **Fail open on internal errors** — a security plugin must never take down your contact form. Exceptions are caught, logged and reported in the registry.
+2. **Remote checks run last and only while the submission is still clean** — saves API quota and LLM tokens (configurable).
+3. **Every verdict carries evidence** — the registry stores per-check results, so false positives are diagnosable in one click.
+
+## Requirements
+
+- WordPress **6.0 – 7.1+**
+- PHP **8.3 – 8.5+** (strict types, readonly properties, enums)
+- [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) **5.7+** (tested with 6.2)
+- Optional: [DeepSeek API key](https://platform.deepseek.com/api_keys), [AbuseIPDB API key](https://www.abuseipdb.com/account/api)
+
+The plugin degrades gracefully: without CF7 it shows a notice and waits; without API keys the local layers keep working.
+
+## Installation
+
+### From WordPress.org (once published)
+
+1. *Plugins → Add New* → search **"CF7 Spam Checker Pro"** → Install → Activate.
+
+### Manual / GitHub release
+
+1. Download `contact-form-7-spam-checker.zip` from [Releases](https://github.com/paulmann/Contact-Form-7-Spam-Checker/releases).
+2. *Plugins → Add New → Upload Plugin* → choose the ZIP → Activate.
+
+Activation creates four tables (`{prefix}cf7sec_events`, `…_ip_rules`, `…_geo`, `…_daily`), schedules a daily maintenance cron and — if you used v3.x — migrates your legacy settings and `ban_list.json` automatically.
+
+## Quick start
+
+1. Go to **CF7 Security → Settings → Protection** and review the layers (sane defaults are already on).
+2. Open **Integrations** and add your DeepSeek and/or AbuseIPDB keys; press **Test connection** for each.
+3. Submit your contact form once — check **Spam Registry** and the **Dashboard** chart.
+4. Set the visitor-facing texts under **Settings → Messages** if you want something friendlier than the CF7 default.
+
+No form tags or template changes are required — protection is injected automatically via hidden fields and the `wpcf7_spam` pipeline.
+
+## LLM gateway setup (DeepSeek, ChatGPT, Qwen, Claude, Gemini, …)
+
+1. Pick a provider on **Integrations → AI spam analysis** and create a key:
+   | Provider | Protocol | Key |
+   |---|---|---|
+   | DeepSeek | OpenAI | [platform.deepseek.com](https://platform.deepseek.com/api_keys) |
+   | OpenAI (ChatGPT) | OpenAI | [platform.openai.com](https://platform.openai.com/api-keys) |
+   | Qwen (DashScope) | OpenAI | [alibabacloud.com](https://www.alibabacloud.com/product/modelstudio) |
+   | Anthropic (Claude) | Anthropic | [console.anthropic.com](https://console.anthropic.com/settings/keys) |
+   | Google Gemini | OpenAI | [aistudio.google.com](https://aistudio.google.com/apikey) |
+   | Groq / Mistral / OpenRouter / xAI | OpenAI | provider console |
+   | Custom (any operator) | OpenAI **or** Anthropic | your gateway |
+2. Paste the key (stored in the WP database, masked in the UI), choose or type a model id, optionally override the base URL (proxies, self-hosted vLLM/Ollama, regional endpoints), and switch on **Enable LLM check**.
+3. Press **Test connection** — the plugin sends one harmless sample submission and shows the provider's verdict and latency.
+
+What gets sent: a structured digest of the submission — all field values, client IP, country/ISP (when AbuseIPDB data is available), user-agent, referrer, human dwell time and the results of the local heuristics. The system prompt (viewable in the UI) forces a one-word answer: `SPAM` or `CLEAN`.
+
+- `SPAM` → submission rejected, written to the registry (optionally bans the IP).
+- `CLEAN` → submission passes.
+- API/parse error → your choice of **fail-open** (default — allow, log error) or **fail-closed** (block).
+
+## AbuseIPDB setup
+
+1. Get a free key at [abuseipdb.com/account/api](https://www.abuseipdb.com/account/api).
+2. **Integrations → AbuseIPDB reputation check**: paste the key, switch on **Enable API check**.
+3. Configure thresholds — a submission is blocked when **any** is met:
+   - **Abuse confidence ≥ X %** (community consensus: 25–50 aggressive, 75+ conservative; default 50);
+   - **Total reports ≥ N** (all categories; 0 = disabled);
+   - **"Email Spam" category reports ≥ M** (0 = disabled).
+4. Optional: auto-ban offenders, report confirmed spammers back (category 10, with block reasons as comment), country block/allow-list.
+5. **Test connection** performs a live lookup of 8.8.8.8.
+
+**About per-category counts:** the public Check API does not expose lifetime per-category counters, but in `verbose` mode it returns the most recent individual reports *with their categories* — the plugin counts "Email Spam" (category 10) entries among them. This is a close approximation and documented as such in the UI.
+
+Quota safety: responses are cached in a DB table for a configurable TTL (default 7 days), the plugin tracks the remaining daily budget from the API's own `x-ratelimit-remaining` header, and remote checks run only for submissions that passed local heuristics.
+
+## Admin dashboard
+
+| Page | What you do there |
+|------|-------------------|
+| **Dashboard** | Today/30-day KPIs, processed-vs-blocked chart, system health, recent events |
+| **Settings** | General (scope, retention, IP detection), Protection (all 10 local layers + parameters), Messages, Notifications, Diagnostics (debug log viewer) |
+| **Integrations** | DeepSeek + AbuseIPDB configuration & self-tests, pipeline order card |
+| **IP Rules** | Ban list & whitelist: add/search/delete/bulk-delete, strikes, expiry, CSV export, per-IP AbuseIPDB lookup |
+| **Spam Registry** | Filter by verdict/type/date/text, evidence modal per event (checks, payload, UA), CSV export, purge |
+| **Tools** | Settings export/import, manual maintenance, geo-cache clear, stats reset, IP lookup, requirements check, danger zone |
+
+Theme toggle (top bar) cycles **light → dark → system**; the choice persists in `localStorage` and is auto-detected from your OS on first visit.
+
+## Developer reference
+
+### Filters & actions
+
+```php
+/**
+ * Fires after an IP has been banned.
+ * @param string $ip
+ * @param string $reason
+ * @param bool   $permanent
+ */
+do_action( 'cf7sec_ip_banned', $ip, $reason, $permanent );
+
+/** Fires after the daily maintenance run. */
+do_action( 'cf7sec_after_cleanup' );
+```
+
+The pipeline consumes the standard CF7 filters: `wpcf7_spam` (priority 5), `wpcf7_validate_{text,email,tel,textarea}` (language validation), `wpcf7_form_hidden_fields`, `wpcf7_display_message` (custom spam messages), `wpcf7_editor_panels`.
+
+### REST API (`cf7sec/v1`)
+
+All routes require `manage_options` + `X-WP-Nonce`:
+
+```
+GET|POST /settings          read (masked secrets) / save
+POST     /settings/reset    factory defaults
+GET      /stats?days=30     chart series + totals
+GET      /health            environment diagnostics
+GET      /events            registry list (filters: verdict, event_type, search, from, to, page)
+GET      /events/{id}       event with full evidence
+GET      /events/export     CSV
+POST     /events/clear      truncate registry
+GET|POST /ip-rules          list / add (ban|whitelist)
+DELETE   /ip-rules/{ip}     remove
+POST     /ip-rules/bulk-delete
+POST     /ip-lookup         on-demand AbuseIPDB lookup
+POST     /test/deepseek | /test/abuseipdb | /test/email
+GET      /export · POST /import    settings backup
+POST     /cleanup           run maintenance now
+GET      /logs · /logs/dates · DELETE /logs    debug log viewer
+```
+
+### Adding a custom check
+
+```php
+use CF7Sec\Security\{CheckInterface, CheckResult, SubmissionContext};
+
+final class MyCheck implements CheckInterface {
+    public function id(): string { return 'my_check'; }
+    public function label(): string { return 'My check'; }
+    public function enabled(SubmissionContext $c): bool { return true; }
+    public function run(SubmissionContext $c): CheckResult {
+        return $c->postedData['email'] === 'spam@spam.test'
+            ? CheckResult::fail('my_check', 'Known spam address', 'keyword_spam')
+            : CheckResult::pass('my_check');
+    }
+}
+```
+
+Compose it into a pipeline by subclassing, or simply block via the standard `wpcf7_spam` filter for lightweight cases.
+
+## Architecture
+
+```
+contact-form-7-spam-checker/
+├── contact-form-7-spam-checker.php   # bootstrap: constants, PSR-4 autoloader, guards
+├── uninstall.php                     # full data purge (unless keep_data)
+├── src/                              # namespace CF7Sec\ (PHP 8.3+, strict types)
+│   ├── Plugin.php                    # composition root, hook wiring
+│   ├── Settings.php                  # schema, defaults, sanitisation, secret masking
+│   ├── Activator.php / Deactivator.php / Cron.php
+│   ├── Languages.php                 # 22-language regex registry
+│   ├── Security/                     # SpamPipeline + CheckResult/Status/Context
+│   │   ├── Checks/                   # 11 checks, one class per file
+│   │   ├── Patterns.php              # SQLi/XSS/bot-UA signature registries
+│   │   ├── LlmPrompt.php             # submission digest builder
+│   │   └── LanguageValidator.php     # wpcf7_validate_* integration
+│   ├── Services/                     # DeepSeek, AbuseIpDb, BanManager, Mailer, Logger
+│   ├── Storage/                      # EventsRepository, IpRuleRepository, GeoCache, DailyStats
+│   ├── Support/                      # Ip (proxy-aware resolution), mbstring compat
+│   └── Admin/                        # AdminMenu, Assets, PageRenderer, RestController,
+│       └── Views/pages/              # dashboard, settings, integrations, ip-rules, registry, tools
+├── assets/
+│   ├── src/                          # input.css (design system) + admin.js (SPA-ish UI)
+│   └── dist/                         # built assets — committed, no build step needed in prod
+├── languages/                        # .pot + ru_RU/zh_CN/de_DE (.po + .mo)
+├── tests/                            # smoke.php (no WP) + wp-integration.php (real WP+CF7)
+└── tools/                            # POT extraction + i18n/MO compiler (pure Python)
+```
+
+Storage: 4 custom tables — `cf7sec_events` (registry), `cf7sec_ip_rules` (ban/whitelist/strikes), `cf7sec_geo` (AbuseIPDB cache), `cf7sec_daily` (aggregate counters). No more JSON files in `wp-content/` (v3 legacy data is migrated on activation).
+
+Full details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## Upgrading from v3.x
+
+1. Install v4 over the old plugin (same folder name) and activate.
+2. On activation the plugin automatically:
+   - migrates `cf7sec_options` (feature flags, rate limits, ban duration, custom messages) into the new schema;
+   - imports `wp-content/cf7sec_logs/ban_list.json` into the new `ip_rules` table (expired bans dropped) and renames it `*.migrated`;
+   - keeps the old JSON files in place for reference (delete manually once satisfied).
+3. Re-check **Settings → Protection** — v4 adds parameters that did not exist in v3.
+
+Behavioural notes: hidden field names changed (`cf7sec_ts`, `cf7sec_age`, `cf7sec_hp_*`); the client-side timer is new and strictly better with page caching. The legacy `_cf7a_timestamp` check never actually received data under CF7 ≥ 5.9 (CF7 strips `_`-prefixed POST keys from `posted_data`) — v4 fixes this class of silent failures.
+
+## Development
+
+```bash
+# assets (only needed when changing CSS/JS sources)
+npm install tailwindcss@3 --no-save
+npx tailwindcss -c tailwind.config.js -i assets/src/input.css -o assets/dist/admin.css --minify
+cp assets/src/admin.js assets/dist/admin.js
+
+# tests
+php8.3 tests/smoke.php                     # 73 assertions, no WordPress needed
+wp eval-file tests/wp-integration.php \
+   --path=/path/to/wp                      # 59 assertions inside real WP + CF7
+                                           # set CF7SEC_TEST_ABUSE_KEY for live API tests
+
+# i18n
+python3 tools/extract-pot.py               # regenerate languages/*.pot
+python3 tools/make-i18n.py                 # rebuild .po/.mo from tools/i18n-*.py
+```
+
+Code style: PSR-12-ish, `declare(strict_types=1)` everywhere, PHPDoc on public APIs, no global state outside the composition root.
+
+## License
+
+GPL-2.0-or-later — see [LICENSE.txt](LICENSE.txt).
 
 ---
 
-## 5. Installation & Configuration
-
-1.  Upload the plugin directory to `/wp-content/plugins/`.
-2.  Ensure `wp-content/cf7fc_logs/` is writable by the web server.
-3.  Activate via WordPress Admin.
-4.  Navigate to **CF7 Security > Settings** to enable specific protection modules.
-
----
-
-## 6. Maintenance & Troubleshooting
-
-*   **Logs Growth:** The system includes a log retention policy (default 30 days). Ensure your server has enough disk space.
-*   **False Positives:** If legitimate users are blocked, check the **Security Dashboard** to see the reason and adjust language settings or whitelist the IP.
-*   **CF7 Compatibility:** Requires Contact Form 7 v5.0 or higher.
-
----
-
-*Developed by Paul Mann - Professional PHP Solutions 2026*
+*Developed by Mikhail Deynekin — [deynekin.com](https://deynekin.com) · 2026*

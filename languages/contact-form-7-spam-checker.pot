@@ -1,0 +1,1672 @@
+# Copyright (C) 2026 Mikhail Deynekin
+# This file is distributed under the GPL-2.0-or-later license.
+msgid ""
+msgstr ""
+"Project-Id-Version: CF7 Spam Checker Pro 4.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-Spam-Checker/issues\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Domain Path: /languages\n"
+"X-Generator: cf7sec-pot-extractor 1.0\n"
+
+#. translators: 1: link count, 2: limit, 3: field name
+#: src/Security/Checks/LinkSpamCheck.php:51
+msgid "%1$d links in field \"%3$s\" — above the limit of %2$d."
+msgstr ""
+
+#: src/Security/Checks/RateLimitCheck.php:60
+msgid "%1$d submissions in the last 60 s (limit: %2$d)."
+msgstr ""
+
+#. translators: 1: provider label, 2: model name, 3: verdict, 4: latency in ms
+#: src/Services/Llm/LlmGateway.php:204
+msgid "%1$s / %2$s responded \"%3$s\" in %4$d ms."
+msgstr ""
+
+#. translators: 1: active bans, 2: whitelisted
+#: src/Admin/Views/pages/ip-rules.php:24
+msgid "%1$s active bans · %2$s whitelisted IPs"
+msgstr ""
+
+#. translators: %s: total blocked entries
+#: src/Admin/Views/pages/registry.php:22
+msgid "%s blocked entries stored. Retention is controlled in Settings → General."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:122
+msgid "0 = always query live (burns quota fast)."
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:66
+msgid "30-day traffic chart"
+msgstr ""
+
+#. translators: %s: plugin name
+#: src/Plugin.php:243
+msgid "<strong>%s</strong> is active, but Contact Form 7 was not detected. Spam protection will engage automatically once Contact Form 7 is installed and activated."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:113
+msgid "A submission is flagged when ANY threshold is met: (1) abuse confidence score, (2) total community reports across all categories, (3) reports filed under the \"Email Spam\" category. Note: the API returns per-category data only for the most recent reports of an IP (verbose mode), so threshold 3 counts recent Email-Spam reports — a close approximation of the full category history. Set any threshold to 0 to disable it. IPs whitelisted upstream always pass."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:37
+msgid "AI spam analysis (LLM gateway)"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:76
+msgid "API base URL override"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:59
+msgid "API key"
+msgstr ""
+
+#. translators: 1: country code, 2: abuse score
+#: src/Services/AbuseIpDb.php:205
+msgid "API key is valid. Sample lookup 8.8.8.8 → country %1$s, abuse score %2$d%%."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:117
+msgid "Abuse confidence threshold"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:149
+msgid "AbuseIPDB"
+msgstr ""
+
+#. translators: 1: email-spam report count, 2: threshold
+#: src/Security/Checks/AbuseIpCheck.php:141
+msgid "AbuseIPDB \"Email Spam\" reports %1$d ≥ %2$d threshold (counted from the most recent reports)."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:110
+msgid "AbuseIPDB API key"
+msgstr ""
+
+#: src/Services/AbuseIpDb.php:71
+#: src/Services/AbuseIpDb.php:152
+msgid "AbuseIPDB API key is not set."
+msgstr ""
+
+#. translators: 1: score, 2: threshold, 3: country
+#: src/Security/Checks/AbuseIpCheck.php:103
+msgid "AbuseIPDB confidence %1$d%% ≥ %2$d%% threshold (country: %3$s, reports: %4$d)."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:247
+msgid "AbuseIPDB error"
+msgstr ""
+
+#: src/Security/Checks/AbuseIpCheck.php:51
+msgid "AbuseIPDB reputation"
+msgstr ""
+
+#: src/Security/SpamPipeline.php:285
+msgid "AbuseIPDB reputation below threshold"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:107
+msgid "AbuseIPDB reputation check"
+msgstr ""
+
+#: src/Services/AbuseIpDb.php:157
+msgid "AbuseIPDB requires a comment when reporting."
+msgstr ""
+
+#. translators: 1: report count, 2: threshold
+#: src/Security/Checks/AbuseIpCheck.php:122
+msgid "AbuseIPDB total reports %1$d ≥ %2$d threshold."
+msgstr ""
+
+#: src/Admin/DashboardWidget.php:51
+#: src/Admin/Views/pages/dashboard.php:44
+msgid "Active bans"
+msgstr ""
+
+#: src/Admin/Cf7Panel.php:78
+msgid "Active layers:"
+msgstr ""
+
+#: src/Admin/Views/pages/ip-rules.php:51
+msgid "Add"
+msgstr ""
+
+#: src/Admin/Views/pages/ip-rules.php:42
+msgid "Add rule"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:261
+msgid "Adds verdict details to the CF7 JSON response — disable on production sites."
+msgstr ""
+
+#: src/Admin/PageRenderer.php:30
+msgid "Advanced form security"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:118
+msgid "All categories combined. 0 disables this threshold. Example: 5 reports already indicates a repeat offender."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:54
+msgid "All forms (recommended)"
+msgstr ""
+
+#: src/Admin/Views/pages/registry.php:45
+msgid "All types"
+msgstr ""
+
+#: src/Admin/Views/pages/registry.php:38
+msgid "All verdicts"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:90
+msgid "Allow (fail-open — recommended)"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:132
+msgid "Allow ONLY listed countries"
+msgstr ""
+
+#: src/Admin/Views/pages/registry.php:40
+msgid "Allowed"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:193
+msgid "Allowed language"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:196
+msgid "Also register violations as blocked events in the spam registry."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:89
+msgid "Always use X-Forwarded-For"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:114
+msgid "An invisible field no human should ever fill."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:65
+msgid "Any custom model id is accepted."
+msgstr ""
+
+#: src/Admin/Views/pages/registry.php:50
+msgid "Apply"
+msgstr ""
+
+#: src/Admin/Assets.php:55
+msgid "Are you sure?"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:86
+msgid "Auto — trust forwarded headers only from local/Cloudflare proxies (recommended)"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:96
+msgid "Auto-ban IP on SPAM verdict"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:125
+msgid "Auto-ban IPs that fail the thresholds"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:140
+msgid "Auto-ban on strike threshold"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:21
+msgid "Backup, maintenance and emergency actions."
+msgstr ""
+
+#: src/Admin/Views/pages/ip-rules.php:47
+msgid "Ban"
+msgstr ""
+
+#: src/Admin/Assets.php:97
+msgid "Ban IP"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:137
+msgid "Ban duration (hours)"
+msgstr ""
+
+#: src/Admin/Views/pages/ip-rules.php:37
+msgid "Ban list"
+msgstr ""
+
+#: src/Admin/Assets.php:56
+msgid "Ban this IP address?"
+msgstr ""
+
+#: src/Security/Checks/KeywordSpamCheck.php:50
+msgid "Blacklisted keyword \"%1$s\" found in field \"%2$s\"."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:91
+msgid "Block (fail-closed)"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:120
+msgid "Block from \"Email Spam\" category reports ≥ …"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:116
+msgid "Block from abuse confidence ≥ … %"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:118
+msgid "Block from total reports ≥ …"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:131
+msgid "Block listed countries"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:47
+msgid "Block rate (30 d)"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:68
+#: src/Admin/Views/pages/registry.php:39
+msgid "Blocked"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:72
+msgid "Blocked submissions only (recommended)"
+msgstr ""
+
+#: src/Admin/DashboardWidget.php:50
+#: src/Admin/Views/pages/dashboard.php:43
+msgid "Blocked today"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:172
+msgid "Blocks fields containing too many URLs."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:162
+#: src/Security/Checks/BotAgentCheck.php:39
+msgid "Bot user-agent detection"
+msgstr ""
+
+#: src/Admin/AdminMenu.php:44
+msgid "CF7 Security"
+msgstr ""
+
+#: src/Admin/PageRenderer.php:29
+msgid "CF7 Spam Checker"
+msgstr ""
+
+#: src/Admin/Cf7Panel.php:65
+msgid "CF7 Spam Checker Pro"
+msgstr ""
+
+#. translators: 1: version, 2: PHP version
+#: src/Admin/PageRenderer.php:79
+msgid "CF7 Spam Checker Pro %1$s · PHP %2$s · "
+msgstr ""
+
+#: src/Admin/DashboardWidget.php:36
+msgid "CF7 Spam Checker — today"
+msgstr ""
+
+#: src/Admin/PageRenderer.php:33
+msgid "CF7 active"
+msgstr ""
+
+#: src/Admin/PageRenderer.php:34
+msgid "CF7 missing"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:122
+msgid "Cache results for (days)"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:181
+msgid "Case-insensitive substring matching, one keyword per line."
+msgstr ""
+
+#: src/Admin/Assets.php:95
+msgid "Check results"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:52
+msgid "Choose which Contact Form 7 forms the pipeline protects."
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:42
+msgid "Clear geo cache"
+msgstr ""
+
+#: src/Admin/Views/pages/registry.php:29
+msgid "Clear registry"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:83
+msgid "Client IP detection"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:107
+msgid "Clock-skew tolerance (s)"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:88
+msgid "Cloudflare — always use CF-Connecting-IP"
+msgstr ""
+
+#: src/Admin/Assets.php:61
+msgid "Connection OK."
+msgstr ""
+
+#: src/Admin/Assets.php:62
+msgid "Connection failed."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:123
+msgid "Consider reports up to (days old)"
+msgstr ""
+
+#: src/Admin/Assets.php:59
+msgid "Copied to clipboard."
+msgstr ""
+
+#: src/Admin/Assets.php:53
+msgid "Could not save settings."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:120
+msgid "Counted from the most recent reports returned by the API (verbose mode). 0 disables this threshold. Example: 3 means an IP reported 3+ times specifically for e-mail/form spam gets blocked."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:127
+msgid "Country filter (uses the same lookup)"
+msgstr ""
+
+#. translators: 1: country code, 2: mode
+#: src/Security/Checks/AbuseIpCheck.php:176
+msgid "Country filter: submission from %1$s is not accepted (mode: %2$s)."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:50
+msgid "Create one at "
+msgstr ""
+
+#: src/Admin/Assets.php:88
+msgid "Created"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:197
+msgid "Custom field error message"
+msgstr ""
+
+#: src/Services/AbuseIpDb.php:75
+msgid "Daily AbuseIPDB query budget exhausted — cached data used when available."
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:58
+msgid "Danger zone"
+msgstr ""
+
+#: src/Admin/Assets.php:73
+msgid "Dark"
+msgstr ""
+
+#: src/Admin/AdminMenu.php:71
+#: src/Admin/PageRenderer.php:100
+msgid "Dashboard"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:260
+msgid "Debug logging"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:258
+msgid "Debug mode"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:261
+msgid "Debug output in AJAX response"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:78
+msgid "Default: "
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:270
+msgid "Delete file"
+msgstr ""
+
+#: src/Admin/Views/pages/ip-rules.php:32
+msgid "Delete selected"
+msgstr ""
+
+#: src/Admin/Assets.php:65
+msgid "Deleted."
+msgstr ""
+
+#: src/Admin/Assets.php:90
+msgid "Details"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:30
+msgid "Diagnostics"
+msgstr ""
+
+#: src/Security/SpamPipeline.php:155
+msgid "Disabled"
+msgstr ""
+
+#: src/Security/SpamPipeline.php:175
+msgid "Disabled or not configured"
+msgstr ""
+
+#: src/Admin/Views/pages/ip-rules.php:49
+msgid "Duration (hours, 0 = permanent)"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:227
+msgid "E-mail alerts"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:98
+msgid "Each submission is appended as a structured digest: form fields, IP, country/ISP (when known), user agent, referrer, dwell time and the results of the local heuristics. The digest is capped at ~12 KB."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:231
+msgid "Empty = site admin e-mail."
+msgstr ""
+
+#: src/Security/Checks/BotAgentCheck.php:54
+msgid "Empty User-Agent header — real browsers always send one."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:109
+msgid "Enable API check"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:39
+msgid "Enable LLM check"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:128
+msgid "Enable country filtering"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:102
+#: src/Admin/Views/pages/settings.php:115
+#: src/Admin/Views/pages/settings.php:123
+#: src/Admin/Views/pages/settings.php:131
+#: src/Admin/Views/pages/settings.php:148
+#: src/Admin/Views/pages/settings.php:156
+msgid "Enabled"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:138
+msgid "Escalation: the Nth ban of the same IP becomes permanent."
+msgstr ""
+
+#: src/Admin/RestController.php:357
+msgid "Event not found."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:76
+msgid "Events older than this are deleted by the daily cron."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:41
+msgid "Every provider speaks one of two universal protocols: OpenAI-compatible chat completions or Anthropic Messages. The two \"Custom\" entries accept any operator exposing either protocol."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:73
+msgid "Every submission (blocked + clean)"
+msgstr ""
+
+#: src/Admin/Assets.php:89
+msgid "Expires"
+msgstr ""
+
+#: src/Services/BanManager.php:97
+msgid "Expires (UTC)"
+msgstr ""
+
+#: src/Admin/Views/pages/ip-rules.php:31
+#: src/Admin/Views/pages/registry.php:28
+msgid "Export CSV"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:31
+msgid "Export JSON"
+msgstr ""
+
+#: src/Admin/Assets.php:69
+msgid "Export started."
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:29
+msgid "Export the complete configuration (including API keys) or restore it on another site."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:29
+msgid "External intelligence: AI classification and IP reputation."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:165
+msgid "Extra keywords (one per line)"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:194
+msgid "Field names (comma-separated)"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:163
+msgid "Flags scripted clients (curl, headless browsers, scrapers…)."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:51
+msgid "Form protection scope"
+msgstr ""
+
+#: src/Security/Checks/TimeCheck.php:69
+msgid "Form sat open for %d s — older than the %d s maximum."
+msgstr ""
+
+#: src/Security/Checks/TimeCheck.php:97
+msgid "Form timestamp is %d s old — beyond the %d s freshness window."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:110
+msgid "Free at "
+msgstr ""
+
+#: src/Admin/Views/pages/registry.php:47
+msgid "From date"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:26
+msgid "General"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:90
+msgid "Header mode"
+msgstr ""
+
+#: src/Security/Checks/HoneypotCheck.php:56
+msgid "Hidden honeypot field \"%s\" was filled."
+msgstr ""
+
+#: src/Admin/Assets.php:76
+msgid "Hide key"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:113
+#: src/Security/Checks/HoneypotCheck.php:31
+msgid "Honeypot"
+msgstr ""
+
+#: src/Security/Checks/HoneypotCheck.php:64
+msgid "Honeypot field missing from submission."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:145
+msgid "How the checks combine per submission."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:84
+msgid "How the real visitor IP is resolved behind proxies and CDNs."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:112
+msgid "How the three thresholds work"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:101
+msgid "Humans need a few seconds to fill a form; bots do not."
+msgstr ""
+
+#: src/Admin/Assets.php:84
+msgid "IP"
+msgstr ""
+
+#: src/Security/Checks/IpBanCheck.php:56
+msgid "IP %1$s is banned (reason: %2$s, source: %3$s)."
+msgstr ""
+
+#: src/Admin/AdminMenu.php:74
+#: src/Admin/PageRenderer.php:103
+#: src/Admin/Views/pages/ip-rules.php:20
+msgid "IP Rules"
+msgstr ""
+
+#: src/Admin/Views/pages/ip-rules.php:45
+msgid "IP address"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:121
+#: src/Security/Checks/IpBanCheck.php:28
+msgid "IP ban list"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:243
+msgid "IP banned"
+msgstr ""
+
+#: src/Admin/Assets.php:66
+msgid "IP banned."
+msgstr ""
+
+#. translators: %s: IP address
+#: src/Services/BanManager.php:89
+msgid "IP banned: %s"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:48
+msgid "IP lookup"
+msgstr ""
+
+#: src/Admin/Assets.php:68
+msgid "IP whitelisted."
+msgstr ""
+
+#: src/Admin/Views/pages/registry.php:49
+msgid "IP, reason, payload…"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:134
+msgid "ISO 3166-1 alpha-2 codes (comma-separated)"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:32
+msgid "Import JSON"
+msgstr ""
+
+#: src/Admin/Assets.php:71
+msgid "Import failed: invalid file."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:94
+msgid "Include geo/ISP data in the prompt"
+msgstr ""
+
+#: src/Admin/Views/pages/registry.php:42
+msgid "Info (bans)"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:122
+msgid "Instantly rejects IPs found in the ban list."
+msgstr ""
+
+#. translators: %s: integration name
+#: src/Security/SpamPipeline.php:358
+msgid "Integration error: %s"
+msgstr ""
+
+#: src/Admin/Views/pages/registry.php:41
+msgid "Integration errors"
+msgstr ""
+
+#: src/Admin/AdminMenu.php:73
+#: src/Admin/PageRenderer.php:102
+#: src/Admin/Views/pages/integrations.php:28
+msgid "Integrations"
+msgstr ""
+
+#: src/Admin/RestController.php:243
+#: src/Admin/RestController.php:435
+#: src/Services/AbuseIpDb.php:53
+msgid "Invalid IP address."
+msgstr ""
+
+#: src/Admin/RestController.php:183
+msgid "Invalid JSON payload."
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:59
+msgid "Irreversible actions."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:79
+msgid "Keep data on uninstall"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:180
+#: src/Security/Checks/KeywordSpamCheck.php:27
+msgid "Keyword blacklist"
+msgstr ""
+
+#: src/Security/Checks/KeywordSpamCheck.php:39
+msgid "Keyword list is empty."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:183
+msgid "Keywords"
+msgstr ""
+
+#. translators: 1: provider label, 2: model, 3: latency ms
+#: src/Security/Checks/LlmCheck.php:95
+msgid "LLM %1$s (%2$s) classified the submission as SPAM in %3$d ms."
+msgstr ""
+
+#: src/Security/Checks/LlmCheck.php:75
+msgid "LLM API error (%1$s); fail-closed policy applied."
+msgstr ""
+
+#: src/Security/Checks/LlmCheck.php:81
+msgid "LLM API error (%1$s); fail-open policy applied."
+msgstr ""
+
+#: src/Security/Checks/LlmCheck.php:44
+msgid "LLM analysis (your provider)"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:150
+msgid "LLM gateway"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:246
+msgid "LLM provider error"
+msgstr ""
+
+#: src/Security/Checks/LlmCheck.php:130
+msgid "LLM returned an unparsable verdict; fail-closed policy applied."
+msgstr ""
+
+#: src/Security/Checks/LlmCheck.php:136
+msgid "LLM returned an unparsable verdict; fail-open policy applied."
+msgstr ""
+
+#: src/Security/SpamPipeline.php:288
+msgid "LLM verdict: SPAM (%s)"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:189
+msgid "Language validation"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:275
+msgid "Latest 400 lines are shown. Log directory: "
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:81
+msgid "Latest registry entries — blocked spam, integration errors and bans."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:78
+msgid "Leave empty unless you use a proxy, regional endpoint or self-hosted gateway."
+msgstr ""
+
+#: src/Admin/Assets.php:72
+msgid "Light"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:171
+msgid "Link spam"
+msgstr ""
+
+#: src/Security/Checks/LinkSpamCheck.php:27
+msgid "Link-spam detection"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:31
+msgid "Live overview of form protection across your site."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:268
+msgid "Loading dates…"
+msgstr ""
+
+#: src/Admin/Assets.php:63
+#: src/Admin/Views/pages/dashboard.php:74
+#: src/Admin/Views/pages/dashboard.php:82
+#: src/Admin/Views/pages/ip-rules.php:62
+#: src/Admin/Views/pages/registry.php:53
+#: src/Admin/Views/pages/tools.php:73
+msgid "Loading…"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:148
+msgid "Local heuristics"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:265
+msgid "Log viewer"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:68
+msgid "Logging & data retention"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:52
+msgid "Lookup"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:38
+msgid "Maintenance"
+msgstr ""
+
+#: src/Admin/RestController.php:531
+msgid "Maintenance run completed."
+msgstr ""
+
+#: src/Admin/Views/pages/ip-rules.php:50
+msgid "Manual ban"
+msgstr ""
+
+#: src/Admin/RestController.php:450
+msgid "Manual ban by administrator"
+msgstr ""
+
+#: src/Services/BanManager.php:133
+msgid "Manually whitelisted by administrator"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:109
+msgid "Master switch — \"check via AbuseIPDB API\"."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:39
+msgid "Master switch — \"check via LLM\"."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:174
+msgid "Max links per field"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:133
+msgid "Max submissions / min"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:105
+msgid "Maximum form age (s)"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:28
+msgid "Messages"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:232
+msgid "Minimum gap between two alerts of the same type."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:104
+msgid "Minimum seconds"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:133
+msgid "Mode"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:63
+msgid "Model"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:66
+msgid "Model id used by your gateway, e.g. mistralai/mistral-7b-instruct."
+msgstr ""
+
+#: src/Services/Llm/LlmGateway.php:196
+msgid "Model returned an unparsable verdict: "
+msgstr ""
+
+#: src/Admin/Cf7Panel.php:73
+msgid "NOT PROTECTED (excluded in Settings → General)"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:59
+msgid "No Contact Form 7 forms found."
+msgstr ""
+
+#: src/Admin/Cf7Panel.php:106
+msgid "No form tags are required — protection is applied automatically via hidden fields and the wpcf7_spam pipeline."
+msgstr ""
+
+#: src/Security/Checks/TimeCheck.php:81
+msgid "No timing fields present (JS disabled or direct POST)."
+msgstr ""
+
+#: src/Admin/Assets.php:64
+msgid "Nothing here yet."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:74
+msgid "Nothing — counters only"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:29
+msgid "Notifications"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:234
+msgid "Notify about"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:228
+msgid "Notify administrators about important security events (throttled)."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:95
+msgid "Off = save tokens: the LLM is consulted only for submissions that passed local heuristics."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:92
+msgid "On API error / unparsable answer"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:55
+msgid "Only selected forms"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:107
+msgid "Only used for the server-timestamp fallback when JavaScript is disabled."
+msgstr ""
+
+#: src/Admin/DashboardWidget.php:68
+msgid "Open dashboard"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:34
+msgid "Open registry"
+msgstr ""
+
+#: src/Admin/Cf7Panel.php:95
+msgid "Open security dashboard"
+msgstr ""
+
+#: src/Admin/Cf7Panel.php:71
+msgid "PROTECTED"
+msgstr ""
+
+#: src/Admin/Assets.php:77
+msgid "Page"
+msgstr ""
+
+#: src/Admin/Views/Ui.php:101
+msgid "Paste new key…"
+msgstr ""
+
+#: src/Admin/Assets.php:96
+msgid "Payload"
+msgstr ""
+
+#: src/Services/BanManager.php:95
+msgid "Permanent"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:138
+msgid "Permanent after N bans"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:144
+msgid "Pipeline order"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:197
+msgid "Placeholders: %field_name%, %language_name%. Empty = use the default from the Messages tab."
+msgstr ""
+
+#: src/Admin/PageRenderer.php:50
+msgid "Plugin sections"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:67
+msgid "Processed"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:65
+msgid "Processed vs blocked submissions per day (UTC)."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:56
+msgid "Protected forms"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:27
+msgid "Protection"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:40
+msgid "Provider"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:108
+msgid "Queries abuseipdb.com for the submitter IP: abuse confidence score, total community reports, country, ISP and Tor status. Results are cached locally to respect the daily API quota."
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:49
+msgid "Query AbuseIPDB for any IP on demand (uses the configured API key and cache)."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:87
+msgid "REMOTE_ADDR only — ignore all headers"
+msgstr ""
+
+#: src/Security/Checks/RateLimitCheck.php:33
+msgid "Rate limiting"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:129
+msgid "Rate limiting & auto-ban"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:245
+msgid "Rate-limit ban"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:75
+msgid "Re-check"
+msgstr ""
+
+#: src/Admin/Assets.php:85
+#: src/Admin/Views/pages/ip-rules.php:50
+msgid "Reason"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:88
+msgid "Reasoner models can take 10–30 s."
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:80
+msgid "Recent events"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:231
+msgid "Recipient e-mail"
+msgstr ""
+
+#: src/Admin/Assets.php:94
+msgid "Referrer"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:35
+#: src/Admin/Views/pages/settings.php:269
+msgid "Refresh"
+msgstr ""
+
+#: src/Admin/RestController.php:438
+msgid "Refusing to ban a private/reserved IP range — this would block your own server or LAN."
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:46
+msgid "Registry (blocked)"
+msgstr ""
+
+#: src/Admin/DashboardWidget.php:52
+msgid "Registry entries"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:75
+msgid "Registry verbosity"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:110
+msgid "Remaining daily budget: %d queries."
+msgstr ""
+
+#: src/Admin/Assets.php:57
+msgid "Remove this IP rule?"
+msgstr ""
+
+#: src/Security/Checks/TimeCheck.php:89
+msgid "Render-to-submit delta of %d s is below the %d s minimum."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:126
+msgid "Report confirmed spammers back to AbuseIPDB"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:79
+msgid "Required for custom providers, e.g. https://api.my-operator.com/v1"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:71
+msgid "Requirements & environment"
+msgstr ""
+
+#: src/Admin/Views/pages/registry.php:51
+msgid "Reset"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:61
+msgid "Reset ALL settings to defaults"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:43
+msgid "Reset statistics"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:190
+msgid "Restricts name-like fields to one character set (22 languages)."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:76
+msgid "Retention (days)"
+msgstr ""
+
+#: src/Admin/Assets.php:67
+msgid "Rule removed."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:95
+msgid "Run LLM even when local checks already flagged spam"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:41
+msgid "Run maintenance now"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:146
+#: src/Security/Checks/SqlInjectionCheck.php:28
+msgid "SQL-injection detection"
+msgstr ""
+
+#: src/Security/Checks/SqlInjectionCheck.php:48
+msgid "SQL-injection signature \"%1$s\" matched in field \"%2$s\"."
+msgstr ""
+
+#: src/Admin/PageRenderer.php:39
+msgid "Save changes"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:155
+msgid "Script tags, event handlers and encoded payloads."
+msgstr ""
+
+#: src/Admin/Views/pages/ip-rules.php:59
+msgid "Search IP or reason…"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:30
+msgid "Security Dashboard"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:272
+msgid "Select a date to view the log."
+msgstr ""
+
+#: src/Admin/Assets.php:79
+msgid "Select all"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:251
+msgid "Send test e-mail"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:38
+msgid "Sends the full submission (fields, IP, browser, geo, timing) to the large language model of your choice, which must answer with exactly one word: SPAM or CLEAN. SPAM verdicts are written to the spam registry and the submission is rejected; CLEAN submissions pass."
+msgstr ""
+
+#: src/Admin/AdminMenu.php:72
+#: src/Admin/Cf7Panel.php:98
+#: src/Admin/PageRenderer.php:101
+#: src/Admin/Views/pages/settings.php:35
+msgid "Settings"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:28
+msgid "Settings backup"
+msgstr ""
+
+#: src/Admin/Assets.php:70
+msgid "Settings imported."
+msgstr ""
+
+#: src/Admin/Assets.php:52
+msgid "Settings saved."
+msgstr ""
+
+#: src/Admin/Assets.php:75
+#: src/Admin/Views/Ui.php:103
+msgid "Show key"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:78
+msgid "Show the daily summary on the main WP dashboard."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:209
+msgid "Shown instead of the generic CF7 spam notice when a specific check fires. Placeholders: %field_name%, %language_name%, %minutes%."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:147
+msgid "Signature scanning of every submitted field."
+msgstr ""
+
+#. translators: 1: processed count, 2: blocked count
+#: src/Admin/Cf7Panel.php:86
+msgid "Site lifetime: %1$s submissions processed, %2$s blocked as spam."
+msgstr ""
+
+#: src/Security/SpamPipeline.php:179
+msgid "Skipped — submission already flagged"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:130
+msgid "Sliding 60-second window per IP with strike escalation."
+msgstr ""
+
+#: src/Admin/Assets.php:86
+#: src/Services/BanManager.php:93
+msgid "Source"
+msgstr ""
+
+#: src/Admin/Cf7Panel.php:33
+msgid "Spam Checker"
+msgstr ""
+
+#: src/Admin/AdminMenu.php:75
+#: src/Admin/PageRenderer.php:104
+#: src/Admin/Views/pages/registry.php:18
+msgid "Spam Registry"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:244
+msgid "Spam blocked"
+msgstr ""
+
+#. translators: %s: form ID
+#: src/Security/SpamPipeline.php:301
+msgid "Spam blocked on form #%s"
+msgstr ""
+
+#: src/Admin/Cf7Panel.php:101
+#: src/Admin/DashboardWidget.php:70
+msgid "Spam registry"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:196
+msgid "Strict mode"
+msgstr ""
+
+#. translators: 1: strike count, 2: threshold
+#: src/Services/BanManager.php:155
+msgid "Strike threshold reached (%1$d/%2$d). Last reason: %3$s"
+msgstr ""
+
+#: src/Admin/Assets.php:87
+msgid "Strikes"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:134
+msgid "Strikes before ban"
+msgstr ""
+
+#: src/Admin/Assets.php:92
+msgid "Submission"
+msgstr ""
+
+#: src/Admin/DashboardWidget.php:49
+#: src/Admin/Views/pages/dashboard.php:42
+msgid "Submissions today"
+msgstr ""
+
+#: src/Security/Checks/TimeCheck.php:61
+msgid "Submitted in %d s — faster than the %d s human minimum."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:65
+msgid "Suggestions: "
+msgstr ""
+
+#: src/Admin/Assets.php:74
+msgid "System"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:72
+msgid "System health"
+msgstr ""
+
+#: src/Services/BanManager.php:96
+msgid "Temporary"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:101
+#: src/Admin/Views/pages/integrations.php:139
+msgid "Test connection"
+msgstr ""
+
+#: src/Admin/RestController.php:234
+msgid "Test e-mail sent."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:138
+msgid "Test performs a live lookup of 8.8.8.8 (Google DNS)."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:100
+msgid "Test sends one harmless sample submission to the configured provider."
+msgstr ""
+
+#: src/Admin/Assets.php:60
+msgid "Testing…"
+msgstr ""
+
+#: src/Services/Llm/AnthropicMessagesClient.php:41
+#: src/Services/Llm/OpenAiChatClient.php:41
+msgid "The API base URL for the selected LLM provider is not set."
+msgstr ""
+
+#: src/Services/Llm/AnthropicMessagesClient.php:38
+#: src/Services/Llm/OpenAiChatClient.php:38
+msgid "The API key for the selected LLM provider is not set."
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:39
+msgid "The daily cron prunes expired bans, old events and stale caches. You can also run it manually."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:53
+msgid "The key is stored in the WordPress database and masked in this UI."
+msgstr ""
+
+#: src/Admin/PageRenderer.php:41
+msgid "Theme: light / dark / system"
+msgstr ""
+
+#: src/Admin/RestController.php:189
+msgid "This file was not exported by CF7 Spam Checker Pro."
+msgstr ""
+
+#: src/Admin/Cf7Panel.php:69
+msgid "This form:"
+msgstr ""
+
+#: src/Services/Mailer.php:82
+msgid "This is a test message from CF7 Spam Checker Pro.\nIf you can read it, e-mail notifications are configured correctly."
+msgstr ""
+
+#: src/Admin/Assets.php:58
+msgid "This permanently deletes data. Continue?"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:232
+msgid "Throttle (minutes)"
+msgstr ""
+
+#: src/Admin/Assets.php:81
+msgid "Time"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:88
+msgid "Timeout (seconds)"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:100
+#: src/Security/Checks/TimeCheck.php:40
+msgid "Timing analysis"
+msgstr ""
+
+#: src/Admin/Views/pages/registry.php:48
+msgid "To date"
+msgstr ""
+
+#: src/Admin/PageRenderer.php:41
+msgid "Toggle theme"
+msgstr ""
+
+#: src/Admin/AdminMenu.php:76
+#: src/Admin/PageRenderer.php:105
+#: src/Admin/Views/pages/tools.php:20
+msgid "Tools"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:64
+msgid "Traffic — last 30 days"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:36
+msgid "Tune every protection layer. Changes are saved with the button in the top bar."
+msgstr ""
+
+#: src/Admin/Assets.php:82
+#: src/Admin/Views/pages/ip-rules.php:46
+#: src/Services/BanManager.php:94
+msgid "Type"
+msgstr ""
+
+#: src/Admin/Views/pages/tools.php:63
+msgid "Uninstall behaviour: the \"Keep data on uninstall\" switch lives in Settings → General. When off, deleting the plugin from WordPress removes all tables, options, transients and log files."
+msgstr ""
+
+#: src/Admin/PageRenderer.php:70
+msgid "Unknown page."
+msgstr ""
+
+#: src/Admin/Assets.php:93
+msgid "User agent"
+msgstr ""
+
+#: src/Security/Checks/BotAgentCheck.php:95
+msgid "User-Agent contains automation marker \"%s\"."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:96
+msgid "Uses the ban duration from Settings → Protection."
+msgstr ""
+
+#: src/Admin/Assets.php:83
+msgid "Verdict"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:83
+msgid "View all"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:97
+msgid "View the system prompt sent to the model"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:208
+msgid "Visitor-facing messages"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:69
+msgid "What the spam registry stores and for how long (GDPR)."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:126
+msgid "When a submission is blocked, its IP is reported under the \"Email Spam\" category with the block reasons as comment. Requires the same API key."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:79
+msgid "When off, deleting the plugin removes all tables, options and logs."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:147
+#: src/Admin/Views/pages/ip-rules.php:38
+msgid "Whitelist"
+msgstr ""
+
+#: src/Admin/Views/pages/ip-rules.php:48
+msgid "Whitelist (never block)"
+msgstr ""
+
+#: src/Admin/Views/pages/dashboard.php:45
+msgid "Whitelisted IPs"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:78
+msgid "WordPress dashboard widget"
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:259
+msgid "Writes a detailed daily log to wp-content/uploads/cf7sec/ (web-inaccessible)."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:154
+#: src/Security/Checks/XssCheck.php:28
+msgid "XSS detection"
+msgstr ""
+
+#: src/Security/Checks/XssCheck.php:48
+msgid "XSS signature \"%1$s\" matched in field \"%2$s\"."
+msgstr ""
+
+#: src/Admin/Assets.php:54
+msgid "You have unsaved changes."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:91
+msgid "Your current request resolves to: "
+msgstr ""
+
+#. translators: %s: site name
+#: src/Services/Mailer.php:79
+msgid "[%s] CF7 Spam Checker Pro — test notification"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:116
+msgid "abuseConfidenceScore 0–100. Community consensus suggests 25–50 for aggressive, 75+ for conservative filtering."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:148
+msgid "ban list, timing, honeypot, bot UA, rate limit, SQLi, XSS, links, keywords."
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:134
+msgid "e.g. US, DE, CN, RU"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:150
+msgid "final AI verdict SPAM/CLEAN with geo context attached."
+msgstr ""
+
+#: src/Admin/Assets.php:91
+msgid "items"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:123
+msgid "maxAgeInDays API parameter."
+msgstr ""
+
+#: src/Admin/Assets.php:78
+msgid "of"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:149
+msgid "runs only while the submission is still clean (saves quota)."
+msgstr ""
+
+#: src/Admin/Assets.php:80
+msgid "selected"
+msgstr ""
+
+#: src/Admin/Views/pages/integrations.php:147
+msgid "whitelisted IPs bypass everything."
+msgstr ""
+
+#: src/Admin/RestController.php:235
+msgid "wp_mail() failed. Check your server mail configuration."
+msgstr ""
+
+#: src/Languages.php:33
+msgctxt "language name"
+msgid "Arabic"
+msgstr ""
+
+#: src/Languages.php:30
+msgctxt "language name"
+msgid "Chinese"
+msgstr ""
+
+#: src/Languages.php:46
+msgctxt "language name"
+msgid "Czech"
+msgstr ""
+
+#: src/Languages.php:38
+msgctxt "language name"
+msgid "Dutch"
+msgstr ""
+
+#: src/Languages.php:26
+msgctxt "language name"
+msgid "English"
+msgstr ""
+
+#: src/Languages.php:28
+msgctxt "language name"
+msgid "French"
+msgstr ""
+
+#: src/Languages.php:29
+msgctxt "language name"
+msgid "German"
+msgstr ""
+
+#: src/Languages.php:42
+msgctxt "language name"
+msgid "Greek"
+msgstr ""
+
+#: src/Languages.php:43
+msgctxt "language name"
+msgid "Hebrew"
+msgstr ""
+
+#: src/Languages.php:34
+msgctxt "language name"
+msgid "Hindi"
+msgstr ""
+
+#: src/Languages.php:36
+msgctxt "language name"
+msgid "Italian"
+msgstr ""
+
+#: src/Languages.php:31
+msgctxt "language name"
+msgid "Japanese"
+msgstr ""
+
+#: src/Languages.php:32
+msgctxt "language name"
+msgid "Korean"
+msgstr ""
+
+#: src/Languages.php:39
+msgctxt "language name"
+msgid "Polish"
+msgstr ""
+
+#: src/Languages.php:35
+msgctxt "language name"
+msgid "Portuguese"
+msgstr ""
+
+#: src/Languages.php:25
+msgctxt "language name"
+msgid "Russian"
+msgstr ""
+
+#: src/Languages.php:27
+msgctxt "language name"
+msgid "Spanish"
+msgstr ""
+
+#: src/Languages.php:40
+msgctxt "language name"
+msgid "Swedish"
+msgstr ""
+
+#: src/Languages.php:44
+msgctxt "language name"
+msgid "Thai"
+msgstr ""
+
+#: src/Languages.php:37
+msgctxt "language name"
+msgid "Turkish"
+msgstr ""
+
+#: src/Languages.php:45
+msgctxt "language name"
+msgid "Ukrainian"
+msgstr ""
+
+#: src/Languages.php:41
+msgctxt "language name"
+msgid "Vietnamese"
+msgstr ""
+
