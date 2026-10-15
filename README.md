@@ -3,7 +3,7 @@
 [![PHP](https://img.shields.io/badge/PHP-8.3%20--8.5-8892bf.svg)](https://php.net/)
 [![WordPress](https://img.shields.io/badge/WordPress-6.0%20--7.1-21759b.svg)](https://wordpress.org/)
 [![License](https://img.shields.io/badge/License-GPL--2.0--or--later-yellow.svg)](LICENSE.txt)
-[![CI](https://github.com/paulmann/Contact-Form-7-Spam-Checker/actions/workflows/ci.yml/badge.svg)](https://github.com/paulmann/Contact-Form-7-Spam-Checker/actions/workflows/ci.yml)
+[![CI](https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/actions/workflows/ci.yml/badge.svg)](https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/actions/workflows/ci.yml)
 
 **Multi-layered spam & security protection for Contact Form 7** — silent, zero-UI for your visitors, ruthless to bots.
 
@@ -125,7 +125,7 @@ The plugin degrades gracefully: without CF7 it shows a notice and waits; without
 
 ### Manual / GitHub release
 
-1. Download `contact-form-7-spam-checker.zip` from [Releases](https://github.com/paulmann/Contact-Form-7-Spam-Checker/releases).
+1. Download `contact-form-7-spam-checker.zip` from [Releases](https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/releases).
 2. *Plugins → Add New → Upload Plugin* → choose the ZIP → Activate.
 
 Activation creates four tables (`{prefix}cf7sec_events`, `…_ip_rules`, `…_geo`, `…_daily`), schedules a daily maintenance cron and — if you used v3.x — migrates your legacy settings and `ban_list.json` automatically.

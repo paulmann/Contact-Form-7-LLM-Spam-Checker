@@ -100,7 +100,7 @@ def main():
 
     header = {
         'Project-Id-Version': 'CF7 Spam Checker Pro ' + plugin_version(),
-        'Report-Msgid-Bugs-To': 'https://github.com/paulmann/Contact-Form-7-Spam-Checker/issues',
+        'Report-Msgid-Bugs-To': 'https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/issues',
         'MIME-Version': '1.0',
         'Content-Type': 'text/plain; charset=UTF-8',
         'Content-Transfer-Encoding': '8bit',

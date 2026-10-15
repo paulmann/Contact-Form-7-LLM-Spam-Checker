@@ -15,7 +15,7 @@ Thanks for helping make CF7 Spam Checker Pro better!
 ## Getting started
 
 ```bash
-git clone https://github.com/paulmann/Contact-Form-7-Spam-Checker.git
+git clone https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker.git
 cd Contact-Form-7-Spam-Checker
 npm install tailwindcss@3 --no-save   # only if you touch assets/src
 composer install                      # only if you run PHPCS locally

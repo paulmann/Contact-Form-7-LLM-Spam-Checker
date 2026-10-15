@@ -80,7 +80,7 @@ final class PageRenderer
             esc_html(CF7SEC_VERSION),
             esc_html(PHP_VERSION)
         );
-        echo '<a href="https://github.com/paulmann/Contact-Form-7-Spam-Checker" target="_blank" rel="noopener">GitHub</a> · ';
+        echo '<a href="https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker" target="_blank" rel="noopener">GitHub</a> · ';
         echo '<a href="https://deynekin.com" target="_blank" rel="noopener">deynekin.com</a>';
         echo '</footer>';
 

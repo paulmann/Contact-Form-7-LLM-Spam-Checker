@@ -93,7 +93,7 @@ flowchart TD
 
 ## Установка
 
-1. Скачайте `contact-form-7-spam-checker.zip` из [релизов](https://github.com/paulmann/Contact-Form-7-Spam-Checker/releases).
+1. Скачайте `contact-form-7-spam-checker.zip` из [релизов](https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/releases).
 2. *Плагины → Добавить новый → Загрузить плагин* → выберите ZIP → Активировать.
 
 При активации создаются 4 таблицы (`{prefix}cf7sec_events`, `…_ip_rules`, `…_geo`, `…_daily`), планируется ежедневный cron — и, если у вас стояла v3.x, автоматически мигрируют старые настройки и `ban_list.json`.

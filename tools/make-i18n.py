@@ -137,7 +137,7 @@ def main():
 msgid ""
 msgstr ""
 "Project-Id-Version: CF7 Spam Checker Pro {plugin_version()}\\n"
-"Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-Spam-Checker/issues\\n"
+"Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/issues\\n"
 "MIME-Version: 1.0\\n"
 "Content-Type: text/plain; charset=UTF-8\\n"
 "Content-Transfer-Encoding: 8bit\\n"
@@ -176,7 +176,7 @@ msgstr ""
         # The MO header entry (empty msgid) must carry the metadata block.
         header_msgstr = '\n'.join([
             f'Project-Id-Version: CF7 Spam Checker Pro {plugin_version()}',
-            'Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-Spam-Checker/issues',
+            'Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-LLM-Spam-Checker/issues',
             'MIME-Version: 1.0',
             'Content-Type: text/plain; charset=UTF-8',
             'Content-Transfer-Encoding: 8bit',
