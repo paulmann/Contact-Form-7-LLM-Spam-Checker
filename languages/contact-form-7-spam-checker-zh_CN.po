@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the CF7 Spam Checker Pro package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CF7 Spam Checker Pro 4.0.0\n"
+"Project-Id-Version: CF7 Spam Checker Pro 4.1.1\n"
 "Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-Spam-Checker/issues\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +43,7 @@ msgstr "0 = 始终实时查询（会快速消耗配额）。"
 msgid "30-day traffic chart"
 msgstr "30 天流量图表"
 
-#: src/Plugin.php:243
+#: src/Plugin.php:275
 #. translators: %s: plugin name
 msgid "<strong>%s</strong> is active, but Contact Form 7 was not detected. Spam protection will engage automatically once Contact Form 7 is installed and activated."
 msgstr "<strong>%s</strong> 已启用，但未检测到 Contact Form 7。安装并启用 Contact Form 7 后，垃圾防护会自动生效。"
@@ -64,7 +64,7 @@ msgstr "API 基础 URL 覆盖"
 msgid "API key"
 msgstr "API 密钥"
 
-#: src/Services/AbuseIpDb.php:205
+#: src/Services/AbuseIpDb.php:207
 #. translators: 1: country code, 2: abuse score
 msgid "API key is valid. Sample lookup 8.8.8.8 → country %1$s, abuse score %2$d%%."
 msgstr "API 密钥有效。示例查询 8.8.8.8 → 国家 %1$s，滥用评分 %2$d%%。"
@@ -77,7 +77,7 @@ msgstr "滥用置信度阈值"
 msgid "AbuseIPDB"
 msgstr "AbuseIPDB"
 
-#: src/Security/Checks/AbuseIpCheck.php:141
+#: src/Security/Checks/AbuseIpCheck.php:145
 #. translators: 1: email-spam report count, 2: threshold
 msgid "AbuseIPDB \"Email Spam\" reports %1$d ≥ %2$d threshold (counted from the most recent reports)."
 msgstr "AbuseIPDB“Email Spam”举报 %1$d ≥ 阈值 %2$d（按最近举报统计）。"
@@ -91,20 +91,20 @@ msgstr "AbuseIPDB API 密钥"
 msgid "AbuseIPDB API key is not set."
 msgstr "AbuseIPDB API 密钥未设置。"
 
-#: src/Security/Checks/AbuseIpCheck.php:103
+#: src/Security/Checks/AbuseIpCheck.php:107
 #. translators: 1: score, 2: threshold, 3: country
 msgid "AbuseIPDB confidence %1$d%% ≥ %2$d%% threshold (country: %3$s, reports: %4$d)."
 msgstr "AbuseIPDB 置信度 %1$d%% ≥ 阈值 %2$d%%（国家：%3$s，举报：%4$d）。"
 
-#: src/Admin/Views/pages/settings.php:247
+#: src/Admin/Views/pages/settings.php:248
 msgid "AbuseIPDB error"
 msgstr "AbuseIPDB 错误"
 
-#: src/Security/Checks/AbuseIpCheck.php:51
+#: src/Security/Checks/AbuseIpCheck.php:55
 msgid "AbuseIPDB reputation"
 msgstr "AbuseIPDB 信誉"
 
-#: src/Security/SpamPipeline.php:285
+#: src/Security/SpamPipeline.php:287
 msgid "AbuseIPDB reputation below threshold"
 msgstr "AbuseIPDB 信誉低于阈值"
 
@@ -116,7 +116,7 @@ msgstr "AbuseIPDB 信誉检查"
 msgid "AbuseIPDB requires a comment when reporting."
 msgstr "AbuseIPDB 要求举报时附带说明。"
 
-#: src/Security/Checks/AbuseIpCheck.php:122
+#: src/Security/Checks/AbuseIpCheck.php:126
 #. translators: 1: report count, 2: threshold
 msgid "AbuseIPDB total reports %1$d ≥ %2$d threshold."
 msgstr "AbuseIPDB 举报总数 %1$d ≥ 阈值 %2$d。"
@@ -126,7 +126,7 @@ msgstr "AbuseIPDB 举报总数 %1$d ≥ 阈值 %2$d。"
 msgid "Active bans"
 msgstr "生效封禁"
 
-#: src/Admin/Cf7Panel.php:78
+#: src/Admin/Cf7Panel.php:88
 msgid "Active layers:"
 msgstr "已启用的防护层："
 
@@ -138,7 +138,7 @@ msgstr "添加"
 msgid "Add rule"
 msgstr "添加规则"
 
-#: src/Admin/Views/pages/settings.php:261
+#: src/Admin/Views/pages/settings.php:262
 msgid "Adds verdict details to the CF7 JSON response — disable on production sites."
 msgstr "在 CF7 的 JSON 响应中附加判定详情——生产站点请禁用。"
 
@@ -174,11 +174,11 @@ msgstr "仅允许所列国家"
 msgid "Allowed"
 msgstr "已放行"
 
-#: src/Admin/Views/pages/settings.php:193
+#: src/Admin/Views/pages/settings.php:194
 msgid "Allowed language"
 msgstr "允许的语言"
 
-#: src/Admin/Views/pages/settings.php:196
+#: src/Admin/Views/pages/settings.php:197
 msgid "Also register violations as blocked events in the spam registry."
 msgstr "同时将违规记录为垃圾注册表中的拦截事件。"
 
@@ -186,7 +186,7 @@ msgstr "同时将违规记录为垃圾注册表中的拦截事件。"
 msgid "Always use X-Forwarded-For"
 msgstr "始终使用 X-Forwarded-For"
 
-#: src/Admin/Views/pages/settings.php:114
+#: src/Admin/Views/pages/settings.php:115
 msgid "An invisible field no human should ever fill."
 msgstr "一个真人永远不会填写的隐藏字段。"
 
@@ -198,7 +198,7 @@ msgstr "接受任何自定义模型 ID。"
 msgid "Apply"
 msgstr "应用"
 
-#: src/Admin/Assets.php:55
+#: src/Admin/Assets.php:57
 msgid "Are you sure?"
 msgstr "确定吗？"
 
@@ -214,7 +214,7 @@ msgstr "判定为 SPAM 时自动封禁 IP"
 msgid "Auto-ban IPs that fail the thresholds"
 msgstr "自动封禁未通过阈值的 IP"
 
-#: src/Admin/Views/pages/settings.php:140
+#: src/Admin/Views/pages/settings.php:141
 msgid "Auto-ban on strike threshold"
 msgstr "达到违规计数阈值时自动封禁"
 
@@ -226,11 +226,11 @@ msgstr "备份、维护与应急操作。"
 msgid "Ban"
 msgstr "封禁"
 
-#: src/Admin/Assets.php:97
+#: src/Admin/Assets.php:99
 msgid "Ban IP"
 msgstr "封禁 IP"
 
-#: src/Admin/Views/pages/settings.php:137
+#: src/Admin/Views/pages/settings.php:138
 msgid "Ban duration (hours)"
 msgstr "封禁时长（小时）"
 
@@ -238,7 +238,7 @@ msgstr "封禁时长（小时）"
 msgid "Ban list"
 msgstr "封禁列表"
 
-#: src/Admin/Assets.php:56
+#: src/Admin/Assets.php:58
 msgid "Ban this IP address?"
 msgstr "封禁此 IP 地址？"
 
@@ -284,11 +284,11 @@ msgstr "仅拦截的提交（推荐）"
 msgid "Blocked today"
 msgstr "今日拦截"
 
-#: src/Admin/Views/pages/settings.php:172
+#: src/Admin/Views/pages/settings.php:173
 msgid "Blocks fields containing too many URLs."
 msgstr "拦截包含过多链接的字段。"
 
-#: src/Admin/Views/pages/settings.php:162
+#: src/Admin/Views/pages/settings.php:163
 #: src/Security/Checks/BotAgentCheck.php:39
 msgid "Bot user-agent detection"
 msgstr "机器人 User-Agent 检测"
@@ -301,7 +301,7 @@ msgstr "CF7 安全"
 msgid "CF7 Spam Checker"
 msgstr "CF7 Spam Checker"
 
-#: src/Admin/Cf7Panel.php:65
+#: src/Admin/Cf7Panel.php:70
 msgid "CF7 Spam Checker Pro"
 msgstr "CF7 Spam Checker Pro"
 
@@ -309,6 +309,11 @@ msgstr "CF7 Spam Checker Pro"
 #. translators: 1: version, 2: PHP version
 msgid "CF7 Spam Checker Pro %1$s · PHP %2$s · "
 msgstr "CF7 Spam Checker Pro %1$s · PHP %2$s · "
+
+#: src/Plugin.php:255
+#. translators: 1: required CF7 version, 2: detected CF7 version
+msgid "CF7 Spam Checker Pro requires Contact Form 7 %1$s or newer (detected: %2$s). Spam protection stays disabled until Contact Form 7 is updated."
+msgstr "CF7 Spam Checker Pro 需要 Contact Form 7 %1$s 或更高版本（检测到：%2$s）。在 Contact Form 7 更新之前，垃圾防护保持禁用。"
 
 #: src/Admin/DashboardWidget.php:36
 msgid "CF7 Spam Checker — today"
@@ -326,11 +331,11 @@ msgstr "缺少 CF7"
 msgid "Cache results for (days)"
 msgstr "结果缓存时长（天）"
 
-#: src/Admin/Views/pages/settings.php:181
+#: src/Admin/Views/pages/settings.php:182
 msgid "Case-insensitive substring matching, one keyword per line."
 msgstr "不区分大小写的子串匹配，每行一个关键词。"
 
-#: src/Admin/Assets.php:95
+#: src/Admin/Assets.php:97
 msgid "Check results"
 msgstr "检查结果"
 
@@ -350,7 +355,7 @@ msgstr "清空注册表"
 msgid "Client IP detection"
 msgstr "客户端 IP 识别"
 
-#: src/Admin/Views/pages/settings.php:107
+#: src/Admin/Views/pages/settings.php:108
 msgid "Clock-skew tolerance (s)"
 msgstr "时钟偏差容忍（秒）"
 
@@ -358,11 +363,11 @@ msgstr "时钟偏差容忍（秒）"
 msgid "Cloudflare — always use CF-Connecting-IP"
 msgstr "Cloudflare——始终使用 CF-Connecting-IP"
 
-#: src/Admin/Assets.php:61
+#: src/Admin/Assets.php:63
 msgid "Connection OK."
 msgstr "连接正常。"
 
-#: src/Admin/Assets.php:62
+#: src/Admin/Assets.php:64
 msgid "Connection failed."
 msgstr "连接失败。"
 
@@ -370,11 +375,11 @@ msgstr "连接失败。"
 msgid "Consider reports up to (days old)"
 msgstr "考虑的举报最长时限（天）"
 
-#: src/Admin/Assets.php:59
+#: src/Admin/Assets.php:61
 msgid "Copied to clipboard."
 msgstr "已复制到剪贴板。"
 
-#: src/Admin/Assets.php:53
+#: src/Admin/Assets.php:55
 msgid "Could not save settings."
 msgstr "无法保存设置。"
 
@@ -386,7 +391,7 @@ msgstr "按 API 返回的最近举报统计（verbose 模式）。0 表示禁用
 msgid "Country filter (uses the same lookup)"
 msgstr "国家过滤（复用同一次查询）"
 
-#: src/Security/Checks/AbuseIpCheck.php:176
+#: src/Security/Checks/AbuseIpCheck.php:180
 #. translators: 1: country code, 2: mode
 msgid "Country filter: submission from %1$s is not accepted (mode: %2$s)."
 msgstr "国家过滤：不接受来自 %1$s 的提交（模式：%2$s）。"
@@ -395,11 +400,11 @@ msgstr "国家过滤：不接受来自 %1$s 的提交（模式：%2$s）。"
 msgid "Create one at "
 msgstr "创建密钥："
 
-#: src/Admin/Assets.php:88
+#: src/Admin/Assets.php:90
 msgid "Created"
 msgstr "创建时间"
 
-#: src/Admin/Views/pages/settings.php:197
+#: src/Admin/Views/pages/settings.php:198
 msgid "Custom field error message"
 msgstr "自定义字段错误消息"
 
@@ -411,7 +416,7 @@ msgstr "AbuseIPDB 当日查询额度已用尽——将尽可能使用缓存数�
 msgid "Danger zone"
 msgstr "危险操作区"
 
-#: src/Admin/Assets.php:73
+#: src/Admin/Assets.php:75
 msgid "Dark"
 msgstr "深色"
 
@@ -420,15 +425,15 @@ msgstr "深色"
 msgid "Dashboard"
 msgstr "仪表盘"
 
-#: src/Admin/Views/pages/settings.php:260
+#: src/Admin/Views/pages/settings.php:261
 msgid "Debug logging"
 msgstr "调试日志"
 
-#: src/Admin/Views/pages/settings.php:258
+#: src/Admin/Views/pages/settings.php:259
 msgid "Debug mode"
 msgstr "调试模式"
 
-#: src/Admin/Views/pages/settings.php:261
+#: src/Admin/Views/pages/settings.php:262
 msgid "Debug output in AJAX response"
 msgstr "AJAX 响应中的调试输出"
 
@@ -436,7 +441,7 @@ msgstr "AJAX 响应中的调试输出"
 msgid "Default: "
 msgstr "默认："
 
-#: src/Admin/Views/pages/settings.php:270
+#: src/Admin/Views/pages/settings.php:271
 msgid "Delete file"
 msgstr "删除文件"
 
@@ -444,11 +449,11 @@ msgstr "删除文件"
 msgid "Delete selected"
 msgstr "删除所选"
 
-#: src/Admin/Assets.php:65
+#: src/Admin/Assets.php:67
 msgid "Deleted."
 msgstr "已删除。"
 
-#: src/Admin/Assets.php:90
+#: src/Admin/Assets.php:92
 msgid "Details"
 msgstr "详情"
 
@@ -468,7 +473,7 @@ msgstr "已禁用或未配置"
 msgid "Duration (hours, 0 = permanent)"
 msgstr "时长（小时，0 = 永久）"
 
-#: src/Admin/Views/pages/settings.php:227
+#: src/Admin/Views/pages/settings.php:228
 msgid "E-mail alerts"
 msgstr "邮件提醒"
 
@@ -476,7 +481,7 @@ msgstr "邮件提醒"
 msgid "Each submission is appended as a structured digest: form fields, IP, country/ISP (when known), user agent, referrer, dwell time and the results of the local heuristics. The digest is capped at ~12 KB."
 msgstr "每次提交都会以结构化摘要附加：表单字段、IP、国家/运营商（如已知）、User-Agent、来源页、停留时间以及本地启发式检查结果。摘要上限约 12 KB。"
 
-#: src/Admin/Views/pages/settings.php:231
+#: src/Admin/Views/pages/settings.php:232
 msgid "Empty = site admin e-mail."
 msgstr "留空 = 站点管理员邮箱。"
 
@@ -496,14 +501,14 @@ msgstr "启用 LLM 检查"
 msgid "Enable country filtering"
 msgstr "启用国家过滤"
 
-#: src/Admin/Views/pages/settings.php:102
-#: src/Admin/Views/pages/settings.php:115
-#: src/Admin/Views/pages/settings.php:123
-#: src/Admin/Views/pages/settings.php:131
+#: src/Admin/Views/pages/settings.php:103
+#: src/Admin/Views/pages/settings.php:116
+#: src/Admin/Views/pages/settings.php:124
+#: src/Admin/Views/pages/settings.php:132
 msgid "Enabled"
 msgstr "启用"
 
-#: src/Admin/Views/pages/settings.php:138
+#: src/Admin/Views/pages/settings.php:139
 msgid "Escalation: the Nth ban of the same IP becomes permanent."
 msgstr "升级机制：同一 IP 第 N 次被封禁时变为永久封禁。"
 
@@ -523,7 +528,7 @@ msgstr "每个提供商都使用两种通用协议之一：OpenAI 兼容的 chat
 msgid "Every submission (blocked + clean)"
 msgstr "每次提交（拦截 + 正常）"
 
-#: src/Admin/Assets.php:89
+#: src/Admin/Assets.php:91
 msgid "Expires"
 msgstr "到期时间"
 
@@ -540,7 +545,7 @@ msgstr "导出 CSV"
 msgid "Export JSON"
 msgstr "导出 JSON"
 
-#: src/Admin/Assets.php:69
+#: src/Admin/Assets.php:71
 msgid "Export started."
 msgstr "导出已开始。"
 
@@ -552,15 +557,19 @@ msgstr "导出完整配置（含 API 密钥），或在其他站点恢复。"
 msgid "External intelligence: AI classification and IP reputation."
 msgstr "外部情报：AI 分类与 IP 信誉。"
 
-#: src/Admin/Views/pages/settings.php:165
+#: src/Admin/Views/pages/settings.php:166
 msgid "Extra keywords (one per line)"
 msgstr "附加关键词（每行一个）"
 
-#: src/Admin/Views/pages/settings.php:194
+#: src/Admin/Views/pages/settings.php:195
 msgid "Field names (comma-separated)"
 msgstr "字段名（逗号分隔）"
 
-#: src/Admin/Views/pages/settings.php:163
+#: src/Admin/Views/pages/settings.php:277
+msgid "File names carry a per-installation suffix; on nginx additionally deny the uploads/cf7sec location in the server config — .htaccess protects Apache only."
+msgstr "文件名包含按安装生成的随机后缀；在 nginx 上还需在服务器配置中拒绝 uploads/cf7sec 位置——.htaccess 仅保护 Apache。"
+
+#: src/Admin/Views/pages/settings.php:164
 msgid "Flags scripted clients (curl, headless browsers, scrapers…)."
 msgstr "标记脚本客户端（curl、无头浏览器、抓取器……）。"
 
@@ -592,20 +601,20 @@ msgstr "常规"
 msgid "Header mode"
 msgstr "请求头模式"
 
-#: src/Security/Checks/HoneypotCheck.php:56
+#: src/Security/Checks/HoneypotCheck.php:63
 msgid "Hidden honeypot field \"%s\" was filled."
 msgstr "隐藏的蜜罐字段“%s”被填写。"
 
-#: src/Admin/Assets.php:76
+#: src/Admin/Assets.php:78
 msgid "Hide key"
 msgstr "隐藏密钥"
 
-#: src/Admin/Views/pages/settings.php:113
+#: src/Admin/Views/pages/settings.php:114
 #: src/Security/Checks/HoneypotCheck.php:31
 msgid "Honeypot"
 msgstr "蜜罐"
 
-#: src/Security/Checks/HoneypotCheck.php:64
+#: src/Security/Checks/HoneypotCheck.php:71
 msgid "Honeypot field missing from submission."
 msgstr "提交中缺少蜜罐字段。"
 
@@ -621,11 +630,11 @@ msgstr "在代理和 CDN 之后如何解析访客真实 IP。"
 msgid "How the three thresholds work"
 msgstr "三个阈值如何工作"
 
-#: src/Admin/Views/pages/settings.php:101
+#: src/Admin/Views/pages/settings.php:102
 msgid "Humans need a few seconds to fill a form; bots do not."
 msgstr "真人填写表单需要几秒钟；机器人则不需要。"
 
-#: src/Admin/Assets.php:84
+#: src/Admin/Assets.php:86
 msgid "IP"
 msgstr "IP"
 
@@ -643,16 +652,16 @@ msgstr "IP 规则"
 msgid "IP address"
 msgstr "IP 地址"
 
-#: src/Admin/Views/pages/settings.php:121
+#: src/Admin/Views/pages/settings.php:122
 #: src/Security/Checks/IpBanCheck.php:28
 msgid "IP ban list"
 msgstr "IP 封禁列表"
 
-#: src/Admin/Views/pages/settings.php:243
+#: src/Admin/Views/pages/settings.php:244
 msgid "IP banned"
 msgstr "IP 被封禁"
 
-#: src/Admin/Assets.php:66
+#: src/Admin/Assets.php:68
 msgid "IP banned."
 msgstr "IP 已封禁。"
 
@@ -665,7 +674,7 @@ msgstr "IP 已封禁：%s"
 msgid "IP lookup"
 msgstr "IP 查询"
 
-#: src/Admin/Assets.php:68
+#: src/Admin/Assets.php:70
 msgid "IP whitelisted."
 msgstr "IP 已加入白名单。"
 
@@ -681,7 +690,7 @@ msgstr "ISO 3166-1 alpha-2 代码（逗号分隔）"
 msgid "Import JSON"
 msgstr "导入 JSON"
 
-#: src/Admin/Assets.php:71
+#: src/Admin/Assets.php:73
 msgid "Import failed: invalid file."
 msgstr "导入失败：文件无效。"
 
@@ -693,11 +702,11 @@ msgstr "在提示词中包含地理/运营商数据"
 msgid "Info (bans)"
 msgstr "信息（封禁）"
 
-#: src/Admin/Views/pages/settings.php:122
+#: src/Admin/Views/pages/settings.php:123
 msgid "Instantly rejects IPs found in the ban list."
 msgstr "立即拒绝封禁列表中的 IP。"
 
-#: src/Security/SpamPipeline.php:358
+#: src/Security/SpamPipeline.php:360
 #. translators: %s: integration name
 msgid "Integration error: %s"
 msgstr "集成错误：%s"
@@ -730,7 +739,7 @@ msgstr "不可逆操作。"
 msgid "Keep data on uninstall"
 msgstr "卸载时保留数据"
 
-#: src/Admin/Views/pages/settings.php:180
+#: src/Admin/Views/pages/settings.php:181
 #: src/Security/Checks/KeywordSpamCheck.php:27
 msgid "Keyword blacklist"
 msgstr "关键词黑名单"
@@ -739,7 +748,7 @@ msgstr "关键词黑名单"
 msgid "Keyword list is empty."
 msgstr "关键词列表为空。"
 
-#: src/Admin/Views/pages/settings.php:183
+#: src/Admin/Views/pages/settings.php:184
 msgid "Keywords"
 msgstr "关键词"
 
@@ -764,7 +773,7 @@ msgstr "LLM 分析（您的提供商）"
 msgid "LLM gateway"
 msgstr "LLM 网关"
 
-#: src/Admin/Views/pages/settings.php:246
+#: src/Admin/Views/pages/settings.php:247
 msgid "LLM provider error"
 msgstr "LLM 提供商错误"
 
@@ -776,15 +785,15 @@ msgstr "LLM 返回了无法解析的判定；已应用 fail-closed 策略。"
 msgid "LLM returned an unparsable verdict; fail-open policy applied."
 msgstr "LLM 返回了无法解析的判定；已应用 fail-open 策略。"
 
-#: src/Security/SpamPipeline.php:288
+#: src/Security/SpamPipeline.php:290
 msgid "LLM verdict: SPAM (%s)"
 msgstr "LLM 判定：SPAM（%s）"
 
-#: src/Admin/Views/pages/settings.php:189
+#: src/Admin/Views/pages/settings.php:190
 msgid "Language validation"
 msgstr "语言校验"
 
-#: src/Admin/Views/pages/settings.php:275
+#: src/Admin/Views/pages/settings.php:276
 msgid "Latest 400 lines are shown. Log directory: "
 msgstr "显示最近 400 行。日志目录："
 
@@ -796,11 +805,11 @@ msgstr "最新注册表条目——拦截的垃圾、集成错误与封禁。"
 msgid "Leave empty unless you use a proxy, regional endpoint or self-hosted gateway."
 msgstr "除非使用代理、区域端点或自建网关，否则留空。"
 
-#: src/Admin/Assets.php:72
+#: src/Admin/Assets.php:74
 msgid "Light"
 msgstr "浅色"
 
-#: src/Admin/Views/pages/settings.php:171
+#: src/Admin/Views/pages/settings.php:172
 msgid "Link spam"
 msgstr "链接垃圾"
 
@@ -812,11 +821,11 @@ msgstr "链接垃圾检测"
 msgid "Live overview of form protection across your site."
 msgstr "全站表单防护实时概览。"
 
-#: src/Admin/Views/pages/settings.php:268
+#: src/Admin/Views/pages/settings.php:269
 msgid "Loading dates…"
 msgstr "正在加载日期…"
 
-#: src/Admin/Assets.php:63
+#: src/Admin/Assets.php:65
 #: src/Admin/Views/pages/dashboard.php:74
 #: src/Admin/Views/pages/dashboard.php:82
 #: src/Admin/Views/pages/ip-rules.php:62
@@ -827,7 +836,7 @@ msgstr "加载中…"
 msgid "Local heuristics"
 msgstr "本地启发式检查"
 
-#: src/Admin/Views/pages/settings.php:265
+#: src/Admin/Views/pages/settings.php:266
 msgid "Log viewer"
 msgstr "日志查看器"
 
@@ -867,15 +876,15 @@ msgstr "总开关——“通过 AbuseIPDB API 检查”。"
 msgid "Master switch — \"check via LLM\"."
 msgstr "总开关——“通过 LLM 检查”。"
 
-#: src/Admin/Views/pages/settings.php:174
+#: src/Admin/Views/pages/settings.php:175
 msgid "Max links per field"
 msgstr "每个字段最多链接数"
 
-#: src/Admin/Views/pages/settings.php:133
+#: src/Admin/Views/pages/settings.php:134
 msgid "Max submissions / min"
 msgstr "每分钟最多提交数"
 
-#: src/Admin/Views/pages/settings.php:105
+#: src/Admin/Views/pages/settings.php:106
 msgid "Maximum form age (s)"
 msgstr "表单最大有效期（秒）"
 
@@ -883,11 +892,11 @@ msgstr "表单最大有效期（秒）"
 msgid "Messages"
 msgstr "消息"
 
-#: src/Admin/Views/pages/settings.php:232
+#: src/Admin/Views/pages/settings.php:233
 msgid "Minimum gap between two alerts of the same type."
 msgstr "同类型两次提醒之间的最小间隔。"
 
-#: src/Admin/Views/pages/settings.php:104
+#: src/Admin/Views/pages/settings.php:105
 msgid "Minimum seconds"
 msgstr "最少秒数"
 
@@ -907,7 +916,7 @@ msgstr "您的网关使用的模型 ID，例如 mistralai/mistral-7b-instruct。
 msgid "Model returned an unparsable verdict: "
 msgstr "模型返回了无法解析的判定："
 
-#: src/Admin/Cf7Panel.php:73
+#: src/Admin/Cf7Panel.php:82
 msgid "NOT PROTECTED (excluded in Settings → General)"
 msgstr "未受保护（已在“设置 → 常规”中排除）"
 
@@ -915,7 +924,7 @@ msgstr "未受保护（已在“设置 → 常规”中排除）"
 msgid "No Contact Form 7 forms found."
 msgstr "未找到 Contact Form 7 表单。"
 
-#: src/Admin/Cf7Panel.php:106
+#: src/Admin/Cf7Panel.php:73
 msgid "No form tags are required — protection is applied automatically via hidden fields and the wpcf7_spam pipeline."
 msgstr "无需任何表单标签——防护通过隐藏字段与 wpcf7_spam 管线自动生效。"
 
@@ -923,7 +932,7 @@ msgstr "无需任何表单标签——防护通过隐藏字段与 wpcf7_spam 管
 msgid "No timing fields present (JS disabled or direct POST)."
 msgstr "缺少计时字段（JS 被禁用或直接 POST）。"
 
-#: src/Admin/Assets.php:64
+#: src/Admin/Assets.php:66
 msgid "Nothing here yet."
 msgstr "暂无内容。"
 
@@ -935,11 +944,11 @@ msgstr "不记录——仅计数器"
 msgid "Notifications"
 msgstr "通知"
 
-#: src/Admin/Views/pages/settings.php:234
+#: src/Admin/Views/pages/settings.php:235
 msgid "Notify about"
 msgstr "通知内容"
 
-#: src/Admin/Views/pages/settings.php:228
+#: src/Admin/Views/pages/settings.php:229
 msgid "Notify administrators about important security events (throttled)."
 msgstr "就重要安全事件通知管理员（带限流）。"
 
@@ -951,11 +960,15 @@ msgstr "关闭 = 节省 token：仅对通过本地启发式检查的提交调用
 msgid "On API error / unparsable answer"
 msgstr "API 错误/答案无法解析时"
 
+#: src/Admin/Views/pages/settings.php:92
+msgid "On shared hosting behind a proxy you do not control, choose \"REMOTE_ADDR only\" — forwarded headers can then no longer be spoofed by the client."
+msgstr "在您无法控制的代理之后的共享主机上，请选择“仅 REMOTE_ADDR”——此时客户端无法伪造转发头。"
+
 #: src/Admin/Views/pages/settings.php:55
 msgid "Only selected forms"
 msgstr "仅所选表单"
 
-#: src/Admin/Views/pages/settings.php:107
+#: src/Admin/Views/pages/settings.php:108
 msgid "Only used for the server-timestamp fallback when JavaScript is disabled."
 msgstr "仅在 JavaScript 被禁用时用于服务器时间戳回退。"
 
@@ -967,15 +980,15 @@ msgstr "打开仪表盘"
 msgid "Open registry"
 msgstr "打开注册表"
 
-#: src/Admin/Cf7Panel.php:95
+#: src/Admin/Cf7Panel.php:105
 msgid "Open security dashboard"
 msgstr "打开安全仪表盘"
 
-#: src/Admin/Cf7Panel.php:71
+#: src/Admin/Cf7Panel.php:80
 msgid "PROTECTED"
 msgstr "已受保护"
 
-#: src/Admin/Assets.php:77
+#: src/Admin/Assets.php:79
 msgid "Page"
 msgstr "第"
 
@@ -983,7 +996,7 @@ msgstr "第"
 msgid "Paste new key…"
 msgstr "粘贴新密钥…"
 
-#: src/Admin/Assets.php:96
+#: src/Admin/Assets.php:98
 msgid "Payload"
 msgstr "提交内容"
 
@@ -991,7 +1004,7 @@ msgstr "提交内容"
 msgid "Permanent"
 msgstr "永久"
 
-#: src/Admin/Views/pages/settings.php:138
+#: src/Admin/Views/pages/settings.php:139
 msgid "Permanent after N bans"
 msgstr "封禁 N 次后转为永久"
 
@@ -999,7 +1012,7 @@ msgstr "封禁 N 次后转为永久"
 msgid "Pipeline order"
 msgstr "管线顺序"
 
-#: src/Admin/Views/pages/settings.php:197
+#: src/Admin/Views/pages/settings.php:198
 msgid "Placeholders: %field_name%, %language_name%. Empty = use the default from the Messages tab."
 msgstr "占位符：%field_name%、%language_name%。留空 = 使用“消息”选项卡中的默认值。"
 
@@ -1043,11 +1056,11 @@ msgstr "仅 REMOTE_ADDR——忽略所有请求头"
 msgid "Rate limiting"
 msgstr "频率限制"
 
-#: src/Admin/Views/pages/settings.php:129
+#: src/Admin/Views/pages/settings.php:130
 msgid "Rate limiting & auto-ban"
 msgstr "频率限制与自动封禁"
 
-#: src/Admin/Views/pages/settings.php:245
+#: src/Admin/Views/pages/settings.php:246
 msgid "Rate-limit ban"
 msgstr "频率限制封禁"
 
@@ -1055,7 +1068,7 @@ msgstr "频率限制封禁"
 msgid "Re-check"
 msgstr "重新检查"
 
-#: src/Admin/Assets.php:85
+#: src/Admin/Assets.php:87
 #: src/Admin/Views/pages/ip-rules.php:50
 msgid "Reason"
 msgstr "原因"
@@ -1068,16 +1081,16 @@ msgstr "Reasoner 模型可能需要 10–30 秒。"
 msgid "Recent events"
 msgstr "最近事件"
 
-#: src/Admin/Views/pages/settings.php:231
+#: src/Admin/Views/pages/settings.php:232
 msgid "Recipient e-mail"
 msgstr "收件邮箱"
 
-#: src/Admin/Assets.php:94
+#: src/Admin/Assets.php:96
 msgid "Referrer"
 msgstr "来源页"
 
 #: src/Admin/Views/pages/dashboard.php:35
-#: src/Admin/Views/pages/settings.php:269
+#: src/Admin/Views/pages/settings.php:270
 msgid "Refresh"
 msgstr "刷新"
 
@@ -1101,7 +1114,7 @@ msgstr "注册表记录级别"
 msgid "Remaining daily budget: %d queries."
 msgstr "今日剩余额度：%d 次查询。"
 
-#: src/Admin/Assets.php:57
+#: src/Admin/Assets.php:59
 msgid "Remove this IP rule?"
 msgstr "移除此 IP 规则？"
 
@@ -1133,7 +1146,7 @@ msgstr "将全部设置重置为默认值"
 msgid "Reset statistics"
 msgstr "重置统计"
 
-#: src/Admin/Views/pages/settings.php:190
+#: src/Admin/Views/pages/settings.php:191
 msgid "Restricts name-like fields to one character set (22 languages)."
 msgstr "将姓名字段限制为单一字符集（支持 22 种语言）。"
 
@@ -1141,7 +1154,7 @@ msgstr "将姓名字段限制为单一字符集（支持 22 种语言）。"
 msgid "Retention (days)"
 msgstr "保留天数"
 
-#: src/Admin/Assets.php:67
+#: src/Admin/Assets.php:69
 msgid "Rule removed."
 msgstr "规则已移除。"
 
@@ -1153,7 +1166,7 @@ msgstr "即使本地检查已判定垃圾也运行 LLM"
 msgid "Run maintenance now"
 msgstr "立即运行维护"
 
-#: src/Admin/Views/pages/settings.php:146
+#: src/Admin/Views/pages/settings.php:147
 #: src/Security/Checks/SqlInjectionCheck.php:28
 msgid "SQL-injection detection"
 msgstr "SQL 注入检测"
@@ -1166,7 +1179,7 @@ msgstr "在字段“%2$s”中匹配到 SQL 注入特征“%1$s”。"
 msgid "Save changes"
 msgstr "保存更改"
 
-#: src/Admin/Views/pages/settings.php:155
+#: src/Admin/Views/pages/settings.php:156
 msgid "Script tags, event handlers and encoded payloads."
 msgstr "脚本标签、事件处理器与编码载荷。"
 
@@ -1178,15 +1191,15 @@ msgstr "搜索 IP 或原因…"
 msgid "Security Dashboard"
 msgstr "安全仪表盘"
 
-#: src/Admin/Views/pages/settings.php:272
+#: src/Admin/Views/pages/settings.php:273
 msgid "Select a date to view the log."
 msgstr "选择日期以查看日志。"
 
-#: src/Admin/Assets.php:79
+#: src/Admin/Assets.php:81
 msgid "Select all"
 msgstr "全选"
 
-#: src/Admin/Views/pages/settings.php:251
+#: src/Admin/Views/pages/settings.php:252
 msgid "Send test e-mail"
 msgstr "发送测试邮件"
 
@@ -1195,7 +1208,7 @@ msgid "Sends the full submission (fields, IP, browser, geo, timing) to the large
 msgstr "将完整提交内容（字段、IP、浏览器、地理、计时）发送给您选择的大语言模型，模型必须恰好以一个词回答：SPAM 或 CLEAN。SPAM 判定会写入垃圾注册表并拒绝提交；CLEAN 提交正常通过。"
 
 #: src/Admin/AdminMenu.php:72
-#: src/Admin/Cf7Panel.php:98
+#: src/Admin/Cf7Panel.php:108
 #: src/Admin/PageRenderer.php:101
 #: src/Admin/Views/pages/settings.php:35
 msgid "Settings"
@@ -1205,15 +1218,15 @@ msgstr "设置"
 msgid "Settings backup"
 msgstr "设置备份"
 
-#: src/Admin/Assets.php:70
+#: src/Admin/Assets.php:72
 msgid "Settings imported."
 msgstr "设置已导入。"
 
-#: src/Admin/Assets.php:52
+#: src/Admin/Assets.php:54
 msgid "Settings saved."
 msgstr "设置已保存。"
 
-#: src/Admin/Assets.php:75
+#: src/Admin/Assets.php:77
 #: src/Admin/Views/Ui.php:103
 msgid "Show key"
 msgstr "显示密钥"
@@ -1222,15 +1235,15 @@ msgstr "显示密钥"
 msgid "Show the daily summary on the main WP dashboard."
 msgstr "在 WordPress 主仪表盘显示每日摘要。"
 
-#: src/Admin/Views/pages/settings.php:209
+#: src/Admin/Views/pages/settings.php:210
 msgid "Shown instead of the generic CF7 spam notice when a specific check fires. Placeholders: %field_name%, %language_name%, %minutes%."
 msgstr "特定检查触发时，替代 CF7 通用垃圾提示显示。占位符：%field_name%、%language_name%、%minutes%。"
 
-#: src/Admin/Views/pages/settings.php:147
+#: src/Admin/Views/pages/settings.php:148
 msgid "Signature scanning of every submitted field."
 msgstr "对每个提交字段进行特征扫描。"
 
-#: src/Admin/Cf7Panel.php:86
+#: src/Admin/Cf7Panel.php:96
 #. translators: 1: processed count, 2: blocked count
 msgid "Site lifetime: %1$s submissions processed, %2$s blocked as spam."
 msgstr "站点累计：处理提交 %1$s 次，拦截垃圾 %2$s 次。"
@@ -1239,16 +1252,16 @@ msgstr "站点累计：处理提交 %1$s 次，拦截垃圾 %2$s 次。"
 msgid "Skipped — submission already flagged"
 msgstr "已跳过——提交已被标记"
 
-#: src/Admin/Views/pages/settings.php:130
+#: src/Admin/Views/pages/settings.php:131
 msgid "Sliding 60-second window per IP with strike escalation."
 msgstr "按 IP 的 60 秒滑动窗口，带违规计数升级。"
 
-#: src/Admin/Assets.php:86
+#: src/Admin/Assets.php:88
 #: src/Services/BanManager.php:93
 msgid "Source"
 msgstr "来源"
 
-#: src/Admin/Cf7Panel.php:33
+#: src/Admin/Cf7Panel.php:35
 msgid "Spam Checker"
 msgstr "Spam Checker"
 
@@ -1258,21 +1271,21 @@ msgstr "Spam Checker"
 msgid "Spam Registry"
 msgstr "垃圾注册表"
 
-#: src/Admin/Views/pages/settings.php:244
+#: src/Admin/Views/pages/settings.php:245
 msgid "Spam blocked"
 msgstr "垃圾已拦截"
 
-#: src/Security/SpamPipeline.php:301
+#: src/Security/SpamPipeline.php:303
 #. translators: %s: form ID
 msgid "Spam blocked on form #%s"
 msgstr "表单 #%s 拦截了垃圾提交"
 
-#: src/Admin/Cf7Panel.php:101
+#: src/Admin/Cf7Panel.php:111
 #: src/Admin/DashboardWidget.php:70
 msgid "Spam registry"
 msgstr "垃圾注册表"
 
-#: src/Admin/Views/pages/settings.php:196
+#: src/Admin/Views/pages/settings.php:197
 msgid "Strict mode"
 msgstr "严格模式"
 
@@ -1281,15 +1294,15 @@ msgstr "严格模式"
 msgid "Strike threshold reached (%1$d/%2$d). Last reason: %3$s"
 msgstr "已达到违规计数阈值（%1$d/%2$d）。最近原因：%3$s"
 
-#: src/Admin/Assets.php:87
+#: src/Admin/Assets.php:89
 msgid "Strikes"
 msgstr "违规计数"
 
-#: src/Admin/Views/pages/settings.php:134
+#: src/Admin/Views/pages/settings.php:135
 msgid "Strikes before ban"
 msgstr "封禁前违规计数"
 
-#: src/Admin/Assets.php:92
+#: src/Admin/Assets.php:94
 msgid "Submission"
 msgstr "提交"
 
@@ -1306,7 +1319,7 @@ msgstr "在 %d 秒内提交——快于人类最低值 %d 秒。"
 msgid "Suggestions: "
 msgstr "建议："
 
-#: src/Admin/Assets.php:74
+#: src/Admin/Assets.php:76
 msgid "System"
 msgstr "跟随系统"
 
@@ -1328,14 +1341,14 @@ msgid "Test e-mail sent."
 msgstr "测试邮件已发送。"
 
 #: src/Admin/Views/pages/integrations.php:138
-msgid "Test performs a live lookup of 8.8.8.8 (Google DNS)."
-msgstr "测试将对 8.8.8.8（Google DNS）执行实时查询。"
+msgid "Test performs a lookup of 8.8.8.8 (Google DNS); a cached result is used when available."
+msgstr "测试将查询 8.8.8.8（Google DNS）；如有缓存则使用缓存结果。"
 
 #: src/Admin/Views/pages/integrations.php:100
 msgid "Test sends one harmless sample submission to the configured provider."
 msgstr "测试会向所配置的提供商发送一条无害的示例提交。"
 
-#: src/Admin/Assets.php:60
+#: src/Admin/Assets.php:62
 msgid "Testing…"
 msgstr "测试中…"
 
@@ -1365,7 +1378,7 @@ msgstr "主题：浅色 / 深色 / 跟随系统"
 msgid "This file was not exported by CF7 Spam Checker Pro."
 msgstr "此文件并非由 CF7 Spam Checker Pro 导出。"
 
-#: src/Admin/Cf7Panel.php:69
+#: src/Admin/Cf7Panel.php:77
 msgid "This form:"
 msgstr "此表单："
 
@@ -1373,15 +1386,15 @@ msgstr "此表单："
 msgid "This is a test message from CF7 Spam Checker Pro.\nIf you can read it, e-mail notifications are configured correctly."
 msgstr "这是来自 CF7 Spam Checker Pro 的测试消息。\n如果您能看到它，说明邮件通知配置正确。"
 
-#: src/Admin/Assets.php:58
+#: src/Admin/Assets.php:60
 msgid "This permanently deletes data. Continue?"
 msgstr "此操作将永久删除数据。是否继续？"
 
-#: src/Admin/Views/pages/settings.php:232
+#: src/Admin/Views/pages/settings.php:233
 msgid "Throttle (minutes)"
 msgstr "限流（分钟）"
 
-#: src/Admin/Assets.php:81
+#: src/Admin/Assets.php:83
 msgid "Time"
 msgstr "时间"
 
@@ -1389,7 +1402,7 @@ msgstr "时间"
 msgid "Timeout (seconds)"
 msgstr "超时（秒）"
 
-#: src/Admin/Views/pages/settings.php:100
+#: src/Admin/Views/pages/settings.php:101
 #: src/Security/Checks/TimeCheck.php:40
 msgid "Timing analysis"
 msgstr "时间分析"
@@ -1416,7 +1429,7 @@ msgstr "流量——最近 30 天"
 msgid "Tune every protection layer. Changes are saved with the button in the top bar."
 msgstr "调整每个防护层。更改通过顶栏按钮保存。"
 
-#: src/Admin/Assets.php:82
+#: src/Admin/Assets.php:84
 #: src/Admin/Views/pages/ip-rules.php:46
 #: src/Services/BanManager.php:94
 msgid "Type"
@@ -1430,7 +1443,7 @@ msgstr "卸载行为：“卸载时保留数据”开关位于“设置 → 常�
 msgid "Unknown page."
 msgstr "未知页面。"
 
-#: src/Admin/Assets.php:93
+#: src/Admin/Assets.php:95
 msgid "User agent"
 msgstr "User-Agent"
 
@@ -1442,7 +1455,7 @@ msgstr "User-Agent 包含自动化标记“%s”。"
 msgid "Uses the ban duration from Settings → Protection."
 msgstr "使用“设置 → 防护”中的封禁时长。"
 
-#: src/Admin/Assets.php:83
+#: src/Admin/Assets.php:85
 msgid "Verdict"
 msgstr "判定"
 
@@ -1454,7 +1467,7 @@ msgstr "查看全部"
 msgid "View the system prompt sent to the model"
 msgstr "查看发送给模型的系统提示词"
 
-#: src/Admin/Views/pages/settings.php:208
+#: src/Admin/Views/pages/settings.php:209
 msgid "Visitor-facing messages"
 msgstr "访客可见消息"
 
@@ -1487,11 +1500,11 @@ msgstr "白名单 IP"
 msgid "WordPress dashboard widget"
 msgstr "WordPress 仪表盘小工具"
 
-#: src/Admin/Views/pages/settings.php:259
+#: src/Admin/Views/pages/settings.php:260
 msgid "Writes a detailed daily log to wp-content/uploads/cf7sec/ (web-inaccessible)."
 msgstr "将详细的每日日志写入 wp-content/uploads/cf7sec/（Web 不可访问）。"
 
-#: src/Admin/Views/pages/settings.php:154
+#: src/Admin/Views/pages/settings.php:155
 #: src/Security/Checks/XssCheck.php:28
 msgid "XSS detection"
 msgstr "XSS 检测"
@@ -1500,7 +1513,7 @@ msgstr "XSS 检测"
 msgid "XSS signature \"%1$s\" matched in field \"%2$s\"."
 msgstr "在字段“%2$s”中匹配到 XSS 特征“%1$s”。"
 
-#: src/Admin/Assets.php:54
+#: src/Admin/Assets.php:56
 msgid "You have unsaved changes."
 msgstr "您有未保存的更改。"
 
@@ -1529,7 +1542,7 @@ msgstr "例如 US, DE, CN, RU"
 msgid "final AI verdict SPAM/CLEAN with geo context attached."
 msgstr "附带地理上下文的最终 AI 判定 SPAM/CLEAN。"
 
-#: src/Admin/Assets.php:91
+#: src/Admin/Assets.php:93
 msgid "items"
 msgstr "条"
 
@@ -1537,7 +1550,7 @@ msgstr "条"
 msgid "maxAgeInDays API parameter."
 msgstr "API 参数 maxAgeInDays。"
 
-#: src/Admin/Assets.php:78
+#: src/Admin/Assets.php:80
 msgid "of"
 msgstr "/"
 
@@ -1545,7 +1558,7 @@ msgstr "/"
 msgid "runs only while the submission is still clean (saves quota)."
 msgstr "仅在提交仍为“干净”时运行（节省配额）。"
 
-#: src/Admin/Assets.php:80
+#: src/Admin/Assets.php:82
 msgid "selected"
 msgstr "已选择"
 

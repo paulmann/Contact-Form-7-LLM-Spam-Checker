@@ -18,10 +18,8 @@ if command -v npx >/dev/null 2>&1 && [ -x "$ROOT/node_modules/.bin/tailwindcss" 
 else
     echo "  • tailwindcss not installed locally — using committed assets/dist/admin.css"
 fi
-cp "$ROOT/assets/src/admin.js" "$ROOT/assets/dist/admin.js" 2>/dev/null || {
-    mkdir -p "$ROOT/assets/dist"
-    cp "$ROOT/assets/src/admin.js" "$ROOT/assets/dist/admin.js"
-}
+mkdir -p "$ROOT/assets/dist"
+cp "$ROOT/assets/src/admin.js" "$ROOT/assets/dist/admin.js"
 echo "  ✓ JS synced"
 
 # 2. Lint PHP (if php available)

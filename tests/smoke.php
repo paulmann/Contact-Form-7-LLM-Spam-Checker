@@ -14,6 +14,7 @@ use CF7Sec\Security\Checks\BotAgentCheck;
 use CF7Sec\Security\Checks\HoneypotCheck;
 use CF7Sec\Security\Checks\KeywordSpamCheck;
 use CF7Sec\Security\Checks\LinkSpamCheck;
+use CF7Sec\Security\Checks\LlmCheck;
 use CF7Sec\Security\Checks\RateLimitCheck;
 use CF7Sec\Security\Checks\SqlInjectionCheck;
 use CF7Sec\Security\Checks\TimeCheck;
@@ -99,6 +100,8 @@ ok(ProviderCatalog::exists('nope') === false, 'unknown provider id rejected');
 echo "== Support\\Ip ==\n";
 ok(Ip::valid('8.8.8.8') === '8.8.8.8' && Ip::valid('nope') === '', 'valid()');
 ok(Ip::firstFromList('10.0.0.1, 93.184.216.34, 8.8.8.8') === '93.184.216.34', 'firstFromList prefers public');
+ok(Ip::firstFromList('1.2.3.4, 203.0.113.9') === '1.2.3.4', 'M12: spoofed XFF list — first public entry wins (documented risk)');
+ok(Ip::firstFromList('203.0.113.9, 1.2.3.4') === '203.0.113.9', 'M12: client-position entry wins when listed first');
 ok(Ip::isPrivate('192.168.1.5') === true && Ip::isPrivate('8.8.8.8') === false, 'isPrivate()');
 ok(Ip::isCloudflare('104.16.5.5') === true && Ip::isCloudflare('8.8.8.8') === false, 'isCloudflare()');
 ok(Ip::inCidr('172.64.0.1', '172.64.0.0/13') === true && Ip::inCidr('172.72.0.1', '172.64.0.0/13') === false, 'inCidr()');
@@ -191,6 +194,24 @@ for ($i = 0; $i < 20; $i++) {
 }
 ok($status === CheckStatus::Pass, '20th request passes (limit 20)');
 ok($rl->run($ctx)->isFail(), '21st request fails');
+
+echo "== B1 regression: LlmCheck enablement under schema v2 ==\n";
+$GLOBALS['cf7sec_test_options'][CF7SEC_OPTION] = Settings::deepMerge(Settings::DEFAULTS, [
+    'llm' => ['enabled' => true, 'provider' => 'deepseek', 'api_keys' => ['deepseek' => 'sk-test-0001']],
+]);
+$s2      = new Settings();
+$gateway = new LlmGateway($s2);
+$llm     = new LlmCheck($gateway);
+ok($gateway->isConfigured(), 'gateway configured from llm.* keys');
+ok($llm->enabled(makeContext([], [], $s2)) === true, 'LlmCheck::enabled() === true with llm.enabled (B1)');
+$GLOBALS['cf7sec_test_options'][CF7SEC_OPTION] = [];
+
+echo "== M10: salted honeypot field names ==\n";
+ok(HoneypotCheck::fieldName(7) === HoneypotCheck::fieldName(7), 'stable within one installation');
+ok(HoneypotCheck::fieldName(7) !== HoneypotCheck::fieldName(8), 'differs per form id');
+ok(!str_starts_with(HoneypotCheck::fieldName(7), '_'), 'no leading underscore (CF7 strips _ keys)');
+ok(strlen(HoneypotCheck::fieldName(7)) === strlen('cf7sec_hp_') + 12, '12-char HMAC suffix');
+ok(HoneypotCheck::fieldName(7) !== 'cf7sec_hp_' . substr(md5('7'), 0, 8), 'old unsalted md5 scheme retired');
 
 echo "== Languages ==\n";
 ok(preg_match(Languages::REGEX['russian']['regex'], 'Иван Петров') === 1, 'russian regex accepts cyrillic name');

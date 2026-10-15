@@ -193,7 +193,9 @@ final class AbuseIpDb
     public function test(): array|WP_Error
     {
         // Google DNS — whitelisted upstream, perfect for a credentials check.
-        $result = $this->lookup('8.8.8.8', true);
+        // Cache-first: a forced refresh on every click would burn daily quota
+        // for no diagnostic benefit (defect L6).
+        $result = $this->lookup('8.8.8.8', false);
         if (is_wp_error($result)) {
             return $result;
         }

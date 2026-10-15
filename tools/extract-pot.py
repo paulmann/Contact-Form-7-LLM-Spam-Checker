@@ -12,6 +12,13 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOMAIN = 'contact-form-7-spam-checker'
 
+
+def plugin_version():
+    """Read CF7SEC_VERSION from the plugin bootstrap (single source)."""
+    src = open(os.path.join(ROOT, DOMAIN + '.php'), encoding='utf-8').read()
+    m = re.search(r"define\('CF7SEC_VERSION', '([^']+)'\)", src)
+    return m.group(1) if m else '0.0.0'
+
 FUNC_PATTERNS = [
     # (regex, group_msg, group_context)
     (re.compile(r'\btranslate_with_gettext_context\s*\(\s*(\'(?:[^\'\\]|\\.)*\'|"(?:[^"\\]|\\.)*")\s*,\s*(\'(?:[^\'\\]|\\.)*\'|"(?:[^"\\]|\\.)*")\s*,\s*[\'"]' + DOMAIN + r'[\'"]', re.S), 1, 2),
@@ -92,7 +99,7 @@ def main():
                 e['refs'].append(('src/Languages.php', line))
 
     header = {
-        'Project-Id-Version': 'CF7 Spam Checker Pro 4.0.0',
+        'Project-Id-Version': 'CF7 Spam Checker Pro ' + plugin_version(),
         'Report-Msgid-Bugs-To': 'https://github.com/paulmann/Contact-Form-7-Spam-Checker/issues',
         'MIME-Version': '1.0',
         'Content-Type': 'text/plain; charset=UTF-8',

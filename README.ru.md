@@ -15,9 +15,9 @@
 | Светлая тема | Тёмная тема |
 |---|---|
 | ![Панель (светлая)](docs/screenshots/dashboard-light.png) | ![Панель (тёмная)](docs/screenshots/dashboard-dark.png) |
-| ![Мобильная панель](docs/screenshots/mobile-dashboard.png) | ![Интеграции (тёмная)](docs/screenshots/integrations-dark.png) |
+| ![Мобильная панель](docs/screenshots/mobile-dashboard-light.png) | ![Интеграции (тёмная)](docs/screenshots/integrations-dark.png) |
 
-*Интерактивный автономный предпросмотр всех страниц админки (светлая/тёмная): откройте `preview/admin-ui-preview.html` из рабочей области репозитория — или переключайте тему прямо в wp-admin после установки.*
+*Интерактивный автономный предпросмотр всех страниц админки (светлая/тёмная): откройте `docs/preview/admin-ui-preview.html` в браузере (самодостаточный файл, сервер не нужен) — или переключайте тему прямо в wp-admin после установки.*
 
 ---
 
@@ -201,8 +201,8 @@ tools/               # экстрактор POT и компилятор .po/.mo 
 
 ```bash
 npm install tailwindcss@3 --no-save
-npx tailwindcss -c tailwind.config.js -i assets/src/input.css -o assets/dist/admin.css --minify
-cp assets/src/admin.js assets/dist/admin.js
+mkdir -p assets/dist
+npm run build
 
 php8.3 tests/smoke.php                # 73 проверки без WordPress
 wp eval-file tests/wp-integration.php --path=/path/to/wp   # 59 проверок в реальных WP+CF7

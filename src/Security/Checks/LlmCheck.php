@@ -46,7 +46,7 @@ final class LlmCheck implements CheckInterface
 
     public function enabled(SubmissionContext $context): bool
     {
-        return (bool) $context->settings->get('deepseek.enabled', false) && $this->client->isConfigured();
+        return (bool) $context->settings->get('llm.enabled', false) && $this->client->isConfigured();
     }
 
     public function run(SubmissionContext $context): CheckResult
@@ -67,7 +67,7 @@ final class LlmCheck implements CheckInterface
         if (is_wp_error($result)) {
             DailyStats::bump(gmdate('Y-m-d'), ['llm_calls' => 1]);
 
-            $onError = (string) $context->settings->get('deepseek.on_error', 'allow');
+            $onError = (string) $context->settings->get('llm.on_error', 'allow');
 
             return $onError === 'block'
                 ? CheckResult::fail(
@@ -122,7 +122,7 @@ final class LlmCheck implements CheckInterface
         }
 
         // Unparsable verdict → treat like an API error.
-        $onError = (string) $context->settings->get('deepseek.on_error', 'allow');
+        $onError = (string) $context->settings->get('llm.on_error', 'allow');
 
         return $onError === 'block'
             ? CheckResult::fail(

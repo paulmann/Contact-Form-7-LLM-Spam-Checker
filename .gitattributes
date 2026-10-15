@@ -1,0 +1,15 @@
+# Enforce LF everywhere; Windows clones must not CRLF-ify scripts.
+* text=auto eol=lf
+
+# Shell scripts must stay LF even on Windows checkouts.
+*.sh text eol=lf
+
+# Windows batch files need CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary assets.
+*.png binary
+*.jpg binary
+*.mo binary
+*.zip binary

@@ -14,8 +14,9 @@ declare(strict_types=1);
 defined('ABSPATH') || exit;
 
 if (!function_exists('mb_strlen')) {
-    function mb_strlen(string $string, ?string $encoding = null): int
+    function mb_strlen($string, $encoding = null): int
     {
+        $string = (string) $string;
         if (function_exists('iconv_strlen')) {
             $len = @iconv_strlen($string, 'UTF-8');
             if ($len !== false) {
@@ -28,8 +29,11 @@ if (!function_exists('mb_strlen')) {
 }
 
 if (!function_exists('mb_substr')) {
-    function mb_substr(string $string, int $start, ?int $length = null, ?string $encoding = null): string
+    function mb_substr($string, $start, $length = null, $encoding = null): string
     {
+        $string = (string) $string;
+        $start  = (int) $start;
+        $length = $length === null ? null : (int) $length;
         if (function_exists('iconv_substr')) {
             $out = @iconv_substr($string, $start, $length, 'UTF-8');
             if ($out !== false) {
@@ -43,15 +47,15 @@ if (!function_exists('mb_substr')) {
 }
 
 if (!function_exists('mb_strtolower')) {
-    function mb_strtolower(string $string, ?string $encoding = null): string
+    function mb_strtolower($string, $encoding = null): string
     {
-        return strtolower($string);
+        return strtolower((string) $string);
     }
 }
 
 if (!function_exists('mb_strtoupper')) {
-    function mb_strtoupper(string $string, ?string $encoding = null): string
+    function mb_strtoupper($string, $encoding = null): string
     {
-        return strtoupper($string);
+        return strtoupper((string) $string);
     }
 }

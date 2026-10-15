@@ -6,7 +6,7 @@
 
 - **PHP 8.3 – 8.5** runtime: strict types, readonly properties, enums, typed class constants; no 8.4-only syntax (e.g. no property hooks) so one codebase runs on both.
 - **WordPress 6.0 – 7.1+**, Contact Form 7 5.7+ (developed against CF7 6.2).
-- **Zero external runtime assets** — no CDNs; Tailwind output is compiled at build time and committed to `assets/dist`.
+- **Zero external runtime assets** — no CDNs; Tailwind output is compiled at build time and committed to `assets/dist`. The build (`npm run build`, i.e. `mkdir -p assets/dist` + tailwind + JS copy) is **mandatory before cutting a release**; CI enforces presence and class coverage via `tests/assets-built.php`.
 - **Fail-open safety** — the plugin must never break form delivery; all unexpected errors are caught, logged and reported.
 
 ## 2. Component map
@@ -123,6 +123,17 @@ ephemeral by design, never in autoloaded options.
    auto-bans (abuseipdb/llm), optional AbuseIPDB community report, throttled
    e-mail notification.
 6. Any `Throwable` → fail-open, `internal_error` registry entry, debug log.
+
+### Client-IP trust model (known risk, documented)
+
+In `general.ip_header_mode = auto` (default) forwarded headers are trusted only
+when `REMOTE_ADDR` is a private/loopback address or a published Cloudflare
+range. On shared hosting where all traffic arrives from a shared balancer that
+does **not** strip client-supplied forwarded headers, a client can still spoof
+`X-Forwarded-For` (the `xff` mode is fully client-controlled by design).
+Recommendation for such hosts: switch to `remote_only` — the admin UI states
+this in the field hint, and `tests/smoke.php` pins the documented behaviour of
+`Ip::firstFromList()` on spoofed lists.
 
 ### Timing analysis (why it is cache-proof)
 

@@ -415,6 +415,10 @@ TRANSLATIONS = {
     'One key, hundreds of models — enter any OpenRouter model id.': 'Один ключ — сотни моделей: вводите любой идентификатор модели OpenRouter.',
     'Works with any operator exposing POST {base}/chat/completions and Bearer auth: Together, Fireworks, Perplexity, self-hosted vLLM/Ollama/LM Studio gateways, Azure-style proxies…': 'Работает с любым оператором, у которого есть POST {base}/chat/completions и Bearer-авторизация: Together, Fireworks, Perplexity, собственные шлюзы vLLM/Ollama/LM Studio, прокси в стиле Azure…',
     'Works with any gateway exposing POST {base}/v1/messages with x-api-key auth (proxies, Bedrock/Vertex Anthropic-compatible endpoints…).': 'Работает с любым шлюзом, у которого есть POST {base}/v1/messages с авторизацией x-api-key (прокси, Anthropic-совместимые эндпоинты Bedrock/Vertex…).',
+    'CF7 Spam Checker Pro requires Contact Form 7 %1$s or newer (detected: %2$s). Spam protection stays disabled until Contact Form 7 is updated.': 'CF7 Spam Checker Pro требует Contact Form 7 %1$s или новее (обнаружено: %2$s). Защита от спама отключена, пока Contact Form 7 не обновлён.',
+    'File names carry a per-installation suffix; on nginx additionally deny the uploads/cf7sec location in the server config — .htaccess protects Apache only.': 'Имена файлов несут суффикс конкретной установки; на nginx дополнительно запретите location uploads/cf7sec в конфигурации сервера — .htaccess защищает только Apache.',
+    'On shared hosting behind a proxy you do not control, choose "REMOTE_ADDR only" — forwarded headers can then no longer be spoofed by the client.': 'На общем хостинге за прокси, который вы не контролируете, выбирайте «Только REMOTE_ADDR» — тогда клиент не сможет подделать forwarded-заголовки.',
+    'Test performs a lookup of 8.8.8.8 (Google DNS); a cached result is used when available.': 'Тест выполняет запрос по 8.8.8.8 (Google DNS); при наличии используется кэшированный результат.',
 }
 
 # Fix accidental English fragment

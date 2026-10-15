@@ -16,7 +16,9 @@ defined('ABSPATH') || exit;
 
 /**
  * Adds a "Spam Checker" panel to each contact form editor screen with the
- * protection status of that form and quick links.
+ * protection status of that form and quick links. Styled with the shared
+ * design system (the stylesheet is enqueued on CF7 editor hooks as well),
+ * so it follows the light/dark theme like the rest of the admin UI.
  */
 final class Cf7Panel
 {
@@ -56,55 +58,61 @@ final class Cf7Panel
             $enabledChecks[] = 'abuseipdb';
         }
         if ($plugin->settings->get('llm.enabled', false)) {
-            $enabledChecks[] = 'llm:' . $plugin->settings->get('llm.provider', 'deepseek');
+            $enabledChecks[] = 'llm:' . (string) $plugin->settings->get('llm.provider', 'deepseek');
         }
 
         $totals = DailyStats::totals();
         ?>
-        <div class="cf7sec-panel" style="max-width:720px">
-            <h2 style="margin-top:0"><?php esc_html_e('CF7 Spam Checker Pro', 'contact-form-7-spam-checker'); ?>
-                <span style="font-weight:400;color:#64748b">v<?php echo esc_html(CF7SEC_VERSION); ?></span></h2>
+        <div class="cf7sec-panel">
+            <div class="c-card">
+                <div class="c-card-header">
+                    <h3 class="c-card-title">
+                        <?php esc_html_e('CF7 Spam Checker Pro', 'contact-form-7-spam-checker'); ?>
+                        <span class="c-badge c-badge-outline">v<?php echo esc_html(CF7SEC_VERSION); ?></span>
+                    </h3>
+                    <p class="c-card-desc"><?php esc_html_e('No form tags are required — protection is applied automatically via hidden fields and the wpcf7_spam pipeline.', 'contact-form-7-spam-checker'); ?></p>
+                </div>
+                <div class="c-card-body">
+                    <div class="c-field">
+                        <span class="c-field-label"><?php esc_html_e('This form:', 'contact-form-7-spam-checker'); ?></span>
+                        <span>
+                            <?php if ($protected) : ?>
+                                <span class="c-badge c-badge-success"><?php esc_html_e('PROTECTED', 'contact-form-7-spam-checker'); ?></span>
+                            <?php else : ?>
+                                <span class="c-badge c-badge-destructive"><?php esc_html_e('NOT PROTECTED (excluded in Settings → General)', 'contact-form-7-spam-checker'); ?></span>
+                            <?php endif; ?>
+                        </span>
+                    </div>
 
-            <p>
-                <strong><?php esc_html_e('This form:', 'contact-form-7-spam-checker'); ?></strong>
-                <?php if ($protected) : ?>
-                    <span style="color:#16a34a">● <?php esc_html_e('PROTECTED', 'contact-form-7-spam-checker'); ?></span>
-                <?php else : ?>
-                    <span style="color:#dc2626">● <?php esc_html_e('NOT PROTECTED (excluded in Settings → General)', 'contact-form-7-spam-checker'); ?></span>
-                <?php endif; ?>
-            </p>
+                    <div class="c-field">
+                        <span class="c-field-label"><?php esc_html_e('Active layers:', 'contact-form-7-spam-checker'); ?></span>
+                        <code><?php echo esc_html(implode(', ', $enabledChecks) ?: '—'); ?></code>
+                    </div>
 
-            <p>
-                <strong><?php esc_html_e('Active layers:', 'contact-form-7-spam-checker'); ?></strong>
-                <code style="font-size:12px"><?php echo esc_html(implode(', ', $enabledChecks) ?: '—'); ?></code>
-            </p>
+                    <p class="c-muted">
+                        <?php
+                        printf(
+                            /* translators: 1: processed count, 2: blocked count */
+                            esc_html__('Site lifetime: %1$s submissions processed, %2$s blocked as spam.', 'contact-form-7-spam-checker'),
+                            esc_html(number_format_i18n((int) $totals['processed'])),
+                            esc_html(number_format_i18n((int) $totals['blocked']))
+                        );
+                        ?>
+                    </p>
 
-            <p>
-                <?php
-                printf(
-                    /* translators: 1: processed count, 2: blocked count */
-                    esc_html__('Site lifetime: %1$s submissions processed, %2$s blocked as spam.', 'contact-form-7-spam-checker'),
-                    esc_html(number_format_i18n((int) $totals['processed'])),
-                    esc_html(number_format_i18n((int) $totals['blocked']))
-                );
-                ?>
-            </p>
-
-            <p>
-                <a class="button button-primary" href="<?php echo esc_url(AdminMenu::url('cf7sec')); ?>">
-                    <?php esc_html_e('Open security dashboard', 'contact-form-7-spam-checker'); ?>
-                </a>
-                <a class="button" href="<?php echo esc_url(AdminMenu::url('cf7sec-settings')); ?>">
-                    <?php esc_html_e('Settings', 'contact-form-7-spam-checker'); ?>
-                </a>
-                <a class="button" href="<?php echo esc_url(AdminMenu::url('cf7sec-registry')); ?>">
-                    <?php esc_html_e('Spam registry', 'contact-form-7-spam-checker'); ?>
-                </a>
-            </p>
-
-            <p style="color:#64748b;font-size:12px">
-                <?php esc_html_e('No form tags are required — protection is applied automatically via hidden fields and the wpcf7_spam pipeline.', 'contact-form-7-spam-checker'); ?>
-            </p>
+                    <div class="c-btn-row">
+                        <a class="c-btn c-btn-primary" href="<?php echo esc_url(AdminMenu::url('cf7sec')); ?>">
+                            <?php esc_html_e('Open security dashboard', 'contact-form-7-spam-checker'); ?>
+                        </a>
+                        <a class="c-btn c-btn-outline" href="<?php echo esc_url(AdminMenu::url('cf7sec-settings')); ?>">
+                            <?php esc_html_e('Settings', 'contact-form-7-spam-checker'); ?>
+                        </a>
+                        <a class="c-btn c-btn-outline" href="<?php echo esc_url(AdminMenu::url('cf7sec-registry')); ?>">
+                            <?php esc_html_e('Spam registry', 'contact-form-7-spam-checker'); ?>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
         <?php
     }

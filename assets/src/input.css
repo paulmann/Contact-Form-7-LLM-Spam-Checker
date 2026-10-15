@@ -70,6 +70,62 @@ html.cf7sec-dark {
     color-scheme: dark;
 }
 
+/* The CF7 form-editor panel lives outside #cf7sec-app, so it carries its own
+   copy of the design tokens (light + dark) to stay on-theme. */
+.cf7sec-panel {
+    --cf7sec-background: 0 0% 100%;
+    --cf7sec-foreground: 240 10% 3.9%;
+    --cf7sec-card: 0 0% 100%;
+    --cf7sec-card-foreground: 240 10% 3.9%;
+    --cf7sec-primary: 240 5.9% 10%;
+    --cf7sec-primary-foreground: 0 0% 98%;
+    --cf7sec-secondary: 240 4.8% 95.9%;
+    --cf7sec-secondary-foreground: 240 5.9% 10%;
+    --cf7sec-muted: 240 4.8% 95.9%;
+    --cf7sec-muted-foreground: 240 3.8% 46.1%;
+    --cf7sec-accent: 240 4.8% 95.9%;
+    --cf7sec-accent-foreground: 240 5.9% 10%;
+    --cf7sec-destructive: 0 72% 51%;
+    --cf7sec-destructive-foreground: 0 0% 98%;
+    --cf7sec-success: 142 64% 40%;
+    --cf7sec-success-foreground: 0 0% 98%;
+    --cf7sec-warning: 32 95% 44%;
+    --cf7sec-warning-foreground: 0 0% 98%;
+    --cf7sec-border: 240 5.9% 90%;
+    --cf7sec-input: 240 5.9% 90%;
+    --cf7sec-ring: 240 5.9% 10%;
+    --cf7sec-radius: 0.625rem;
+    --cf7sec-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Microsoft YaHei",
+        sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    --cf7sec-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+        Consolas, "Liberation Mono", monospace;
+    max-width: 760px;
+}
+html.cf7sec-dark .cf7sec-panel {
+    --cf7sec-background: 240 10% 3.9%;
+    --cf7sec-foreground: 0 0% 98%;
+    --cf7sec-card: 240 8% 6.5%;
+    --cf7sec-card-foreground: 0 0% 98%;
+    --cf7sec-primary: 0 0% 98%;
+    --cf7sec-primary-foreground: 240 5.9% 10%;
+    --cf7sec-secondary: 240 3.7% 15.9%;
+    --cf7sec-secondary-foreground: 0 0% 98%;
+    --cf7sec-muted: 240 3.7% 15.9%;
+    --cf7sec-muted-foreground: 240 5% 64.9%;
+    --cf7sec-accent: 240 3.7% 15.9%;
+    --cf7sec-accent-foreground: 0 0% 98%;
+    --cf7sec-destructive: 0 62.8% 52%;
+    --cf7sec-destructive-foreground: 0 0% 98%;
+    --cf7sec-success: 142 60% 45%;
+    --cf7sec-success-foreground: 240 10% 3.9%;
+    --cf7sec-warning: 38 92% 50%;
+    --cf7sec-warning-foreground: 240 10% 3.9%;
+    --cf7sec-border: 240 3.7% 15.9%;
+    --cf7sec-input: 240 3.7% 18%;
+    --cf7sec-ring: 240 4.9% 83.9%;
+}
+
 /* Full-bleed takeover of the wp-admin content area on our pages. */
 body.cf7sec-admin-page #wpcontent {
     padding-left: 0;
@@ -172,6 +228,10 @@ html.cf7sec-dark body.cf7sec-admin-page #wpbody-content {
     .c-page-actions { @apply flex flex-wrap items-center gap-2; }
 
     /* ---------- buttons ---------- */
+    /* The hidden attribute must win over display utilities (save button). */
+    .cf7sec-app [hidden] { display: none !important; }
+    .c-save-btn[hidden] { display: none !important; }
+
     .c-btn {
         @apply inline-flex cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all no-underline;
         height: 2.25rem;
@@ -239,6 +299,7 @@ html.cf7sec-dark body.cf7sec-admin-page #wpbody-content {
         color: hsl(var(--cf7sec-muted-foreground));
     }
     .c-kpi-icon .c-icon { @apply h-5 w-5; }
+    .c-kpi-default { background: hsl(var(--cf7sec-muted)); color: hsl(var(--cf7sec-muted-foreground)); }
     .c-kpi-danger { background: hsl(var(--cf7sec-destructive) / 0.12); color: hsl(var(--cf7sec-destructive)); }
     .c-kpi-warning { background: hsl(var(--cf7sec-warning) / 0.14); color: hsl(var(--cf7sec-warning)); }
     .c-kpi-success { background: hsl(var(--cf7sec-success) / 0.12); color: hsl(var(--cf7sec-success)); }
@@ -328,6 +389,7 @@ html.cf7sec-dark body.cf7sec-admin-page #wpbody-content {
     .c-checkbox-grid { @apply grid gap-1 sm:grid-cols-2; }
 
     .c-range { @apply w-full; accent-color: hsl(var(--cf7sec-primary)); }
+    .c-country-filter { @apply mt-2 rounded-md border p-3; border-color: hsl(var(--cf7sec-border)); }
 
     .c-inline-form {
         @apply grid gap-3 md:grid-cols-[minmax(140px,1fr)_minmax(140px,1fr)_minmax(150px,1fr)_minmax(180px,2fr)_auto] md:items-end;
@@ -483,6 +545,12 @@ html.cf7sec-dark body.cf7sec-admin-page #wpbody-content {
         word-break: break-word;
     }
 }
+
+/* ---------- CF7 form-editor panel ---------- */
+.cf7sec-panel { @apply font-sans text-foreground; font-size: 14px; line-height: 1.5; }
+.cf7sec-panel *, .cf7sec-panel *::before, .cf7sec-panel *::after { box-sizing: border-box; }
+.cf7sec-panel code { @apply rounded bg-muted px-1 py-0.5 font-mono text-[11px]; }
+.cf7sec-panel .c-card-body p { margin: 0; }
 
 /* ---------- toasts ---------- */
 .c-toasts {

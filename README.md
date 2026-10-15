@@ -3,7 +3,7 @@
 [![PHP](https://img.shields.io/badge/PHP-8.3%20--8.5-8892bf.svg)](https://php.net/)
 [![WordPress](https://img.shields.io/badge/WordPress-6.0%20--7.1-21759b.svg)](https://wordpress.org/)
 [![License](https://img.shields.io/badge/License-GPL--2.0--or--later-yellow.svg)](LICENSE.txt)
-[![Tests](https://img.shields.io/badge/tests-159%20passing-brightgreen.svg)](#development)
+[![CI](https://github.com/paulmann/Contact-Form-7-Spam-Checker/actions/workflows/ci.yml/badge.svg)](https://github.com/paulmann/Contact-Form-7-Spam-Checker/actions/workflows/ci.yml)
 
 **Multi-layered spam & security protection for Contact Form 7** — silent, zero-UI for your visitors, ruthless to bots.
 
@@ -16,9 +16,9 @@ Combines behavioural analysis (timing + honeypot), content inspection (SQLi/XSS/
 | Light theme | Dark theme |
 |---|---|
 | ![Dashboard (light)](docs/screenshots/dashboard-light.png) | ![Dashboard (dark)](docs/screenshots/dashboard-dark.png) |
-| ![Mobile dashboard](docs/screenshots/mobile-dashboard.png) | ![Integrations (dark)](docs/screenshots/integrations-dark.png) |
+| ![Mobile dashboard](docs/screenshots/mobile-dashboard-light.png) | ![Integrations (dark)](docs/screenshots/integrations-dark.png) |
 
-*Interactive standalone preview of every admin page (light/dark): open `preview/admin-ui-preview.html` from the repository workspace, or browse the built-in toggles right in wp-admin after install.*
+*Interactive standalone preview of every admin page (light/dark): open `docs/preview/admin-ui-preview.html` in a browser (self-contained, no server needed), or use the built-in theme toggle right in wp-admin after install.*
 
 ---
 
@@ -296,20 +296,26 @@ Behavioural notes: hidden field names changed (`cf7sec_ts`, `cf7sec_age`, `cf7se
 ## Development
 
 ```bash
-# assets (only needed when changing CSS/JS sources)
+# assets (only needed when changing CSS/JS sources; assets/dist is committed)
 npm install tailwindcss@3 --no-save
-npx tailwindcss -c tailwind.config.js -i assets/src/input.css -o assets/dist/admin.css --minify
-cp assets/src/admin.js assets/dist/admin.js
+mkdir -p assets/dist
+npm run build
 
-# tests
-php8.3 tests/smoke.php                     # 73 assertions, no WordPress needed
+# tests (all of them, in order)
+npm test
+# or individually:
+php tests/smoke.php                        # pure logic, no WordPress needed
+php tests/settings-paths.php               # guard: no dead settings paths (B1)
+php tests/assets-built.php                 # guard: dist assets + class coverage (B3/M1)
+php tests/upgrade-4.0-to-4.1.php           # guard: upgrade preserves LLM config (B2)
+php tests/docs-links.php                   # guard: documentation links resolve
 wp eval-file tests/wp-integration.php \
-   --path=/path/to/wp                      # 59 assertions inside real WP + CF7
+   --path=/path/to/wp                      # full stack: real WP + CF7 + MySQL
                                            # set CF7SEC_TEST_ABUSE_KEY for live API tests
 
-# i18n
-python3 tools/extract-pot.py               # regenerate languages/*.pot
-python3 tools/make-i18n.py                 # rebuild .po/.mo from tools/i18n-*.py
+# i18n (cross-platform: node tools/py.js picks python3 or python)
+npm run i18n:extract                       # regenerate languages/*.pot
+npm run i18n:build                         # rebuild .po/.mo from tools/i18n-*.py
 ```
 
 Code style: PSR-12-ish, `declare(strict_types=1)` everywhere, PHPDoc on public APIs, no global state outside the composition root.

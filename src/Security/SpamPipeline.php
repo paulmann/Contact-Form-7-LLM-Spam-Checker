@@ -169,7 +169,7 @@ final class SpamPipeline
         }
 
         // 2. Remote checks.
-        $runRemoteWhenFlagged = (bool) $this->settings->get('deepseek.run_when_flagged', false);
+        $runRemoteWhenFlagged = (bool) $this->settings->get('llm.run_when_flagged', false);
         foreach ($this->remoteChecks as $check) {
             if (!$check->enabled($context)) {
                 $results[] = CheckResult::skip($check->id(), __('Disabled or not configured', 'contact-form-7-spam-checker'));
@@ -240,12 +240,14 @@ final class SpamPipeline
             $message = (string) (Settings::DEFAULTS['messages'][$this->lastMessageKey] ?? $fallback);
         }
 
-        $minutes = max(1, (int) ceil(((int) $this->settings->get('checks.rate_limit.ban_duration_hours', 1) * 3600) / 60));
-        $message = str_replace(
-            ['%minutes%', '%field_name%', '%language_name%'],
-            [(string) $minutes, (string) ($this->lastMessageContext['field'] ?? ''), (string) ($this->lastMessageContext['language_name'] ?? '')],
-            $message
-        );
+        $replacements = [
+            '%field_name%'   => (string) ($this->lastMessageContext['field'] ?? ''),
+            '%language_name%' => (string) ($this->lastMessageContext['language_name'] ?? ''),
+        ];
+        if (str_contains($message, '%minutes%')) {
+            $replacements['%minutes%'] = (string) max(1, (int) ceil(((int) $this->settings->get('checks.rate_limit.ban_duration_hours', 1) * 3600) / 60));
+        }
+        $message = str_replace(array_keys($replacements), array_values($replacements), $message);
 
         return $message !== '' ? $message : $fallback;
     }

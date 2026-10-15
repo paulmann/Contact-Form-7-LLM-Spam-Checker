@@ -30,10 +30,14 @@ defined('ABSPATH') || exit;
  *  - API error                                          → ERROR (fail-open,
  *    counted and visible in the registry, never blocks legit traffic)
  *
- * Note on categories: the public AbuseIPDB Check API returns the *total*
- * report count across all categories. Per-category counters (e.g. "Email
- * Spam") are not exposed by the API, therefore the reports threshold is
- * applied to `totalReports` — this is documented in the admin UI.
+ * Note on categories: with `verbose=true` the Check API returns the lifetime
+ * `totalReports` counter *plus* the most recent individual reports, each with
+ * its `categories` array. The plugin counts category-10 ("Email Spam") entries
+ * among those recent reports (`email_spam_reports`) and applies the
+ * `abuseipdb.min_email_spam_reports` threshold to it — a close approximation
+ * of the full category history, documented as such in the admin UI. The
+ * `abuseipdb.min_total_reports` threshold is applied to the lifetime
+ * `totalReports` value.
  */
 final class AbuseIpCheck implements CheckInterface
 {

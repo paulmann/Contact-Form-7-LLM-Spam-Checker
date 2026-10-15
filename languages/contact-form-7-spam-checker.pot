@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later license.
 msgid ""
 msgstr ""
-"Project-Id-Version: CF7 Spam Checker Pro 4.0.0\n"
+"Project-Id-Version: CF7 Spam Checker Pro 4.1.1\n"
 "Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-Spam-Checker/issues\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +43,7 @@ msgid "30-day traffic chart"
 msgstr ""
 
 #. translators: %s: plugin name
-#: src/Plugin.php:243
+#: src/Plugin.php:275
 msgid "<strong>%s</strong> is active, but Contact Form 7 was not detected. Spam protection will engage automatically once Contact Form 7 is installed and activated."
 msgstr ""
 
@@ -64,7 +64,7 @@ msgid "API key"
 msgstr ""
 
 #. translators: 1: country code, 2: abuse score
-#: src/Services/AbuseIpDb.php:205
+#: src/Services/AbuseIpDb.php:207
 msgid "API key is valid. Sample lookup 8.8.8.8 → country %1$s, abuse score %2$d%%."
 msgstr ""
 
@@ -77,7 +77,7 @@ msgid "AbuseIPDB"
 msgstr ""
 
 #. translators: 1: email-spam report count, 2: threshold
-#: src/Security/Checks/AbuseIpCheck.php:141
+#: src/Security/Checks/AbuseIpCheck.php:145
 msgid "AbuseIPDB \"Email Spam\" reports %1$d ≥ %2$d threshold (counted from the most recent reports)."
 msgstr ""
 
@@ -91,19 +91,19 @@ msgid "AbuseIPDB API key is not set."
 msgstr ""
 
 #. translators: 1: score, 2: threshold, 3: country
-#: src/Security/Checks/AbuseIpCheck.php:103
+#: src/Security/Checks/AbuseIpCheck.php:107
 msgid "AbuseIPDB confidence %1$d%% ≥ %2$d%% threshold (country: %3$s, reports: %4$d)."
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:247
+#: src/Admin/Views/pages/settings.php:248
 msgid "AbuseIPDB error"
 msgstr ""
 
-#: src/Security/Checks/AbuseIpCheck.php:51
+#: src/Security/Checks/AbuseIpCheck.php:55
 msgid "AbuseIPDB reputation"
 msgstr ""
 
-#: src/Security/SpamPipeline.php:285
+#: src/Security/SpamPipeline.php:287
 msgid "AbuseIPDB reputation below threshold"
 msgstr ""
 
@@ -116,7 +116,7 @@ msgid "AbuseIPDB requires a comment when reporting."
 msgstr ""
 
 #. translators: 1: report count, 2: threshold
-#: src/Security/Checks/AbuseIpCheck.php:122
+#: src/Security/Checks/AbuseIpCheck.php:126
 msgid "AbuseIPDB total reports %1$d ≥ %2$d threshold."
 msgstr ""
 
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Active bans"
 msgstr ""
 
-#: src/Admin/Cf7Panel.php:78
+#: src/Admin/Cf7Panel.php:88
 msgid "Active layers:"
 msgstr ""
 
@@ -137,7 +137,7 @@ msgstr ""
 msgid "Add rule"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:261
+#: src/Admin/Views/pages/settings.php:262
 msgid "Adds verdict details to the CF7 JSON response — disable on production sites."
 msgstr ""
 
@@ -173,11 +173,11 @@ msgstr ""
 msgid "Allowed"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:193
+#: src/Admin/Views/pages/settings.php:194
 msgid "Allowed language"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:196
+#: src/Admin/Views/pages/settings.php:197
 msgid "Also register violations as blocked events in the spam registry."
 msgstr ""
 
@@ -185,7 +185,7 @@ msgstr ""
 msgid "Always use X-Forwarded-For"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:114
+#: src/Admin/Views/pages/settings.php:115
 msgid "An invisible field no human should ever fill."
 msgstr ""
 
@@ -197,7 +197,7 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: src/Admin/Assets.php:55
+#: src/Admin/Assets.php:57
 msgid "Are you sure?"
 msgstr ""
 
@@ -213,7 +213,7 @@ msgstr ""
 msgid "Auto-ban IPs that fail the thresholds"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:140
+#: src/Admin/Views/pages/settings.php:141
 msgid "Auto-ban on strike threshold"
 msgstr ""
 
@@ -225,11 +225,11 @@ msgstr ""
 msgid "Ban"
 msgstr ""
 
-#: src/Admin/Assets.php:97
+#: src/Admin/Assets.php:99
 msgid "Ban IP"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:137
+#: src/Admin/Views/pages/settings.php:138
 msgid "Ban duration (hours)"
 msgstr ""
 
@@ -237,7 +237,7 @@ msgstr ""
 msgid "Ban list"
 msgstr ""
 
-#: src/Admin/Assets.php:56
+#: src/Admin/Assets.php:58
 msgid "Ban this IP address?"
 msgstr ""
 
@@ -283,11 +283,11 @@ msgstr ""
 msgid "Blocked today"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:172
+#: src/Admin/Views/pages/settings.php:173
 msgid "Blocks fields containing too many URLs."
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:162
+#: src/Admin/Views/pages/settings.php:163
 #: src/Security/Checks/BotAgentCheck.php:39
 msgid "Bot user-agent detection"
 msgstr ""
@@ -300,13 +300,18 @@ msgstr ""
 msgid "CF7 Spam Checker"
 msgstr ""
 
-#: src/Admin/Cf7Panel.php:65
+#: src/Admin/Cf7Panel.php:70
 msgid "CF7 Spam Checker Pro"
 msgstr ""
 
 #. translators: 1: version, 2: PHP version
 #: src/Admin/PageRenderer.php:79
 msgid "CF7 Spam Checker Pro %1$s · PHP %2$s · "
+msgstr ""
+
+#. translators: 1: required CF7 version, 2: detected CF7 version
+#: src/Plugin.php:255
+msgid "CF7 Spam Checker Pro requires Contact Form 7 %1$s or newer (detected: %2$s). Spam protection stays disabled until Contact Form 7 is updated."
 msgstr ""
 
 #: src/Admin/DashboardWidget.php:36
@@ -325,11 +330,11 @@ msgstr ""
 msgid "Cache results for (days)"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:181
+#: src/Admin/Views/pages/settings.php:182
 msgid "Case-insensitive substring matching, one keyword per line."
 msgstr ""
 
-#: src/Admin/Assets.php:95
+#: src/Admin/Assets.php:97
 msgid "Check results"
 msgstr ""
 
@@ -349,7 +354,7 @@ msgstr ""
 msgid "Client IP detection"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:107
+#: src/Admin/Views/pages/settings.php:108
 msgid "Clock-skew tolerance (s)"
 msgstr ""
 
@@ -357,11 +362,11 @@ msgstr ""
 msgid "Cloudflare — always use CF-Connecting-IP"
 msgstr ""
 
-#: src/Admin/Assets.php:61
+#: src/Admin/Assets.php:63
 msgid "Connection OK."
 msgstr ""
 
-#: src/Admin/Assets.php:62
+#: src/Admin/Assets.php:64
 msgid "Connection failed."
 msgstr ""
 
@@ -369,11 +374,11 @@ msgstr ""
 msgid "Consider reports up to (days old)"
 msgstr ""
 
-#: src/Admin/Assets.php:59
+#: src/Admin/Assets.php:61
 msgid "Copied to clipboard."
 msgstr ""
 
-#: src/Admin/Assets.php:53
+#: src/Admin/Assets.php:55
 msgid "Could not save settings."
 msgstr ""
 
@@ -386,7 +391,7 @@ msgid "Country filter (uses the same lookup)"
 msgstr ""
 
 #. translators: 1: country code, 2: mode
-#: src/Security/Checks/AbuseIpCheck.php:176
+#: src/Security/Checks/AbuseIpCheck.php:180
 msgid "Country filter: submission from %1$s is not accepted (mode: %2$s)."
 msgstr ""
 
@@ -394,11 +399,11 @@ msgstr ""
 msgid "Create one at "
 msgstr ""
 
-#: src/Admin/Assets.php:88
+#: src/Admin/Assets.php:90
 msgid "Created"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:197
+#: src/Admin/Views/pages/settings.php:198
 msgid "Custom field error message"
 msgstr ""
 
@@ -410,7 +415,7 @@ msgstr ""
 msgid "Danger zone"
 msgstr ""
 
-#: src/Admin/Assets.php:73
+#: src/Admin/Assets.php:75
 msgid "Dark"
 msgstr ""
 
@@ -419,15 +424,15 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:260
+#: src/Admin/Views/pages/settings.php:261
 msgid "Debug logging"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:258
+#: src/Admin/Views/pages/settings.php:259
 msgid "Debug mode"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:261
+#: src/Admin/Views/pages/settings.php:262
 msgid "Debug output in AJAX response"
 msgstr ""
 
@@ -435,7 +440,7 @@ msgstr ""
 msgid "Default: "
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:270
+#: src/Admin/Views/pages/settings.php:271
 msgid "Delete file"
 msgstr ""
 
@@ -443,11 +448,11 @@ msgstr ""
 msgid "Delete selected"
 msgstr ""
 
-#: src/Admin/Assets.php:65
+#: src/Admin/Assets.php:67
 msgid "Deleted."
 msgstr ""
 
-#: src/Admin/Assets.php:90
+#: src/Admin/Assets.php:92
 msgid "Details"
 msgstr ""
 
@@ -467,7 +472,7 @@ msgstr ""
 msgid "Duration (hours, 0 = permanent)"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:227
+#: src/Admin/Views/pages/settings.php:228
 msgid "E-mail alerts"
 msgstr ""
 
@@ -475,7 +480,7 @@ msgstr ""
 msgid "Each submission is appended as a structured digest: form fields, IP, country/ISP (when known), user agent, referrer, dwell time and the results of the local heuristics. The digest is capped at ~12 KB."
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:231
+#: src/Admin/Views/pages/settings.php:232
 msgid "Empty = site admin e-mail."
 msgstr ""
 
@@ -495,16 +500,16 @@ msgstr ""
 msgid "Enable country filtering"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:102
-#: src/Admin/Views/pages/settings.php:115
-#: src/Admin/Views/pages/settings.php:123
-#: src/Admin/Views/pages/settings.php:131
-#: src/Admin/Views/pages/settings.php:148
-#: src/Admin/Views/pages/settings.php:156
+#: src/Admin/Views/pages/settings.php:103
+#: src/Admin/Views/pages/settings.php:116
+#: src/Admin/Views/pages/settings.php:124
+#: src/Admin/Views/pages/settings.php:132
+#: src/Admin/Views/pages/settings.php:149
+#: src/Admin/Views/pages/settings.php:157
 msgid "Enabled"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:138
+#: src/Admin/Views/pages/settings.php:139
 msgid "Escalation: the Nth ban of the same IP becomes permanent."
 msgstr ""
 
@@ -524,7 +529,7 @@ msgstr ""
 msgid "Every submission (blocked + clean)"
 msgstr ""
 
-#: src/Admin/Assets.php:89
+#: src/Admin/Assets.php:91
 msgid "Expires"
 msgstr ""
 
@@ -541,7 +546,7 @@ msgstr ""
 msgid "Export JSON"
 msgstr ""
 
-#: src/Admin/Assets.php:69
+#: src/Admin/Assets.php:71
 msgid "Export started."
 msgstr ""
 
@@ -553,15 +558,19 @@ msgstr ""
 msgid "External intelligence: AI classification and IP reputation."
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:165
+#: src/Admin/Views/pages/settings.php:166
 msgid "Extra keywords (one per line)"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:194
+#: src/Admin/Views/pages/settings.php:195
 msgid "Field names (comma-separated)"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:163
+#: src/Admin/Views/pages/settings.php:277
+msgid "File names carry a per-installation suffix; on nginx additionally deny the uploads/cf7sec location in the server config — .htaccess protects Apache only."
+msgstr ""
+
+#: src/Admin/Views/pages/settings.php:164
 msgid "Flags scripted clients (curl, headless browsers, scrapers…)."
 msgstr ""
 
@@ -593,20 +602,20 @@ msgstr ""
 msgid "Header mode"
 msgstr ""
 
-#: src/Security/Checks/HoneypotCheck.php:56
+#: src/Security/Checks/HoneypotCheck.php:63
 msgid "Hidden honeypot field \"%s\" was filled."
 msgstr ""
 
-#: src/Admin/Assets.php:76
+#: src/Admin/Assets.php:78
 msgid "Hide key"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:113
+#: src/Admin/Views/pages/settings.php:114
 #: src/Security/Checks/HoneypotCheck.php:31
 msgid "Honeypot"
 msgstr ""
 
-#: src/Security/Checks/HoneypotCheck.php:64
+#: src/Security/Checks/HoneypotCheck.php:71
 msgid "Honeypot field missing from submission."
 msgstr ""
 
@@ -622,11 +631,11 @@ msgstr ""
 msgid "How the three thresholds work"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:101
+#: src/Admin/Views/pages/settings.php:102
 msgid "Humans need a few seconds to fill a form; bots do not."
 msgstr ""
 
-#: src/Admin/Assets.php:84
+#: src/Admin/Assets.php:86
 msgid "IP"
 msgstr ""
 
@@ -644,16 +653,16 @@ msgstr ""
 msgid "IP address"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:121
+#: src/Admin/Views/pages/settings.php:122
 #: src/Security/Checks/IpBanCheck.php:28
 msgid "IP ban list"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:243
+#: src/Admin/Views/pages/settings.php:244
 msgid "IP banned"
 msgstr ""
 
-#: src/Admin/Assets.php:66
+#: src/Admin/Assets.php:68
 msgid "IP banned."
 msgstr ""
 
@@ -666,7 +675,7 @@ msgstr ""
 msgid "IP lookup"
 msgstr ""
 
-#: src/Admin/Assets.php:68
+#: src/Admin/Assets.php:70
 msgid "IP whitelisted."
 msgstr ""
 
@@ -682,7 +691,7 @@ msgstr ""
 msgid "Import JSON"
 msgstr ""
 
-#: src/Admin/Assets.php:71
+#: src/Admin/Assets.php:73
 msgid "Import failed: invalid file."
 msgstr ""
 
@@ -694,12 +703,12 @@ msgstr ""
 msgid "Info (bans)"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:122
+#: src/Admin/Views/pages/settings.php:123
 msgid "Instantly rejects IPs found in the ban list."
 msgstr ""
 
 #. translators: %s: integration name
-#: src/Security/SpamPipeline.php:358
+#: src/Security/SpamPipeline.php:360
 msgid "Integration error: %s"
 msgstr ""
 
@@ -731,7 +740,7 @@ msgstr ""
 msgid "Keep data on uninstall"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:180
+#: src/Admin/Views/pages/settings.php:181
 #: src/Security/Checks/KeywordSpamCheck.php:27
 msgid "Keyword blacklist"
 msgstr ""
@@ -740,7 +749,7 @@ msgstr ""
 msgid "Keyword list is empty."
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:183
+#: src/Admin/Views/pages/settings.php:184
 msgid "Keywords"
 msgstr ""
 
@@ -765,7 +774,7 @@ msgstr ""
 msgid "LLM gateway"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:246
+#: src/Admin/Views/pages/settings.php:247
 msgid "LLM provider error"
 msgstr ""
 
@@ -777,15 +786,15 @@ msgstr ""
 msgid "LLM returned an unparsable verdict; fail-open policy applied."
 msgstr ""
 
-#: src/Security/SpamPipeline.php:288
+#: src/Security/SpamPipeline.php:290
 msgid "LLM verdict: SPAM (%s)"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:189
+#: src/Admin/Views/pages/settings.php:190
 msgid "Language validation"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:275
+#: src/Admin/Views/pages/settings.php:276
 msgid "Latest 400 lines are shown. Log directory: "
 msgstr ""
 
@@ -797,11 +806,11 @@ msgstr ""
 msgid "Leave empty unless you use a proxy, regional endpoint or self-hosted gateway."
 msgstr ""
 
-#: src/Admin/Assets.php:72
+#: src/Admin/Assets.php:74
 msgid "Light"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:171
+#: src/Admin/Views/pages/settings.php:172
 msgid "Link spam"
 msgstr ""
 
@@ -813,11 +822,11 @@ msgstr ""
 msgid "Live overview of form protection across your site."
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:268
+#: src/Admin/Views/pages/settings.php:269
 msgid "Loading dates…"
 msgstr ""
 
-#: src/Admin/Assets.php:63
+#: src/Admin/Assets.php:65
 #: src/Admin/Views/pages/dashboard.php:74
 #: src/Admin/Views/pages/dashboard.php:82
 #: src/Admin/Views/pages/ip-rules.php:62
@@ -830,7 +839,7 @@ msgstr ""
 msgid "Local heuristics"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:265
+#: src/Admin/Views/pages/settings.php:266
 msgid "Log viewer"
 msgstr ""
 
@@ -870,15 +879,15 @@ msgstr ""
 msgid "Master switch — \"check via LLM\"."
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:174
+#: src/Admin/Views/pages/settings.php:175
 msgid "Max links per field"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:133
+#: src/Admin/Views/pages/settings.php:134
 msgid "Max submissions / min"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:105
+#: src/Admin/Views/pages/settings.php:106
 msgid "Maximum form age (s)"
 msgstr ""
 
@@ -886,11 +895,11 @@ msgstr ""
 msgid "Messages"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:232
+#: src/Admin/Views/pages/settings.php:233
 msgid "Minimum gap between two alerts of the same type."
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:104
+#: src/Admin/Views/pages/settings.php:105
 msgid "Minimum seconds"
 msgstr ""
 
@@ -910,7 +919,7 @@ msgstr ""
 msgid "Model returned an unparsable verdict: "
 msgstr ""
 
-#: src/Admin/Cf7Panel.php:73
+#: src/Admin/Cf7Panel.php:82
 msgid "NOT PROTECTED (excluded in Settings → General)"
 msgstr ""
 
@@ -918,7 +927,7 @@ msgstr ""
 msgid "No Contact Form 7 forms found."
 msgstr ""
 
-#: src/Admin/Cf7Panel.php:106
+#: src/Admin/Cf7Panel.php:73
 msgid "No form tags are required — protection is applied automatically via hidden fields and the wpcf7_spam pipeline."
 msgstr ""
 
@@ -926,7 +935,7 @@ msgstr ""
 msgid "No timing fields present (JS disabled or direct POST)."
 msgstr ""
 
-#: src/Admin/Assets.php:64
+#: src/Admin/Assets.php:66
 msgid "Nothing here yet."
 msgstr ""
 
@@ -938,11 +947,11 @@ msgstr ""
 msgid "Notifications"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:234
+#: src/Admin/Views/pages/settings.php:235
 msgid "Notify about"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:228
+#: src/Admin/Views/pages/settings.php:229
 msgid "Notify administrators about important security events (throttled)."
 msgstr ""
 
@@ -954,11 +963,15 @@ msgstr ""
 msgid "On API error / unparsable answer"
 msgstr ""
 
+#: src/Admin/Views/pages/settings.php:92
+msgid "On shared hosting behind a proxy you do not control, choose \"REMOTE_ADDR only\" — forwarded headers can then no longer be spoofed by the client."
+msgstr ""
+
 #: src/Admin/Views/pages/settings.php:55
 msgid "Only selected forms"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:107
+#: src/Admin/Views/pages/settings.php:108
 msgid "Only used for the server-timestamp fallback when JavaScript is disabled."
 msgstr ""
 
@@ -970,15 +983,15 @@ msgstr ""
 msgid "Open registry"
 msgstr ""
 
-#: src/Admin/Cf7Panel.php:95
+#: src/Admin/Cf7Panel.php:105
 msgid "Open security dashboard"
 msgstr ""
 
-#: src/Admin/Cf7Panel.php:71
+#: src/Admin/Cf7Panel.php:80
 msgid "PROTECTED"
 msgstr ""
 
-#: src/Admin/Assets.php:77
+#: src/Admin/Assets.php:79
 msgid "Page"
 msgstr ""
 
@@ -986,7 +999,7 @@ msgstr ""
 msgid "Paste new key…"
 msgstr ""
 
-#: src/Admin/Assets.php:96
+#: src/Admin/Assets.php:98
 msgid "Payload"
 msgstr ""
 
@@ -994,7 +1007,7 @@ msgstr ""
 msgid "Permanent"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:138
+#: src/Admin/Views/pages/settings.php:139
 msgid "Permanent after N bans"
 msgstr ""
 
@@ -1002,7 +1015,7 @@ msgstr ""
 msgid "Pipeline order"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:197
+#: src/Admin/Views/pages/settings.php:198
 msgid "Placeholders: %field_name%, %language_name%. Empty = use the default from the Messages tab."
 msgstr ""
 
@@ -1046,11 +1059,11 @@ msgstr ""
 msgid "Rate limiting"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:129
+#: src/Admin/Views/pages/settings.php:130
 msgid "Rate limiting & auto-ban"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:245
+#: src/Admin/Views/pages/settings.php:246
 msgid "Rate-limit ban"
 msgstr ""
 
@@ -1058,7 +1071,7 @@ msgstr ""
 msgid "Re-check"
 msgstr ""
 
-#: src/Admin/Assets.php:85
+#: src/Admin/Assets.php:87
 #: src/Admin/Views/pages/ip-rules.php:50
 msgid "Reason"
 msgstr ""
@@ -1071,16 +1084,16 @@ msgstr ""
 msgid "Recent events"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:231
+#: src/Admin/Views/pages/settings.php:232
 msgid "Recipient e-mail"
 msgstr ""
 
-#: src/Admin/Assets.php:94
+#: src/Admin/Assets.php:96
 msgid "Referrer"
 msgstr ""
 
 #: src/Admin/Views/pages/dashboard.php:35
-#: src/Admin/Views/pages/settings.php:269
+#: src/Admin/Views/pages/settings.php:270
 msgid "Refresh"
 msgstr ""
 
@@ -1104,7 +1117,7 @@ msgstr ""
 msgid "Remaining daily budget: %d queries."
 msgstr ""
 
-#: src/Admin/Assets.php:57
+#: src/Admin/Assets.php:59
 msgid "Remove this IP rule?"
 msgstr ""
 
@@ -1136,7 +1149,7 @@ msgstr ""
 msgid "Reset statistics"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:190
+#: src/Admin/Views/pages/settings.php:191
 msgid "Restricts name-like fields to one character set (22 languages)."
 msgstr ""
 
@@ -1144,7 +1157,7 @@ msgstr ""
 msgid "Retention (days)"
 msgstr ""
 
-#: src/Admin/Assets.php:67
+#: src/Admin/Assets.php:69
 msgid "Rule removed."
 msgstr ""
 
@@ -1156,7 +1169,7 @@ msgstr ""
 msgid "Run maintenance now"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:146
+#: src/Admin/Views/pages/settings.php:147
 #: src/Security/Checks/SqlInjectionCheck.php:28
 msgid "SQL-injection detection"
 msgstr ""
@@ -1169,7 +1182,7 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:155
+#: src/Admin/Views/pages/settings.php:156
 msgid "Script tags, event handlers and encoded payloads."
 msgstr ""
 
@@ -1181,15 +1194,15 @@ msgstr ""
 msgid "Security Dashboard"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:272
+#: src/Admin/Views/pages/settings.php:273
 msgid "Select a date to view the log."
 msgstr ""
 
-#: src/Admin/Assets.php:79
+#: src/Admin/Assets.php:81
 msgid "Select all"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:251
+#: src/Admin/Views/pages/settings.php:252
 msgid "Send test e-mail"
 msgstr ""
 
@@ -1198,7 +1211,7 @@ msgid "Sends the full submission (fields, IP, browser, geo, timing) to the large
 msgstr ""
 
 #: src/Admin/AdminMenu.php:72
-#: src/Admin/Cf7Panel.php:98
+#: src/Admin/Cf7Panel.php:108
 #: src/Admin/PageRenderer.php:101
 #: src/Admin/Views/pages/settings.php:35
 msgid "Settings"
@@ -1208,15 +1221,15 @@ msgstr ""
 msgid "Settings backup"
 msgstr ""
 
-#: src/Admin/Assets.php:70
+#: src/Admin/Assets.php:72
 msgid "Settings imported."
 msgstr ""
 
-#: src/Admin/Assets.php:52
+#: src/Admin/Assets.php:54
 msgid "Settings saved."
 msgstr ""
 
-#: src/Admin/Assets.php:75
+#: src/Admin/Assets.php:77
 #: src/Admin/Views/Ui.php:103
 msgid "Show key"
 msgstr ""
@@ -1225,16 +1238,16 @@ msgstr ""
 msgid "Show the daily summary on the main WP dashboard."
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:209
+#: src/Admin/Views/pages/settings.php:210
 msgid "Shown instead of the generic CF7 spam notice when a specific check fires. Placeholders: %field_name%, %language_name%, %minutes%."
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:147
+#: src/Admin/Views/pages/settings.php:148
 msgid "Signature scanning of every submitted field."
 msgstr ""
 
 #. translators: 1: processed count, 2: blocked count
-#: src/Admin/Cf7Panel.php:86
+#: src/Admin/Cf7Panel.php:96
 msgid "Site lifetime: %1$s submissions processed, %2$s blocked as spam."
 msgstr ""
 
@@ -1242,16 +1255,16 @@ msgstr ""
 msgid "Skipped — submission already flagged"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:130
+#: src/Admin/Views/pages/settings.php:131
 msgid "Sliding 60-second window per IP with strike escalation."
 msgstr ""
 
-#: src/Admin/Assets.php:86
+#: src/Admin/Assets.php:88
 #: src/Services/BanManager.php:93
 msgid "Source"
 msgstr ""
 
-#: src/Admin/Cf7Panel.php:33
+#: src/Admin/Cf7Panel.php:35
 msgid "Spam Checker"
 msgstr ""
 
@@ -1261,21 +1274,21 @@ msgstr ""
 msgid "Spam Registry"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:244
+#: src/Admin/Views/pages/settings.php:245
 msgid "Spam blocked"
 msgstr ""
 
 #. translators: %s: form ID
-#: src/Security/SpamPipeline.php:301
+#: src/Security/SpamPipeline.php:303
 msgid "Spam blocked on form #%s"
 msgstr ""
 
-#: src/Admin/Cf7Panel.php:101
+#: src/Admin/Cf7Panel.php:111
 #: src/Admin/DashboardWidget.php:70
 msgid "Spam registry"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:196
+#: src/Admin/Views/pages/settings.php:197
 msgid "Strict mode"
 msgstr ""
 
@@ -1284,15 +1297,15 @@ msgstr ""
 msgid "Strike threshold reached (%1$d/%2$d). Last reason: %3$s"
 msgstr ""
 
-#: src/Admin/Assets.php:87
+#: src/Admin/Assets.php:89
 msgid "Strikes"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:134
+#: src/Admin/Views/pages/settings.php:135
 msgid "Strikes before ban"
 msgstr ""
 
-#: src/Admin/Assets.php:92
+#: src/Admin/Assets.php:94
 msgid "Submission"
 msgstr ""
 
@@ -1309,7 +1322,7 @@ msgstr ""
 msgid "Suggestions: "
 msgstr ""
 
-#: src/Admin/Assets.php:74
+#: src/Admin/Assets.php:76
 msgid "System"
 msgstr ""
 
@@ -1331,14 +1344,14 @@ msgid "Test e-mail sent."
 msgstr ""
 
 #: src/Admin/Views/pages/integrations.php:138
-msgid "Test performs a live lookup of 8.8.8.8 (Google DNS)."
+msgid "Test performs a lookup of 8.8.8.8 (Google DNS); a cached result is used when available."
 msgstr ""
 
 #: src/Admin/Views/pages/integrations.php:100
 msgid "Test sends one harmless sample submission to the configured provider."
 msgstr ""
 
-#: src/Admin/Assets.php:60
+#: src/Admin/Assets.php:62
 msgid "Testing…"
 msgstr ""
 
@@ -1368,7 +1381,7 @@ msgstr ""
 msgid "This file was not exported by CF7 Spam Checker Pro."
 msgstr ""
 
-#: src/Admin/Cf7Panel.php:69
+#: src/Admin/Cf7Panel.php:77
 msgid "This form:"
 msgstr ""
 
@@ -1376,15 +1389,15 @@ msgstr ""
 msgid "This is a test message from CF7 Spam Checker Pro.\nIf you can read it, e-mail notifications are configured correctly."
 msgstr ""
 
-#: src/Admin/Assets.php:58
+#: src/Admin/Assets.php:60
 msgid "This permanently deletes data. Continue?"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:232
+#: src/Admin/Views/pages/settings.php:233
 msgid "Throttle (minutes)"
 msgstr ""
 
-#: src/Admin/Assets.php:81
+#: src/Admin/Assets.php:83
 msgid "Time"
 msgstr ""
 
@@ -1392,7 +1405,7 @@ msgstr ""
 msgid "Timeout (seconds)"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:100
+#: src/Admin/Views/pages/settings.php:101
 #: src/Security/Checks/TimeCheck.php:40
 msgid "Timing analysis"
 msgstr ""
@@ -1419,7 +1432,7 @@ msgstr ""
 msgid "Tune every protection layer. Changes are saved with the button in the top bar."
 msgstr ""
 
-#: src/Admin/Assets.php:82
+#: src/Admin/Assets.php:84
 #: src/Admin/Views/pages/ip-rules.php:46
 #: src/Services/BanManager.php:94
 msgid "Type"
@@ -1433,7 +1446,7 @@ msgstr ""
 msgid "Unknown page."
 msgstr ""
 
-#: src/Admin/Assets.php:93
+#: src/Admin/Assets.php:95
 msgid "User agent"
 msgstr ""
 
@@ -1445,7 +1458,7 @@ msgstr ""
 msgid "Uses the ban duration from Settings → Protection."
 msgstr ""
 
-#: src/Admin/Assets.php:83
+#: src/Admin/Assets.php:85
 msgid "Verdict"
 msgstr ""
 
@@ -1457,7 +1470,7 @@ msgstr ""
 msgid "View the system prompt sent to the model"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:208
+#: src/Admin/Views/pages/settings.php:209
 msgid "Visitor-facing messages"
 msgstr ""
 
@@ -1490,11 +1503,11 @@ msgstr ""
 msgid "WordPress dashboard widget"
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:259
+#: src/Admin/Views/pages/settings.php:260
 msgid "Writes a detailed daily log to wp-content/uploads/cf7sec/ (web-inaccessible)."
 msgstr ""
 
-#: src/Admin/Views/pages/settings.php:154
+#: src/Admin/Views/pages/settings.php:155
 #: src/Security/Checks/XssCheck.php:28
 msgid "XSS detection"
 msgstr ""
@@ -1503,7 +1516,7 @@ msgstr ""
 msgid "XSS signature \"%1$s\" matched in field \"%2$s\"."
 msgstr ""
 
-#: src/Admin/Assets.php:54
+#: src/Admin/Assets.php:56
 msgid "You have unsaved changes."
 msgstr ""
 
@@ -1532,7 +1545,7 @@ msgstr ""
 msgid "final AI verdict SPAM/CLEAN with geo context attached."
 msgstr ""
 
-#: src/Admin/Assets.php:91
+#: src/Admin/Assets.php:93
 msgid "items"
 msgstr ""
 
@@ -1540,7 +1553,7 @@ msgstr ""
 msgid "maxAgeInDays API parameter."
 msgstr ""
 
-#: src/Admin/Assets.php:78
+#: src/Admin/Assets.php:80
 msgid "of"
 msgstr ""
 
@@ -1548,7 +1561,7 @@ msgstr ""
 msgid "runs only while the submission is still clean (saves quota)."
 msgstr ""
 
-#: src/Admin/Assets.php:80
+#: src/Admin/Assets.php:82
 msgid "selected"
 msgstr ""
 

@@ -3,7 +3,7 @@
  * Plugin Name:       CF7 Spam Checker Pro
  * Plugin URI:        https://github.com/paulmann/Contact-Form-7-Spam-Checker
  * Description:       Multi-layered spam & security protection for Contact Form 7: honeypot, timing analysis, rate limiting, bot/SQLi/XSS detection, language validation, AbuseIPDB reputation checks and DeepSeek LLM analysis — with a spam registry, IP management and a modern admin dashboard.
- * Version:           4.1.0
+ * Version:           4.1.1
  * Requires at least: 6.0
  * Requires PHP:      8.3
  * Author:            Mikhail Deynekin
@@ -12,7 +12,6 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       contact-form-7-spam-checker
  * Domain Path:       /languages
- * Update URI:        https://github.com/paulmann/Contact-Form-7-Spam-Checker
  */
 
 declare(strict_types=1);
@@ -25,7 +24,7 @@ defined('ABSPATH') || exit;
 |--------------------------------------------------------------------------
 */
 
-define('CF7SEC_VERSION', '4.1.0');
+define('CF7SEC_VERSION', '4.1.1');
 define('CF7SEC_DB_VERSION', 400);
 define('CF7SEC_MIN_PHP', '8.3');
 define('CF7SEC_MIN_WP', '6.0');

@@ -415,4 +415,8 @@ TRANSLATIONS = {
     'One key, hundreds of models — enter any OpenRouter model id.': '一个密钥，数百个模型——输入任意 OpenRouter 模型 ID。',
     'Works with any operator exposing POST {base}/chat/completions and Bearer auth: Together, Fireworks, Perplexity, self-hosted vLLM/Ollama/LM Studio gateways, Azure-style proxies…': '适用于任何开放 POST {base}/chat/completions 且使用 Bearer 认证的运营商：Together、Fireworks、Perplexity、自建 vLLM/Ollama/LM Studio 网关、Azure 风格代理等。',
     'Works with any gateway exposing POST {base}/v1/messages with x-api-key auth (proxies, Bedrock/Vertex Anthropic-compatible endpoints…).': '适用于任何开放 POST {base}/v1/messages 且使用 x-api-key 认证的网关（代理、Bedrock/Vertex 的 Anthropic 兼容端点等）。',
+    'CF7 Spam Checker Pro requires Contact Form 7 %1$s or newer (detected: %2$s). Spam protection stays disabled until Contact Form 7 is updated.': 'CF7 Spam Checker Pro 需要 Contact Form 7 %1$s 或更高版本（检测到：%2$s）。在 Contact Form 7 更新之前，垃圾防护保持禁用。',
+    'File names carry a per-installation suffix; on nginx additionally deny the uploads/cf7sec location in the server config — .htaccess protects Apache only.': '文件名包含按安装生成的随机后缀；在 nginx 上还需在服务器配置中拒绝 uploads/cf7sec 位置——.htaccess 仅保护 Apache。',
+    'On shared hosting behind a proxy you do not control, choose "REMOTE_ADDR only" — forwarded headers can then no longer be spoofed by the client.': '在您无法控制的代理之后的共享主机上，请选择“仅 REMOTE_ADDR”——此时客户端无法伪造转发头。',
+    'Test performs a lookup of 8.8.8.8 (Google DNS); a cached result is used when available.': '测试将查询 8.8.8.8（Google DNS）；如有缓存则使用缓存结果。',
 }

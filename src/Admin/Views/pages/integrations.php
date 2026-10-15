@@ -135,7 +135,7 @@ foreach (ProviderCatalog::PROVIDERS as $pid => $def) {
     )
     . '</fieldset>',
     '<div class="c-card-footer-row">'
-    . '<span class="c-muted c-hint-sm">' . esc_html__('Test performs a live lookup of 8.8.8.8 (Google DNS).', 'contact-form-7-spam-checker') . '</span>'
+    . '<span class="c-muted c-hint-sm">' . esc_html__('Test performs a lookup of 8.8.8.8 (Google DNS); a cached result is used when available.', 'contact-form-7-spam-checker') . '</span>'
     . '<button type="button" class="c-btn c-btn-primary" data-action="test-abuseipdb">' . Ui::icon('globe', 'c-icon c-icon-sm') . ' ' . esc_html__('Test connection', 'contact-form-7-spam-checker') . '</button>'
     . '</div>'
 ) ?>

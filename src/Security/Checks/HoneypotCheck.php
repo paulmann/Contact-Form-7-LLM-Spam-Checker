@@ -31,9 +31,16 @@ final class HoneypotCheck implements CheckInterface
         return __('Honeypot', 'contact-form-7-spam-checker');
     }
 
+    /**
+     * Per-form honeypot field name.
+     *
+     * Salted with the installation key (wp_salt) so the name cannot be
+     * predicted across sites — unlike the pre-4.1.1 plain md5(form_id)
+     * scheme, which let an attacker who knows the scheme skip the field.
+     */
     public static function fieldName(int $formId): string
     {
-        return 'cf7sec_hp_' . substr(md5((string) $formId), 0, 8);
+        return 'cf7sec_hp_' . substr(hash_hmac('sha256', 'hp:' . $formId, wp_salt('auth')), 0, 12);
     }
 
     public function enabled(SubmissionContext $context): bool

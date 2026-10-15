@@ -18,7 +18,9 @@ final class Assets
 
     public function enqueue(string $hook): void
     {
-        if (!str_contains($hook, 'cf7sec')) {
+        // CF7 editor screens get the stylesheet + theme bootstrap as well:
+        // the "Spam Checker" panel is styled with the same design system.
+        if (!str_contains($hook, 'cf7sec') && !str_contains($hook, 'wpcf7')) {
             return;
         }
 

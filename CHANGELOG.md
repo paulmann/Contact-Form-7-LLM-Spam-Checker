@@ -3,6 +3,32 @@
 All notable changes to **CF7 Spam Checker Pro** are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows [SemVer](https://semver.org/).
 
+## [4.1.1] — 2026-10-15
+
+Patch release: defect audit fixes, no new features.
+
+### Fixed
+- **B1 (blocker):** the LLM check was dead code under the v2 settings schema — `LlmCheck::enabled()`, the fail-open/fail-closed policy and `SpamPipeline`'s `run_when_flagged` still read the removed `deepseek.*` paths. All four reads now use `llm.*`; guarded by a smoke regression test and by the new static guard `tests/settings-paths.php`, which fails the build on any literal settings path missing from `Settings::DEFAULTS`.
+- **B2 (blocker):** `Activator::maybeUpgrade()` built its `Settings` snapshot *before* running the schema migration and then wrote that stale snapshot back, wiping the migrated LLM API key and `llm.enabled` on 4.0 → 4.1 upgrades. Migration now runs first on the raw option; version stamping is extracted into `Activator::stampVersions()`; a leftover `deepseek` section is stripped even when the schema stamp is already current. Reproduced and locked by `tests/upgrade-4.0-to-4.1.php`.
+- **B3:** locked the committed-assets invariant with `tests/assets-built.php` (presence of `assets/dist/*` + every design-system class used in markup must exist in the compiled CSS); `.gitignore` scopes the release-dir rule to `/dist/`; `tools/build-release.sh` and `npm run build:js` create `assets/dist/` before copying.
+- **M1:** `c-country-filter`, `c-save-btn` and `cf7sec-panel` had no CSS rules; the CF7 editor panel is rebuilt on the design system (no inline styles, theme-aware via a scoped token block) and `[hidden]` now reliably wins over `.c-btn` display utilities (the top-bar save button was visible when it should not be).
+- **M2:** `AbuseIpCheck` docblock claimed per-category report counting was impossible — the implementation does count category-10 reports from verbose mode; documentation now matches the code and readme.txt FAQ.
+- **M3:** removed the `Update URI` header — with no custom updater present it only disabled wordpress.org update checks. Updates come from the wp.org catalog.
+- **M5:** `LanguageValidator` no longer reads `$_POST` directly; values come from `WPCF7_Submission::get_posted_data()` (array-safe), with a sanitised `$_POST` fallback only outside submissions.
+- **M10:** honeypot field names are now HMAC-salted with `wp_salt('auth')` (12-char suffix) instead of plain `md5(form_id)`, so the trap name is unguessable across installations.
+- **M11/L5:** debug log file names carry a per-installation suffix (nginx-safe, `.htaccess` covers Apache only; documented in readme.txt FAQ and the Diagnostics card); rotation keeps timestamped copies instead of overwriting `.1`.
+- **M12:** documented the shared-proxy spoofing risk of `ip_header_mode=auto` in ARCHITECTURE and in the admin hint; smoke tests pin `Ip::firstFromList()` behaviour on spoofed lists.
+- **L4:** CF7 older than 5.7 now detaches the protection hooks and shows an admin notice instead of silently half-working.
+- **L6:** the AbuseIPDB "Test connection" no longer force-refreshes the cache (saves daily quota); UI hint updated.
+- **L7:** `%minutes%` is computed only when the message template actually contains the placeholder.
+- **L8:** mbstring polyfills accept mixed input like the native functions, preventing TypeErrors on non-string values when mbstring is absent.
+- **L1/L2/L3/L9/L10:** cross-platform `python` runner for npm i18n scripts; documentation links fixed (`docs/preview/admin-ui-preview.html`); ARCHITECTURE references the `llm.*` schema; KPI tone classes are literal and compiled; `SECURITY.md` and `CONTRIBUTING.md` added.
+
+### Added
+- Guard suite wired into CI (`.github/workflows/ci.yml`, PHP 8.3/8.4/8.5 matrix): `php -l`, smoke, `settings-paths`, `assets-built`, `upgrade-4.0-to-4.1`, `docs-links`, advisory PHPCS (`phpcs.xml` + `composer.json`).
+- `.gitattributes` enforcing LF for text/shell and binary marks for png/mo/zip (M4).
+- i18n: `Project-Id-Version` is parsed from `CF7SEC_VERSION`; POT/PO/MO regenerated (396 strings, 100 % for ru/zh/de).
+
 ## [4.1.0] — 2026-10-15
 
 ### Added

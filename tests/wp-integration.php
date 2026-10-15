@@ -71,7 +71,7 @@ $_SERVER['REMOTE_ADDR'] = '203.0.113.9';
 $_SERVER['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36';
 unset($_SERVER['HTTP_CF_CONNECTING_IP'], $_SERVER['HTTP_X_FORWARDED_FOR'], $_SERVER['HTTP_X_REAL_IP']);
 
-$hpField = 'cf7sec_hp_' . substr(md5((string) $formId), 0, 8);
+$hpField = \CF7Sec\Security\Checks\HoneypotCheck::fieldName($formId);
 
 // Neutralise language validation for the pipeline phase (tested separately below).
 $allOpts = $plugin->settings->all();
@@ -107,7 +107,7 @@ function simulate(WPCF7_ContactForm $form, array $overrides = []): ?WPCF7_Submis
         'your-message' => 'Hello, I would like a quote for my project.',
         'cf7sec_ts' => (string) (time() - 40),
         'cf7sec_age' => '40',
-        'cf7sec_hp_' . substr(md5((string) $form->id()), 0, 8) => '',
+        \CF7Sec\Security\Checks\HoneypotCheck::fieldName((int) $form->id()) => '',
     ], $overrides);
 
     return WPCF7_Submission::get_instance($form, ['skip_mail' => true]);
@@ -162,6 +162,7 @@ $all['checks']['language']['fields']   = 'your-name';
 $plugin->settings->replace($all);
 
 $tag = new WPCF7_FormTag(['type' => 'text*', 'name' => 'your-name', 'basetype' => 'text', 'required' => true]);
+resetSubmission(); // direct filter call outside a submission -> $_POST fallback
 $_POST['your-name'] = 'Ivan Petrov';
 $validation = new WPCF7_Validation();
 $validation = $plugin->language->validate($validation, $tag);
@@ -283,6 +284,16 @@ ok(is_array($last) && str_ends_with($last['url'], '/chat/completions'), 'OpenAI 
 ok(is_array($last) && str_starts_with((string) ($last['args']['headers']['Authorization'] ?? ''), 'Bearer '), 'OpenAI protocol: Bearer auth header');
 $capBody = json_decode((string) ($last['args']['body'] ?? ''), true);
 ok(($capBody['messages'][0]['role'] ?? '') === 'system' && ($capBody['model'] ?? '') === 'gpt-4o-mini', 'OpenAI protocol: body shape (system message, model)');
+
+// B1 acceptance: with llm.enabled the pipeline really consults the LLM and
+// the registry carries the llm check evidence (fake API still answers SPAM).
+rest('POST', '/settings', ['llm' => ['enabled' => true]]);
+$llmSub = simulate($form);
+ok($llmSub && $llmSub->is('spam') === true, 'B1 acceptance: pipeline blocks on LLM SPAM verdict');
+$evLatest = EventsRepository::list(['verdict' => 'blocked', 'per_page' => 1]);
+$evChecks = json_decode((string) ($evLatest['items'][0]->checks ?? '[]'), true) ?: [];
+$llmEvidence = array_filter($evChecks, static fn(array $c): bool => ($c['check'] ?? '') === 'llm');
+ok($llmEvidence !== [], 'B1 acceptance: registry event carries the llm check evidence');
 
 rest('POST', '/settings', ['llm' => ['provider' => 'anthropic', 'api_keys' => ['anthropic' => 'sk-ant-fake'], 'models' => ['anthropic' => 'claude-3-5-haiku-latest']]]);
 $GLOBALS['cf7sec_captured'] = [];

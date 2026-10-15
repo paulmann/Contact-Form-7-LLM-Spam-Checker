@@ -38,16 +38,31 @@ final class Activator
      */
     public static function maybeUpgrade(): void
     {
-        $settings = new Settings();
-        $dbOk       = (int) $settings->get('internal.db_version', 0) === CF7SEC_DB_VERSION;
-        $schemaOk   = (int) $settings->get('internal.settings_schema', 0) === Settings::SCHEMA_VERSION;
+        // Migrate FIRST on the raw option: a Settings object built before the
+        // migration would carry the stale (pre-migration) array and clobber
+        // the migrated values when written back (defect B2, v4.1.0).
+        self::migrateSettingsSchema();
+
+        $settings = new Settings(); // fresh read, post-migration
+        $dbOk     = (int) $settings->get('internal.db_version', 0) === CF7SEC_DB_VERSION;
+        $schemaOk = (int) $settings->get('internal.settings_schema', 0) === Settings::SCHEMA_VERSION;
 
         if ($dbOk && $schemaOk) {
             return;
         }
 
         self::createTables();
-        self::migrateSettingsSchema();
+        self::stampVersions($settings);
+    }
+
+    /**
+     * Persist the current code/version stamps into the settings option.
+     * Always re-reads the option through the given (or a fresh) Settings
+     * object so concurrent migrations are never overwritten.
+     */
+    public static function stampVersions(?Settings $settings = null): void
+    {
+        $settings ??= new Settings();
 
         $all = $settings->all();
         $all['internal']['db_version']      = CF7SEC_DB_VERSION;
@@ -65,7 +80,16 @@ final class Activator
         if (!is_array($stored) || $stored === []) {
             return;
         }
-        if ((int) ($stored['internal']['settings_schema'] ?? 0) >= Settings::SCHEMA_VERSION) {
+        $schema = (int) ($stored['internal']['settings_schema'] ?? 0);
+
+        // Defensive: a partially migrated option (defect B2 scenario) may still
+        // carry the dead `deepseek` section even with a current schema stamp.
+        if ($schema >= Settings::SCHEMA_VERSION) {
+            if (isset($stored['deepseek'])) {
+                unset($stored['deepseek']);
+                update_option(CF7SEC_OPTION, $stored, false);
+            }
+
             return;
         }
 

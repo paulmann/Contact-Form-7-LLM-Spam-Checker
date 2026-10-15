@@ -1,16 +1,21 @@
 {
     "name": "cf7-spam-checker-pro",
-    "version": "4.1.0",
-    "description": "Multi-layered spam & security protection for Contact Form 7 (DeepSeek LLM + AbuseIPDB + local heuristics).",
+    "version": "4.1.1",
+    "description": "Multi-layered spam & security protection for Contact Form 7 (LLM gateway + AbuseIPDB + local heuristics).",
     "private": true,
     "scripts": {
         "build:css": "tailwindcss -c tailwind.config.js -i assets/src/input.css -o assets/dist/admin.css --minify",
-        "build:js": "node -e \"require('fs').copyFileSync('assets/src/admin.js','assets/dist/admin.js')\"",
+        "build:js": "node -e \"const fs=require('fs');fs.mkdirSync('assets/dist',{recursive:true});fs.copyFileSync('assets/src/admin.js','assets/dist/admin.js')\"",
         "build": "npm run build:css && npm run build:js",
         "watch:css": "tailwindcss -c tailwind.config.js -i assets/src/input.css -o assets/dist/admin.css --watch",
-        "i18n:extract": "python3 tools/extract-pot.py",
-        "i18n:build": "python3 tools/make-i18n.py",
+        "i18n:extract": "node tools/py.js tools/extract-pot.py",
+        "i18n:build": "node tools/py.js tools/make-i18n.py",
         "test:smoke": "php tests/smoke.php",
+        "test:paths": "php tests/settings-paths.php",
+        "test:assets": "php tests/assets-built.php",
+        "test:upgrade": "php tests/upgrade-4.0-to-4.1.php",
+        "test:docs": "php tests/docs-links.php",
+        "test": "npm run test:smoke && npm run test:paths && npm run test:assets && npm run test:upgrade && npm run test:docs",
         "release": "bash tools/build-release.sh"
     },
     "devDependencies": {

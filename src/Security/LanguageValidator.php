@@ -58,7 +58,7 @@ final class LanguageValidator
             return $result;
         }
 
-        $value = isset($_POST[$tag->name]) ? trim((string) wp_unslash($_POST[$tag->name])) : '';
+        $value = $this->postedValue($tag->name);
         if ($value === '') {
             return $result;
         }
@@ -95,6 +95,37 @@ final class LanguageValidator
         $this->logger->debug('LANGUAGE_INVALID', ['field' => $tag->name, 'language' => $language, 'strict' => $strict]);
 
         return $result;
+    }
+
+    /**
+     * Field value as Contact Form 7 sees it (prepared, unslashed once).
+     *
+     * Prefers the submission object over $_POST: CF7 normalises arrays,
+     * pipes and multi-values there. $_POST is only a last-resort fallback
+     * (e.g. validation triggered outside a submission) and handles arrays.
+     */
+    private function postedValue(string $fieldName): string
+    {
+        $submission = class_exists('\WPCF7_Submission') ? \WPCF7_Submission::get_instance() : null;
+
+        if ($submission !== null) {
+            $posted = $submission->get_posted_data();
+            if (isset($posted[$fieldName])) {
+                return is_array($posted[$fieldName])
+                    ? trim(implode(' ', array_map('strval', $posted[$fieldName])))
+                    : trim((string) $posted[$fieldName]);
+            }
+
+            return '';
+        }
+
+        // Fallback: raw request data (already slashed by WordPress).
+        if (!isset($_POST[$fieldName])) {
+            return '';
+        }
+        $raw = wp_unslash($_POST[$fieldName]);
+
+        return is_array($raw) ? trim(implode(' ', array_map('strval', $raw))) : trim((string) $raw);
     }
 
     /**

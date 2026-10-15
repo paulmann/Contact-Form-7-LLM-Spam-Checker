@@ -22,6 +22,12 @@ LANGS = {
     'de_DE': ('i18n-de.py', 'de', 'nplurals=2; plural=(n != 1);'),
 }
 
+def plugin_version():
+    src = open(os.path.join(ROOT, DOMAIN + '.php'), encoding='utf-8').read()
+    m = re.search(r"define\('CF7SEC_VERSION', '([^']+)'\)", src)
+    return m.group(1) if m else '0.0.0'
+
+
 TEAM = {
     'ru': 'Russian Team',
     'zh': 'Chinese (Simplified) Team',
@@ -130,7 +136,7 @@ def main():
 # This file is distributed under the same license as the CF7 Spam Checker Pro package.
 msgid ""
 msgstr ""
-"Project-Id-Version: CF7 Spam Checker Pro 4.0.0\\n"
+"Project-Id-Version: CF7 Spam Checker Pro {plugin_version()}\\n"
 "Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-Spam-Checker/issues\\n"
 "MIME-Version: 1.0\\n"
 "Content-Type: text/plain; charset=UTF-8\\n"
@@ -169,7 +175,7 @@ msgstr ""
 
         # The MO header entry (empty msgid) must carry the metadata block.
         header_msgstr = '\n'.join([
-            'Project-Id-Version: CF7 Spam Checker Pro 4.0.0',
+            f'Project-Id-Version: CF7 Spam Checker Pro {plugin_version()}',
             'Report-Msgid-Bugs-To: https://github.com/paulmann/Contact-Form-7-Spam-Checker/issues',
             'MIME-Version: 1.0',
             'Content-Type: text/plain; charset=UTF-8',

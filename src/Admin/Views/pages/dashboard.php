@@ -39,18 +39,18 @@ $blockRate = $totals['processed'] > 0 ? round($totals['blocked'] / max(1, $total
 <div class="c-kpi-grid">
     <?php
     $kpis = [
-        ['label' => __('Submissions today', 'contact-form-7-spam-checker'), 'value' => $todayP, 'icon' => 'activity', 'tone' => 'default'],
-        ['label' => __('Blocked today', 'contact-form-7-spam-checker'), 'value' => $todayB, 'icon' => 'shield', 'tone' => 'danger'],
-        ['label' => __('Active bans', 'contact-form-7-spam-checker'), 'value' => $bans, 'icon' => 'ban', 'tone' => 'warning'],
-        ['label' => __('Whitelisted IPs', 'contact-form-7-spam-checker'), 'value' => $wl, 'icon' => 'check', 'tone' => 'success'],
-        ['label' => __('Registry (blocked)', 'contact-form-7-spam-checker'), 'value' => $blocked, 'icon' => 'list', 'tone' => 'default'],
-        ['label' => __('Block rate (30 d)', 'contact-form-7-spam-checker'), 'value' => $blockRate . '%', 'icon' => 'zap', 'tone' => 'default'],
+        ['label' => __('Submissions today', 'contact-form-7-spam-checker'), 'value' => $todayP, 'icon' => 'activity', 'tone' => 'c-kpi-default'],
+        ['label' => __('Blocked today', 'contact-form-7-spam-checker'), 'value' => $todayB, 'icon' => 'shield', 'tone' => 'c-kpi-danger'],
+        ['label' => __('Active bans', 'contact-form-7-spam-checker'), 'value' => $bans, 'icon' => 'ban', 'tone' => 'c-kpi-warning'],
+        ['label' => __('Whitelisted IPs', 'contact-form-7-spam-checker'), 'value' => $wl, 'icon' => 'check', 'tone' => 'c-kpi-success'],
+        ['label' => __('Registry (blocked)', 'contact-form-7-spam-checker'), 'value' => $blocked, 'icon' => 'list', 'tone' => 'c-kpi-default'],
+        ['label' => __('Block rate (30 d)', 'contact-form-7-spam-checker'), 'value' => $blockRate . '%', 'icon' => 'zap', 'tone' => 'c-kpi-default'],
     ];
     foreach ($kpis as $kpi) :
         $display = is_int($kpi['value']) ? number_format_i18n($kpi['value']) : (string) $kpi['value'];
         ?>
         <div class="c-card c-kpi">
-            <div class="c-kpi-icon c-kpi-<?= esc_attr($kpi['tone']) ?>"><?= Ui::icon($kpi['icon']) ?></div>
+            <div class="c-kpi-icon <?= esc_attr($kpi['tone']) ?>"><?= Ui::icon($kpi['icon']) ?></div>
             <div class="c-kpi-body">
                 <span class="c-kpi-value"><?= esc_html($display) ?></span>
                 <span class="c-kpi-label"><?= esc_html($kpi['label']) ?></span>

@@ -87,7 +87,7 @@ final class Plugin
         add_action('admin_init', [Activator::class, 'maybeUpgrade']);
 
         /* ---- Contact Form 7 integration ---- */
-        if ($this->cf7Active()) {
+        if ($this->cf7Active() && $this->cf7Supported()) {
             add_filter('wpcf7_spam', [$this->pipeline, 'filter'], 5, 2);
             add_filter('wpcf7_form_hidden_fields', [$this, 'addHiddenFields']);
             add_filter('wpcf7_display_message', [$this, 'filterSpamMessage'], 10, 2);
@@ -99,6 +99,8 @@ final class Plugin
 
             add_filter('wpcf7_editor_panels', [Cf7Panel::class, 'register']);
             add_action('wpcf7_editor_panel_cf7sec', [Cf7Panel::class, 'render']);
+        } elseif ($this->cf7Active()) {
+            add_action('admin_notices', [$this, 'outdatedCf7Notice']);
         } else {
             add_action('admin_notices', [$this, 'missingCf7Notice']);
         }
@@ -124,7 +126,21 @@ final class Plugin
 
     public function cf7Active(): bool
     {
-        return defined('WPCF7_VERSION') || class_exists('WPCF7_ContactForm');
+        return defined('WPCF7_VERSION') || class_exists('\WPCF7_ContactForm');
+    }
+
+    /** Minimum Contact Form 7 version the protection hooks rely on. */
+    public const CF7_MIN_VERSION = '5.7';
+
+    /**
+     * True when CF7 is present AND new enough. Older releases lack the
+     * submission/filter behaviour the pipeline depends on, so the hooks
+     * stay detached and an admin notice explains why.
+     */
+    public function cf7Supported(): bool
+    {
+        return defined('WPCF7_VERSION')
+            && version_compare((string) WPCF7_VERSION, self::CF7_MIN_VERSION, '>=');
     }
 
     /**
@@ -225,6 +241,22 @@ JS;
         }
 
         return $classes;
+    }
+
+    public function outdatedCf7Notice(): void
+    {
+        if (!current_user_can('activate_plugins')) {
+            return;
+        }
+        printf(
+            '<div class="notice notice-error"><p>%s</p></div>',
+            esc_html(sprintf(
+                /* translators: 1: required CF7 version, 2: detected CF7 version */
+                __('CF7 Spam Checker Pro requires Contact Form 7 %1$s or newer (detected: %2$s). Spam protection stays disabled until Contact Form 7 is updated.', 'contact-form-7-spam-checker'),
+                self::CF7_MIN_VERSION,
+                defined('WPCF7_VERSION') ? (string) WPCF7_VERSION : '?'
+            ))
+        );
     }
 
     public function missingCf7Notice(): void

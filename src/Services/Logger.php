@@ -15,8 +15,16 @@ use CF7Sec\Settings;
 defined('ABSPATH') || exit;
 
 /**
- * Writes rotating daily debug logs into wp-content/uploads/cf7sec/,
- * a directory protected by .htaccess (deny-all).
+ * Writes rotating daily debug logs into wp-content/uploads/cf7sec/.
+ *
+ * Defence in depth against direct web access (the logs contain IPs,
+ * user agents and fragments of submitted data):
+ *  1. `.htaccess` deny-all (Apache) + `index.php` (directory listing);
+ *  2. every file name carries a per-installation random suffix derived
+ *     from `wp_salt('auth')`, so guessing a URL requires knowing the
+ *     site keys — this also covers nginx, where `.htaccess` is ignored
+ *     (see the Diagnostics card warning and readme.txt FAQ);
+ *  3. rotation keeps timestamped copies instead of overwriting.
  */
 final class Logger
 {
@@ -51,6 +59,15 @@ final class Logger
         }
     }
 
+    /**
+     * Per-installation filename suffix (stable for this site, unguessable
+     * for anyone without the auth salts).
+     */
+    public static function suffix(): string
+    {
+        return substr(hash('sha256', wp_salt('auth') . '|cf7sec-log'), 0, 10);
+    }
+
     public static function file(?string $date = null): ?string
     {
         $dir = Activator::logDir();
@@ -58,7 +75,7 @@ final class Logger
             return null;
         }
 
-        return $dir . '/debug-' . ($date ?? gmdate('Y-m-d')) . '.log';
+        return $dir . '/debug-' . ($date ?? gmdate('Y-m-d')) . '-' . self::suffix() . '.log';
     }
 
     /**
@@ -84,7 +101,8 @@ final class Logger
     }
 
     /**
-     * Available log dates (for the viewer dropdown).
+     * Available log dates (for the viewer dropdown). Rotated copies
+     * (`...log.Ymd-His`) are excluded.
      *
      * @return array<int, string>
      */
@@ -97,10 +115,11 @@ final class Logger
 
         $dates = [];
         foreach (glob($dir . '/debug-*.log') ?: [] as $file) {
-            if (preg_match('/debug-(\d{4}-\d{2}-\d{2})\.log$/', basename($file), $m)) {
+            if (preg_match('/^debug-(\d{4}-\d{2}-\d{2})-[a-f0-9]{10}\.log$/', basename($file), $m)) {
                 $dates[] = $m[1];
             }
         }
+        $dates = array_values(array_unique($dates));
         rsort($dates);
 
         return array_slice($dates, 0, 30);
@@ -117,13 +136,14 @@ final class Logger
     }
 
     /**
-     * Rotate the current file when it exceeds $maxBytes.
+     * Rotate the current file when it exceeds $maxBytes. Rotated copies keep
+     * a timestamp, so successive rotations never overwrite each other.
      */
     public static function rotate(int $maxBytes = 5242880): void
     {
         $file = self::file();
         if ($file !== null && is_file($file) && filesize($file) > $maxBytes) {
-            @rename($file, $file . '.1');
+            @rename($file, $file . '.' . gmdate('Ymd-His'));
         }
     }
 }

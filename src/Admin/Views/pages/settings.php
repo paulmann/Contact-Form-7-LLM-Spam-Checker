@@ -88,7 +88,8 @@ $tabs = [
             'cf'          => __('Cloudflare — always use CF-Connecting-IP', 'contact-form-7-spam-checker'),
             'xff'         => __('Always use X-Forwarded-For', 'contact-form-7-spam-checker'),
         ], (string) $s->get('general.ip_header_mode', 'auto'), __('Header mode', 'contact-form-7-spam-checker'),
-            __('Your current request resolves to: ', 'contact-form-7-spam-checker') . '<code>' . esc_html(\CF7Sec\Support\Ip::clientFromSettings($s)) . '</code>')
+            __('Your current request resolves to: ', 'contact-form-7-spam-checker') . '<code>' . esc_html(\CF7Sec\Support\Ip::clientFromSettings($s)) . '</code>. '
+            . __('On shared hosting behind a proxy you do not control, choose "REMOTE_ADDR only" — forwarded headers can then no longer be spoofed by the client.', 'contact-form-7-spam-checker'))
     ) ?>
 </section>
 
@@ -272,7 +273,8 @@ $tabs = [
         . '<pre id="cf7sec-log-view" class="c-log-view" aria-live="polite">' . esc_html__('Select a date to view the log.', 'contact-form-7-spam-checker') . '</pre>',
         sprintf(
             '<span class="c-muted">%s</span>',
-            esc_html__('Latest 400 lines are shown. Log directory: ', 'contact-form-7-spam-checker') . '<code>' . esc_html(\CF7Sec\Activator::logDir()) . '</code>'
+            esc_html__('Latest 400 lines are shown. Log directory: ', 'contact-form-7-spam-checker') . '<code>' . esc_html(\CF7Sec\Activator::logDir()) . '</code>. '
+            . esc_html__('File names carry a per-installation suffix; on nginx additionally deny the uploads/cf7sec location in the server config — .htaccess protects Apache only.', 'contact-form-7-spam-checker')
         )
     ) ?>
 </section>

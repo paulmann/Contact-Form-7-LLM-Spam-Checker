@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4', '8.5']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, json
+          coverage: none
+          tools: composer:v2
+
+      - name: Syntax check (php -l)
+        run: |
+          find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' -print0 \
+            | xargs -0 -n1 php -l
+
+      - name: Smoke tests (no WordPress required)
+        run: php tests/smoke.php
+
+      - name: Settings paths guard (B1)
+        run: php tests/settings-paths.php
+
+      - name: Compiled assets guard (B3/M1)
+        run: php tests/assets-built.php
+
+      - name: 4.0 -> 4.1 upgrade guard (B2)
+        run: php tests/upgrade-4.0-to-4.1.php
+
+      - name: Documentation links guard (M7/L2)
+        run: php tests/docs-links.php
+
+      - name: Install PHPCS dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      # Advisory for now: the codebase carries ~40 phpcs:ignore annotations for
+      # intentional direct $wpdb usage; full WPCS clearance is tracked separately.
+      - name: PHPCS (advisory)
+        continue-on-error: true
+        run: vendor/bin/phpcs --report=summary --warning-severity=0
+
+  integration:
+    # The WordPress integration suite (tests/wp-integration.php, 78 assertions)
+    # needs a live WP + Contact Form 7 + MySQL stack; it is documented in
+    # README.md → Development and runs locally or on a self-hosted runner:
+    #   wp eval-file tests/wp-integration.php --path=/path/to/wp
+    name: WordPress integration (manual)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notice
+        run: echo "Run tests/wp-integration.php against a live WordPress install (see README.md → Development)."

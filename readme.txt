@@ -5,7 +5,7 @@ Tags: contact form 7, spam, antispam, security, honeypot
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 4.1.0
+Stable tag: 4.1.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,14 @@ You choose per integration: fail-open (allow, log the error — default) or fail
 = How does the "Email Spam" category threshold work? =
 
 The AbuseIPDB Check API returns lifetime totals plus the most recent individual reports with their categories (verbose mode). The plugin counts category-10 ("Email Spam") entries among the recent reports and compares against your threshold.
+
+= Are the debug logs web-accessible? =
+
+By default no: they live in `wp-content/uploads/cf7sec/` protected by a deny-all
+`.htaccess` (Apache), an `index.php` guard, and — since 4.1.1 — a per-installation
+random suffix in every file name, which also covers nginx. On nginx we additionally
+recommend denying the location in your server config:
+`location ^~ /wp-content/uploads/cf7sec/ { deny all; }`
 
 = Where is data stored? =
 
